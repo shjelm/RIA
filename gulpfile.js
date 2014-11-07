@@ -21,3 +21,5 @@ gulp.task('lint', function(){
       .pipe(jshint.reporter(stylish))
       .pipe(jshint.reporter('fail'))
 });
+
+gulp.task('default',['lint', 'copyindex', 'browserify']);
