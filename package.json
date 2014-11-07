@@ -1,0 +1,12 @@
+{
+"name": "ria2014",
+"version": "0.0.1",
+"description": "my first app for the RIA-course",
+"author": "shjelm",
+"license": "ISC",
+"scripts": {
+	},
+	"devDependencies": {
+	"react": "0.12.0"
+	}
+}
