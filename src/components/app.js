@@ -13,5 +13,6 @@ var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
 	var node = document.getElementById('node-id');
-	node.innerHTML('<p>'+snapshot.val()+'</p>');
+	var string = '<p>'+snapshot.val()+'</p>';
+	node.innerHTML(string);
 });
