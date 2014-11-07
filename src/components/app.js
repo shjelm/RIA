@@ -1,5 +1,5 @@
 var Firebase = require("firebase");
-var myFirebaseRef = new Firebase("https://<your-firebase>.firebaseio.com/");
+var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
 myFirebaseRef.set({
   title: "Hello World!",
