@@ -1,12 +1,7 @@
 <html>
     <head>
-      <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
-    </head>
-    <body>
-    	<H1>RIA 2014</H1>
-    	<p> Min första app</p>
-    	
-		<script>var Firebase = require("firebase");
+      <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js">
+      	var Firebase = require("firebase");
 
 var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
@@ -22,6 +17,13 @@ myFirebaseRef.set({
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
   alert(snapshot.val());  // Alerts "San Francisco"
-});</script>
+});
+      </script>
+    </head>
+    <body>
+    	<H1>RIA 2014</H1>
+    	<p> Min första app</p>
+    	
+		<script src="js/main.js"></script>
     </body>
 </html>
