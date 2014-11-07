@@ -3,9 +3,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat');
 
 gulp.task('browserify', function() {
-    gulp.src('src/js/main.js')
+    gulp.src('src/main.js')
       .pipe(browserify({transform:"reactify"}))
-      .pipe(concat('js/main.js'))
+      .pipe(concat('main.js'))
       .pipe(gulp.dest('dist'));
 });
 
