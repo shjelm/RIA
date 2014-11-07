@@ -22,4 +22,4 @@ gulp.task('lint', function(){
       .pipe(jshint.reporter('fail'))
 });
 
-gulp.task('default',['lint', 'copyindex', 'browserify']);
+gulp.task('default',[ 'copyindex', 'browserify']);
