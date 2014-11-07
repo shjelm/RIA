@@ -1,11 +1,11 @@
 var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
-    concat = require('gulp-concat'),
-    jest = require('gulp-jest'),
+    concat = require('gulp-concat')
+    /*jest = require('gulp-jest'),
     stylish = require('jshint-stylish'),
-    jshint = require('gulp-jshint');
+    jshint = require('gulp-jshint')*/;
     
-gulp.task('test',function(){
+/*gulp.task('test',function(){
     return gulp.src('__tests__').pipe(jest({
       testDirectoryName: "spec",
       scriptPreprocessor: './support/preprocessor.js',
@@ -15,7 +15,7 @@ gulp.task('test',function(){
         "./support"
       ]
     }));
-});
+});*/
 
 gulp.task('browserify', function() {
     gulp.src('src/main.js')
