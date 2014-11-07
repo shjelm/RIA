@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 gulp.task('browserify', function() {
     gulp.src('src/js/main.js')
       .pipe(browserify({transform:"reactify"}))
-      .pipe(concat('main.js'))
+      .pipe(concat('js/main.js'))
       .pipe(gulp.dest('dist'));
 });
 
