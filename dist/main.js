@@ -18482,7 +18482,8 @@ var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 });*/
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
-  console.log(snapshot.val());
+	var node = document.getElementById('node-id');
+	node.innerHTML('<p>'+snapshot.val()+'</p>');
 });
 },{"firebase":1}],150:[function(require,module,exports){
 /** @jsx React.DOM */
