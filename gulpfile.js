@@ -1,6 +1,21 @@
 var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    jest = require('gulp-jest'),
+    stylish = require('jshint-stylish'),
+    jshint = require('gulp-jshint');
+    
+gulp.task('test',function(){
+    return gulp.src('__tests__').pipe(jest({
+      testDirectoryName: "spec",
+      scriptPreprocessor: './support/preprocessor.js',
+      unmockedModulePathPatterns: ['node_modules/react'],
+      testPathIgnorePatterns: [
+        "node_modules",
+        "./support"
+      ]
+    }));
+});
 
 gulp.task('browserify', function() {
     gulp.src('src/main.js')
@@ -22,4 +37,6 @@ gulp.task('lint', function(){
       .pipe(jshint.reporter('fail'))
 });
 
-gulp.task('default',[ 'copyindex', 'browserify']);
+gulp.task('build',['browserify','copyindex']);
+
+gulp.task('default',['test', 'build']);

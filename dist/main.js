@@ -18471,7 +18471,7 @@ module.exports = require('./lib/React');
 var Firebase = require("firebase");
 var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
-/*myFirebaseRef.set({
+myFirebaseRef.set({
   title: "Hello World!",
   author: "Firebase",
   location: {
@@ -18479,7 +18479,7 @@ var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
     state: "California",
     zip: 94103
   }
-});*/
+});
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
 	var node = document.getElementById('node-id');
