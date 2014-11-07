@@ -6,6 +6,22 @@
     	<H1>RIA 2014</H1>
     	<p> Min första app</p>
     	
-		<script src="js/main.js"></script>
+		<script>var Firebase = require("firebase");
+
+var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
+
+myFirebaseRef.set({
+  title: "Hello World!",
+  author: "Firebase",
+  location: {
+    city: "San Francisco",
+    state: "California",
+    zip: 94103
+  }
+});
+
+myFirebaseRef.child("location/city").on("value", function(snapshot) {
+  alert(snapshot.val());  // Alerts "San Francisco"
+});</script>
     </body>
 </html>
