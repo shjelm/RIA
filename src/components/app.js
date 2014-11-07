@@ -12,6 +12,5 @@ var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 });*/
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
-  console.log(alert(snapshot.val()))
-  //alert(snapshot.val());  // Alerts "San Francisco"
+  console.log(snapshot.val());
 });
