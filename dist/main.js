@@ -18471,7 +18471,7 @@ module.exports = require('./lib/React');
 var Firebase = require("firebase");
 var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
-myFirebaseRef.set({
+/*myFirebaseRef.set({
   title: "Hello World!",
   author: "Firebase",
   location: {
@@ -18479,10 +18479,11 @@ myFirebaseRef.set({
     state: "California",
     zip: 94103
   }
-});
+});*/
 
 myFirebaseRef.child("location/city").on("value", function(snapshot) {
-  alert(snapshot.val());  // Alerts "San Francisco"
+  console.log(alert(snapshot.val()))
+  //alert(snapshot.val());  // Alerts "San Francisco"
 });
 },{"firebase":1}],150:[function(require,module,exports){
 /** @jsx React.DOM */
