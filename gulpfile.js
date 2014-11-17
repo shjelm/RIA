@@ -3,9 +3,10 @@ var gulp = require('gulp'),
     concat = require('gulp-concat')
     jest = require('gulp-jest'),
     docco = require('gulp-docco'),
-    folderToc = require('folder-toc')/*,
-    stylish = require('jshint-stylish'),
-    jshint = require('gulp-jshint')*/;
+    folderToc = require('folder-toc'),
+    jshint = require('gulp-jshint'),
+    react = require('gulp-react'),
+    stylish = require('jshint-stylish');
 
 gulp.task('builddocs', function(){
     gulp.src(['src/*/*.js','src/*.js'])
@@ -20,6 +21,14 @@ gulp.task('docsindex', function(){
     filter: '*.html',
     title: 'Files'    
   });
+});
+
+gulp.task('lint', function(){
+    gulp.src(['src/*/*.js','src/*.js'])
+      .pipe(react())
+      .pipe(jshint())
+      .pipe(jshint.reporter(stylish))
+      .pipe(jshint.reporter('fail'))
 });
 
 gulp.task('test',function(){
@@ -54,7 +63,7 @@ gulp.task('lint', function(){
       .pipe(jshint.reporter('fail'))
 });
 
-gulp.task('build',['browserify','copyindex']);
+gulp.task('build',['lint','browserify','copyindex']);
 
 gulp.task('docs',['builddocs','docsindex']);
 
