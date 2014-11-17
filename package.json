@@ -19,6 +19,8 @@
     "react-tools": "0.11.2",
     "reactify": "0.14.0",
     "reactfire": "0.3.0",
-    "gulp-jest": "0.2.2"
+    "gulp-jest": "0.2.2",
+    "folder-toc": "0.1.0",
+    "gulp-docco": "0.0.4"
 	}
 }
