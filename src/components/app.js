@@ -12,6 +12,8 @@ var App = React.createClass({
    }
 });
 
+module.exports = App;
+
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 // 
