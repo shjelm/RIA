@@ -3,7 +3,5 @@
     "maxdepth": 5,
     "maxstatements": 25,
     "maxcomplexity": 10,
-    "newcap": false,
-    "undef": true,
-  	"unused": true,
+    "newcap": false
 }
