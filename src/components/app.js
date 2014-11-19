@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-var APP = Render.createClass({
+var React = require('react');
+
+var App = React.createClass({
 	render: function(){
 		return (
       React.createElement('div', {className: "commentBox"},
