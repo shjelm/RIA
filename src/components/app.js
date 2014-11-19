@@ -1,3 +1,5 @@
+/** @jsx React.DOM */
+
 var Firebase = require("firebase");
 var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
