@@ -1,13 +1,3 @@
-// var APP = Render.createClass({
-	// render: function(){
-		// return (
-      // React.createElement('div', {className: "commentBox"},
-        // "Hello, world! I am a CommentBox."
-      // )
-    // );
-   // }
-// });
-
 var Firebase = require("firebase");
 var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
 
@@ -26,4 +16,15 @@ myFirebaseRef.child("location/city").on("value", function(snapshot) {
 	var string = '<p>'+snapshot.val()+'</p>';
 	node.innerHTML = string;
 });
+
+// var APP = Render.createClass({
+	// render: function(){
+		// return (
+      // React.createElement('div', {className: "commentBox"},
+        // "Hello, world! I am a CommentBox."
+      // )
+    // );
+   // }
+// });
+
 
