@@ -1,16 +1,13 @@
-var CommentBox = React.createClass({displayName: 'CommentBox',
-  render: function() {
-    return (
-      React.createElement('div', {className: "commentBox"},
-        "Hello, world! I am a CommentBox."
-      )
-    );
-  }
+var APP = Render.createClass({
+	render: function(){
+		return (
+			<div>
+				<H1>HELLO WORLD</H1>
+			</div>
+		);
+	}
+	
 });
-React.render(
-  React.createElement(CommentBox, null),
-  document.getElementById('content')
-);
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
