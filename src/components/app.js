@@ -1,18 +1,32 @@
-var Firebase = require("firebase");
-var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
+var quiz = {
+	questions: [],
+	
+	init: function(){
+		var quizbox;
+		quizbox = document.getElementById("quizbox");
+		quizbox.innerHTML = "<h2>HEJ</h2>";
+	}
+	
+};
 
-myFirebaseRef.set({
-  title: "Hello World!",
-  author: "Firebase",
-  location: {
-    city: "San Francisco",
-    state: "California",
-    zip: 94103
-  }
-});
+window.onload = quiz.init;
 
-myFirebaseRef.child("location/city").on("value", function(snapshot) {
-	var node = document.getElementById('node-id');
-	var string = '<p>'+snapshot.val()+'</p>';
-	node.innerHTML = string;
-});
+// var Firebase = require("firebase");
+// var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
+// 
+// myFirebaseRef.set({
+  // title: "Hello World!",
+  // author: "Firebase",
+  // location: {
+    // city: "San Francisco",
+    // state: "California",
+    // zip: 94103
+  // }
+// });
+// 
+// myFirebaseRef.child("location/city").on("value", function(snapshot) {
+	// var node = document.getElementById('node-id');
+	// var string = '<p>'+snapshot.val()+'</p>';
+	// node.innerHTML = string;
+// });
+
