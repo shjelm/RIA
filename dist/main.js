@@ -18275,7 +18275,24 @@ var quiz = {
 	init: function(){
 		var quizbox;
 		quizbox = document.getElementById("quizbox");
-		quizbox.innerHTML = "<h2>HEJ</h2>";
+		
+		var fullForm = createForm();
+		
+		quizbox.appendChild(fullform);
+		
+	},
+	
+	createForm: function(){
+		var form = document.createElement("form");
+		var fieldset = document.createElement("fieldset");
+		var label = document.createElement("label");
+		var input = document.createElement("input");
+		
+		label.appendChild(input);
+		fieldset.appendChild(label);
+		form.appendChild(fieldset);
+		
+		return form;
 	}
 	
 };
