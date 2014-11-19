@@ -1,35 +1,21 @@
 /** @jsx React.DOM */
 
-var APP = Render.createClass({
-	render: function(){
-		return (
-      React.createElement('div', {className: "commentBox"},
-        "Hello, world! I am a CommentBox."
-      )
-    );
-   }
+var Firebase = require("firebase");
+var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
+
+myFirebaseRef.set({
+  title: "Hello World!",
+  author: "Firebase",
+  location: {
+    city: "San Francisco",
+    state: "California",
+    zip: 94103
+  }
 });
-module.exports = App;
 
-
-
-
-// var Firebase = require("firebase");
-// var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
-// 
-// myFirebaseRef.set({
-  // title: "Hello World!",
-  // author: "Firebase",
-  // location: {
-    // city: "San Francisco",
-    // state: "California",
-    // zip: 94103
-  // }
-// });
-// 
-// myFirebaseRef.child("location/city").on("value", function(snapshot) {
-	// var node = document.getElementById('node-id');
-	// var string = '<p>'+snapshot.val()+'</p>';
-	// node.innerHTML = string;
-// });
+myFirebaseRef.child("location/city").on("value", function(snapshot) {
+	var node = document.getElementById('node-id');
+	var string = '<p>'+snapshot.val()+'</p>';
+	node.innerHTML = string;
+});
 
