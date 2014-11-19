@@ -1,32 +1,16 @@
-var quiz = {
-	questions: [],
-	
-	init: function(){
-		var quizbox;
-		quizbox = document.getElementById("quizbox");
-		
-		var fullForm = createForm();
-		
-		quizbox.appendChild(fullform);
-		
-	},
-	
-	createForm: function(){
-		var form = document.createElement("form");
-		var fieldset = document.createElement("fieldset");
-		var label = document.createElement("label");
-		var input = document.createElement("input");
-		
-		label.appendChild(input);
-		fieldset.appendChild(label);
-		form.appendChild(fieldset);
-		
-		return form;
-	}
-	
-};
-
-window.onload = quiz.init;
+var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        <p>Hello, world! I am a CommentBox.</p>
+      </div>
+    );
+  }
+});
+React.render(
+  <CommentBox />,
+  document.getElementById('content')
+);
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
