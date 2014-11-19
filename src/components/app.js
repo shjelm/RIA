@@ -1,10 +1,11 @@
 var APP = Render.createClass({
 	render: function(){
 		return (
-			'<h1>HELLO WORLD</h1>'
-		);
-	}
-	
+      React.createElement('div', {className: "commentBox"},
+        "Hello, world! I am a CommentBox."
+      )
+    );
+   }
 });
 
 // var Firebase = require("firebase");
