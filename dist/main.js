@@ -18276,7 +18276,7 @@ var React = require('react');
 var App = React.createClass({displayName: 'App',
 	render: function(){
 		return (
-      React.createElement('div', {className: "commentBox"},
+      React.DOM.div({className: "commentBox"}, 
         "Hello, world! I am a CommentBox."
       )
     );
@@ -18311,5 +18311,5 @@ var App = require('./components/app'),
 	
 React.render(
   App,
-  document.querySelector('main'));
+  document.getElementById('main'));
 },{"./components/app":148,"react":147}]},{},[149])
