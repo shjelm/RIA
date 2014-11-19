@@ -18269,19 +18269,14 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":29}],148:[function(require,module,exports){
-var CommentBox = React.createClass({displayName: 'CommentBox',
-  render: function() {
-    return (
-      React.createElement('div', {className: "commentBox"},
-        "Hello, world! I am a CommentBox."
-      )
-    );
-  }
+var APP = Render.createClass({
+	render: function(){
+		return (
+			'<h1>HELLO WORLD</h1>'
+		);
+	}
+	
 });
-React.render(
-  React.createElement(CommentBox, null),
-  document.getElementById('content')
-);
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");

@@ -1,9 +1,7 @@
 var APP = Render.createClass({
 	render: function(){
 		return (
-			<div>
-				<H1>HELLO WORLD</H1>
-			</div>
+			'<h1>HELLO WORLD</h1>'
 		);
 	}
 	
