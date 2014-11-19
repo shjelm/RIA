@@ -18269,35 +18269,19 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":29}],148:[function(require,module,exports){
-var quiz = {
-	questions: [],
-	
-	init: function(){
-		var quizbox;
-		quizbox = document.getElementById("quizbox");
-		
-		var fullForm = createForm();
-		
-		quizbox.appendChild(fullform);
-		
-	},
-	
-	createForm: function(){
-		var form = document.createElement("form");
-		var fieldset = document.createElement("fieldset");
-		var label = document.createElement("label");
-		var input = document.createElement("input");
-		
-		label.appendChild(input);
-		fieldset.appendChild(label);
-		form.appendChild(fieldset);
-		
-		return form;
-	}
-	
-};
-
-window.onload = quiz.init;
+var CommentBox = React.createClass({displayName: 'CommentBox',
+  render: function() {
+    return (
+      React.createElement('div', {className: "commentBox"},
+        "Hello, world! I am a CommentBox."
+      )
+    );
+  }
+});
+React.render(
+  React.createElement(CommentBox, null),
+  document.getElementById('content')
+);
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
