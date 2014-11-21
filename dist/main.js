@@ -18284,36 +18284,6 @@ var App = React.createClass({displayName: 'App',
 });
 
 module.exports = App;
-
-if (typeof window !== 'undefined') {
-  window.onload = function() {
-    React.render(App(), document);
-  };
-}
-
-
-// module.exports = App;
-
-// var Firebase = require("firebase");
-// var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
-// 
-// myFirebaseRef.set({
-  // title: "Hello World!",
-  // author: "Firebase",
-  // location: {
-    // city: "San Francisco",
-    // state: "California",
-    // zip: 94103
-  // }
-// });
-// 
-// myFirebaseRef.child("location/city").on("value", function(snapshot) {
-	// var node = document.getElementById('node-id');
-	// var string = '<p>'+snapshot.val()+'</p>';
-	// node.innerHTML = string;
-// });
-
-
 },{"react":147}],149:[function(require,module,exports){
 /** @jsx React.DOM */
 
