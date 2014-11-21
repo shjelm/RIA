@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var MyApp = React.createClass({
+var App = React.createClass({
 	render: function(){
 		return (
       <div className="commentBox">

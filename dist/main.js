@@ -18273,7 +18273,7 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
-var MyApp = React.createClass({displayName: 'MyApp',
+var App = React.createClass({displayName: 'App',
 	render: function(){
 		return (
       React.DOM.div({className: "commentBox"}, 
