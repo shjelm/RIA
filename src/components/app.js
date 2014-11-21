@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Test = React.createClass({
+var MyApp = React.createClass({
 	render: function(){
 		return (
       <div className="commentBox">
@@ -12,7 +12,10 @@ var Test = React.createClass({
    }
 });
 
-window.onload = Test;
+React.render(
+  <MyApp />,
+  document.getElementById('main')
+);
 
 
 // module.exports = App;
