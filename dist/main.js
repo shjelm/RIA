@@ -18284,7 +18284,7 @@ var MyApp = React.createClass({displayName: 'MyApp',
 });
 
 React.render(
-  MyApp(null),
+  MyApp,
   document.getElementById('main')
 );
 
