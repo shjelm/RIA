@@ -18283,6 +18283,11 @@ var App = React.createClass({displayName: 'App',
    }
 });
 
+React.renderComponent(
+    App(null),
+    document.body
+);
+
 
 // module.exports = App;
 
