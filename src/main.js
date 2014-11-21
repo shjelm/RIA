@@ -3,6 +3,6 @@
 var App = require('./components/app'),
     React = require('react');
 	
-React.render(
+React.renderComponent(
   App,
-  document.getElementById('main'));
+  document.querySelector('body'));

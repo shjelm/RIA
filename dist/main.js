@@ -18283,7 +18283,8 @@ var App = React.createClass({displayName: 'App',
    }
 });
 
-module.exports = App;
+
+// module.exports = App;
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
@@ -18311,7 +18312,7 @@ module.exports = App;
 var App = require('./components/app'),
     React = require('react');
 	
-React.render(
+React.renderComponent(
   App,
-  document.getElementById('main'));
+  document.querySelector('body'));
 },{"./components/app":148,"react":147}]},{},[149])
