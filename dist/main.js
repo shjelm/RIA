@@ -18283,10 +18283,13 @@ var MyApp = React.createClass({displayName: 'MyApp',
    }
 });
 
-React.render(
-  MyApp,
-  document.getElementById('main')
-);
+module.exports = App;
+
+if (typeof window !== 'undefined') {
+  window.onload = function() {
+    React.renderComponent(App(), document);
+  };
+}
 
 
 // module.exports = App;

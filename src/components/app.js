@@ -12,10 +12,13 @@ var MyApp = React.createClass({
    }
 });
 
-React.render(
-  MyApp,
-  document.getElementById('main')
-);
+module.exports = App;
+
+if (typeof window !== 'undefined') {
+  window.onload = function() {
+    React.renderComponent(App(), document);
+  };
+}
 
 
 // module.exports = App;
