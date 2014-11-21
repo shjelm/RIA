@@ -18287,7 +18287,7 @@ module.exports = App;
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    React.renderComponent(App(), document);
+    React.render(App(), document);
   };
 }
 
@@ -18320,7 +18320,7 @@ if (typeof window !== 'undefined') {
 var App = require('./components/app'),
     React = require('react');
 	
-React.renderComponent(
+React.render(
   App,
   document.getElementById('main'));
 },{"./components/app":148,"react":147}]},{},[149])
