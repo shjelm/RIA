@@ -18273,7 +18273,7 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
-var App = React.createClass({displayName: 'App',
+var Test = React.createClass({displayName: 'Test',
 	render: function(){
 		return (
       React.DOM.div({className: "commentBox"}, 
@@ -18283,13 +18283,8 @@ var App = React.createClass({displayName: 'App',
    }
 });
 
+window.onload = Test;
 
-window.App = App;
-
-
-React.renderComponent(
-  App,
-  document.getElementById('main'));
 
 // module.exports = App;
 
