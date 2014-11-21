@@ -18273,7 +18273,7 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
-var Test = React.createClass({displayName: 'Test',
+var App = React.createClass({displayName: 'App',
 	render: function(){
 		return (
       React.DOM.div({className: "commentBox"}, 
@@ -18283,8 +18283,9 @@ var Test = React.createClass({displayName: 'Test',
    }
 });
 
+window.App = App;
 
-// module.exports = App;
+module.exports = App;
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");
@@ -18314,5 +18315,5 @@ var App = require('./components/app'),
 	
 React.renderComponent(
   App,
-  document.querySelector('body'));
+  document.getElementById('main'));
 },{"./components/app":148,"react":147}]},{},[149])

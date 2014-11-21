@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Test = React.createClass({
+var App = React.createClass({
 	render: function(){
 		return (
       <div className="commentBox">
@@ -12,8 +12,9 @@ var Test = React.createClass({
    }
 });
 
+window.App = App;
 
-// module.exports = App;
+module.exports = App;
 
 // var Firebase = require("firebase");
 // var myFirebaseRef = new Firebase("https://ria2014.firebaseio.com/");

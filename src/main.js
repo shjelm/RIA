@@ -5,4 +5,4 @@ var App = require('./components/app'),
 	
 React.renderComponent(
   App,
-  document.querySelector('body'));
+  document.getElementById('main'));
