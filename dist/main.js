@@ -23036,25 +23036,39 @@ module.exports = require('./lib/React');
 
 var React = require('react'),
 	Router = require('react-router'),
-	Routes = require('react-router').Routes,
     Route = require('react-router').Route,
     DefaultRoute = require('react-router').DefaultRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
-    Wrapper = require('./wrapper.js');
+    Container = require('./container.js');
     
 var App = (
-	React.createElement(Routes, {location: "hash"}, 
-	    React.createElement(Route, {name: "app", path: "/", handler: Wrapper}, 
+	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
 	      React.createElement(Route, {name: "qform", handler: QForm}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
-    )
 );
 
 module.exports = App;
 
-},{"./qform.js":192,"./start.js":193,"./wrapper.js":194,"react":190,"react-router":13}],192:[function(require,module,exports){
+},{"./container.js":192,"./qform.js":193,"./start.js":194,"react":190,"react-router":13}],192:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react');
+
+var Container = React.createClass({displayName: 'Container',
+	render: function(){
+		return (
+		React.createElement("div", {id: "test"}, 
+          React.createElement("h2", null, "Test"), 
+          React.createElement("p", null, "bla bla bla")
+        )
+        );
+   }
+});
+
+module.exports = Container;
+},{"react":190}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23071,7 +23085,7 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":190}],193:[function(require,module,exports){
+},{"react":190}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23088,23 +23102,6 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":190}],194:[function(require,module,exports){
-/** @jsx React.DOM */
-
-var React = require('react');
-
-var Wrapper = React.createClass({displayName: 'Wrapper',
-	render: function(){
-		return (
-		React.createElement("div", {id: "test"}, 
-          React.createElement("h2", null, "Test"), 
-          React.createElement("p", null, "bla bla bla")
-        )
-        );
-   }
-});
-
-module.exports = Wrapper;
 },{"react":190}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 

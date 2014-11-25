@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Wrapper = React.createClass({
+var Container = React.createClass({
 	render: function(){
 		return (
 		<div id="test">
@@ -13,4 +13,4 @@ var Wrapper = React.createClass({
    }
 });
 
-module.exports = Wrapper;
+module.exports = Container;
