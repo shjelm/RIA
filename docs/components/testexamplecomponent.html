@@ -41,11 +41,19 @@
   },
   render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> (
-      {<span class="hljs-keyword">this</span>.state.isChecked ? <span class="hljs-keyword">this</span>.props.labelOn : <span class="hljs-keyword">this</span>.props.labelOff}
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+          <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
+          <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.isChecked}</span>
+          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span>
+        /&gt;</span>
+        {this.state.isChecked ? this.props.labelOn : this.props.labelOff}
+      <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
     );
   }
 });
-<span class="hljs-built_in">module</span>.exports = CheckboxWithLabel;</pre></div></div>
+module.exports = CheckboxWithLabel;
+</span></pre></div></div>
             
         </li>
         

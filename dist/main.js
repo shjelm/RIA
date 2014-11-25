@@ -18276,10 +18276,11 @@ var React = require('react');
 var App = React.createClass({displayName: 'App',
 	render: function(){
 		return (
-      React.DOM.div({className: "commentBox"}, 
-        "Hello, world! I am a CommentBox."
-      )
-    );
+		React.createElement("div", {id: "test"}, 
+          React.createElement("h2", null, "Test"), 
+          React.createElement("p", null, "bla bla bla")
+        )
+        );
    }
 });
 

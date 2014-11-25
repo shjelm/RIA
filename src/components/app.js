@@ -5,10 +5,11 @@ var React = require('react');
 var App = React.createClass({
 	render: function(){
 		return (
-      <div className="commentBox">
-        Hello, world! I am a CommentBox.
-      </div>
-    );
+		<div id="test">
+          <h2>Test</h2>
+          <p>bla bla bla</p>
+        </div>
+        );
    }
 });
 
