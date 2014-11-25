@@ -18292,6 +18292,6 @@ var App = require('./components/app'),
     React = require('react');
 	
 React.render(
-  App,
+  React.createElement(App, null),
   document.getElementById('main'));
 },{"./components/app":148,"react":147}]},{},[149])
