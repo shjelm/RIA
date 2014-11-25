@@ -23059,9 +23059,11 @@ var React = require('react');
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {id: "test"}, 
-          React.createElement("h2", null, "Test"), 
-          React.createElement("p", null, "bla bla bla")
+		React.createElement("div", {id: "questionbox"}, 
+          React.createElement("div", {id: "question"}
+          ), 
+          React.createElement("div", {id: "answers"}
+          )
         )
         );
    }
