@@ -11,11 +11,11 @@ var Container = React.createClass({
 		<div id="container">
           <div id="showQuestion">
           	<h2>Play game</h2>
-          	<Link href='show_question.js'>Play!</Link>
+          	<Link to='show_question'>Play!</Link>
           </div>
           <div id="addQuestion">
           	<h2>Add question</h2>
-          	<Link href='add_question.js'>Here</Link>
+          	<Link to='add_question'>Here</Link>
           </div>
         </div>
         );

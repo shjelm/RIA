@@ -23063,18 +23063,22 @@ var React = require('react'),
     DefaultRoute = require('react-router').DefaultRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
+    Show_question = require('./show_question.js'),
+    Add_question = require('./add_question.js'),
     Container = require('./container.js');
     
 var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
 	      React.createElement(Route, {name: "qform", handler: QForm}), 
+	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
+	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
 );
 
 module.exports = App;
 
-},{"./container.js":193,"./qform.js":194,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
+},{"./add_question.js":191,"./container.js":193,"./qform.js":194,"./show_question.js":195,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -23088,11 +23092,11 @@ var Container = React.createClass({displayName: 'Container',
 		React.createElement("div", {id: "container"}, 
           React.createElement("div", {id: "showQuestion"}, 
           	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {href: "show_question.js"}, "Play!")
+          	React.createElement(Link, {to: "show_question"}, "Play!")
           ), 
           React.createElement("div", {id: "addQuestion"}, 
           	React.createElement("h2", null, "Add question"), 
-          	React.createElement(Link, {href: "add_question.js"}, "Here")
+          	React.createElement(Link, {to: "add_question"}, "Here")
           )
         )
         );
