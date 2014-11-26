@@ -23055,14 +23055,19 @@ module.exports = App;
 /** @jsx React.DOM */
 
 var React = require('react');
+var Link = require('react-router').Link;
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
 		React.createElement("div", {id: "container"}, 
-          React.createElement("div", {id: "showQuestion"}
+          React.createElement("div", {id: "showQuestion"}, 
+          	React.createElement("h2", null, "Play game"), 
+          	React.createElement(Link, {to: "show_question"}, "Play!")
           ), 
-          React.createElement("div", {id: "addQuestion"}
+          React.createElement("div", {id: "addQuestion"}, 
+          	React.createElement("h2", null, "Add question"), 
+          	React.createElement(Link, {to: "add_question"}, "Here")
           )
         )
         );
@@ -23070,7 +23075,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"react":190}],193:[function(require,module,exports){
+},{"react":190,"react-router":13}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
