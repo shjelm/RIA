@@ -10,7 +10,7 @@ var Container = React.createClass({
 		<div id="container">
           <div id="showQuestion">
           	<h2>Play game</h2>
-          	<Link to='show_question'>Play!</Link>
+          	<Link to='./show_question.js'>Play!</Link>
           </div>
           <div id="addQuestion">
           	<h2>Add question</h2>
