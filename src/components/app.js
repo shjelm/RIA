@@ -13,7 +13,7 @@ var React = require('react'),
 var App = (
 	    <Route name="app" path="/" handler={Container}>
 	      <Route name="add_question" handler={Add_question} />
-	      <Route name="show_question" path="./show_question.js" />
+	      <Route name="show_question" path="./show_question.js" handler={Show_question} />
 	      <DefaultRoute handler={Start}/>
 	    </Route>
 );

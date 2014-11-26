@@ -23070,7 +23070,7 @@ var React = require('react'),
 var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
 	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
-	      React.createElement(Route, {name: "show_question", path: "./show_question.js"}), 
+	      React.createElement(Route, {name: "show_question", path: "./show_question.js", handler: Show_question}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
 );
