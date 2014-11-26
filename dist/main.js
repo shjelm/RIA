@@ -23034,12 +23034,37 @@ module.exports = require('./lib/React');
 },{"./lib/React":71}],191:[function(require,module,exports){
 /** @jsx React.DOM */
 
+var React = require('react');
+
+var NewQuestion = React.createClass({displayName: 'NewQuestion',
+	render: function(){
+		return (
+		React.createElement("div", {id: "questionbox"}, 
+          React.createElement("div", {id: "question"}, 
+          React.createElement("h2", null, "Question:"), 
+          React.createElement("p", null, "What's the question?: ")
+          ), 
+          React.createElement("div", {id: "answers"}, 
+          React.createElement("h2", null, "Answers: "), 
+          React.createElement("p", null, "Provide some answers: ")
+          )
+        )
+        );
+   }
+});
+
+module.exports = NewQuestion;
+},{"react":190}],192:[function(require,module,exports){
+/** @jsx React.DOM */
+
 var React = require('react'),
 	Router = require('react-router'),
     Route = require('react-router').Route,
     DefaultRoute = require('react-router').DefaultRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
+    Show_question = require('./show_question.js'),
+    Add_question = require('./add_question.js'),
     Container = require('./container.js');
     
 var App = (
@@ -23051,7 +23076,7 @@ var App = (
 
 module.exports = App;
 
-},{"./container.js":192,"./qform.js":193,"./start.js":194,"react":190,"react-router":13}],192:[function(require,module,exports){
+},{"./add_question.js":191,"./container.js":193,"./qform.js":194,"./show_question.js":195,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23063,11 +23088,11 @@ var Container = React.createClass({displayName: 'Container',
 		React.createElement("div", {id: "container"}, 
           React.createElement("div", {id: "showQuestion"}, 
           	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {to: "show_question"}, "Play!")
+          	React.createElement(Link, {to: "Show_question"}, "Play!")
           ), 
           React.createElement("div", {id: "addQuestion"}, 
           	React.createElement("h2", null, "Add question"), 
-          	React.createElement(Link, {to: "add_question"}, "Here")
+          	React.createElement(Link, {to: "Add_question"}, "Here")
           )
         )
         );
@@ -23075,7 +23100,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"react":190,"react-router":13}],193:[function(require,module,exports){
+},{"react":190,"react-router":13}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23092,7 +23117,27 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":190}],194:[function(require,module,exports){
+},{"react":190}],195:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react');
+
+var Question = React.createClass({displayName: 'Question',
+	render: function(){
+		return (
+		React.createElement("div", {id: "questionbox"}, 
+          React.createElement("div", {id: "question"}, 
+          React.createElement("h2", null, "Question:")
+          ), 
+          React.createElement("div", {id: "answers"}
+          )
+        )
+        );
+   }
+});
+
+module.exports = Question;
+},{"react":190}],196:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23109,7 +23154,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":190}],195:[function(require,module,exports){
+},{"react":190}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -23119,4 +23164,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":191,"react":190,"react-router":13}]},{},[195])
+},{"./components/app":192,"react":190,"react-router":13}]},{},[197])

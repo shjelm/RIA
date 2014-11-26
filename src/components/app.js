@@ -6,6 +6,8 @@ var React = require('react'),
     DefaultRoute = require('react-router').DefaultRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
+    Show_question = require('./show_question.js'),
+    Add_question = require('./add_question.js'),
     Container = require('./container.js');
     
 var App = (
