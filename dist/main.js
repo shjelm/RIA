@@ -23063,8 +23063,6 @@ var React = require('react'),
     DefaultRoute = require('react-router').DefaultRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
-    Show_question = require('./show_question.js'),
-    Add_question = require('./add_question.js'),
     Container = require('./container.js');
     
 var App = (
@@ -23076,11 +23074,13 @@ var App = (
 
 module.exports = App;
 
-},{"./add_question.js":191,"./container.js":193,"./qform.js":194,"./show_question.js":195,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
+},{"./container.js":193,"./qform.js":194,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var React = require('react');
-var Link = require('react-router').Link;
+var React = require('react'),
+	Link = require('react-router').Link,	
+    Show_question = require('./show_question.js'),
+    Add_question = require('./add_question.js');
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
@@ -23100,7 +23100,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"react":190,"react-router":13}],194:[function(require,module,exports){
+},{"./add_question.js":191,"./show_question.js":195,"react":190,"react-router":13}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');

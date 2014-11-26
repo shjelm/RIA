@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var Link = require('react-router').Link;
+var React = require('react'),
+	Link = require('react-router').Link,	
+    Show_question = require('./show_question.js'),
+    Add_question = require('./add_question.js');
 
 var Container = React.createClass({
 	render: function(){
