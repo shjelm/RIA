@@ -23088,11 +23088,11 @@ var Container = React.createClass({displayName: 'Container',
 		React.createElement("div", {id: "container"}, 
           React.createElement("div", {id: "showQuestion"}, 
           	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {to: "Show_question"}, "Play!")
+          	React.createElement(Link, {href: "show_question.js"}, "Play!")
           ), 
           React.createElement("div", {id: "addQuestion"}, 
           	React.createElement("h2", null, "Add question"), 
-          	React.createElement(Link, {to: "Add_question"}, "Here")
+          	React.createElement(Link, {href: "add_question.js"}, "Here")
           )
         )
         );
