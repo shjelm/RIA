@@ -23069,9 +23069,8 @@ var React = require('react'),
     
 var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
-	      React.createElement(Route, {name: "qform", handler: QForm}), 
 	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
-	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
+	      React.createElement(Route, {name: "show_question", path: "./show_question.js"}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
 );
@@ -23091,7 +23090,7 @@ var Container = React.createClass({displayName: 'Container',
 		React.createElement("div", {id: "container"}, 
           React.createElement("div", {id: "showQuestion"}, 
           	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {to: "./show_question.js"}, "Play!")
+          	React.createElement(Link, {to: "show_question"}, "Play!")
           ), 
           React.createElement("div", {id: "addQuestion"}, 
           	React.createElement("h2", null, "Add question"), 

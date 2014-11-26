@@ -12,9 +12,8 @@ var React = require('react'),
     
 var App = (
 	    <Route name="app" path="/" handler={Container}>
-	      <Route name="qform" handler={QForm} />
 	      <Route name="add_question" handler={Add_question} />
-	      <Route name="show_question" handler={Show_question} />
+	      <Route name="show_question" path="./show_question.js" />
 	      <DefaultRoute handler={Start}/>
 	    </Route>
 );
