@@ -5,5 +5,5 @@ var approutes = require('./components/app'),
     Router = require('react-router');
 
 Router.run(approutes, function(Handler) {
-	React.render(<Handler/>, document.getElementById('main'));
+	React.render(<Handler />, document.getElementById('main'));
 });
