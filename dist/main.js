@@ -23082,9 +23082,8 @@ module.exports = App;
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Link = require('react-router').Link,	
-    Show_question = require('./show_question.js'),
-    Add_question = require('./add_question.js');
+	Router = require('react-router'),
+	Link = Router.Link;
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
@@ -23104,7 +23103,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./add_question.js":191,"./show_question.js":195,"react":190,"react-router":13}],194:[function(require,module,exports){
+},{"react":190,"react-router":13}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
