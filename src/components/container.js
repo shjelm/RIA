@@ -5,11 +5,10 @@ var React = require('react');
 var Container = React.createClass({
 	render: function(){
 		return (
-		<div id="questionbox">
-          <p>Questions and answers:</p>
-          <div id="question">
+		<div id="container">
+          <div id="showQuestion">
           </div>
-          <div id="answers">
+          <div id="addQuestion">
           </div>
         </div>
         );
