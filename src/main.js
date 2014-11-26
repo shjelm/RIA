@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
 
-var App = require('./components/app'),
-    React = require('react');
-	
-React.render(
-  < App/>,
-  document.getElementById('main'));
+var approutes = require('./components/app'),
+    React = require('react'),
+    Router = require('react-router');
+
+Router.run(approutes, function(Handler) {
+	React.render(<Handler/>, document.getElementById('main'));
+});
