@@ -23059,11 +23059,10 @@ var React = require('react');
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {id: "questionbox"}, 
-          React.createElement("p", null, "Questions and answers:"), 
-          React.createElement("div", {id: "question"}
+		React.createElement("div", {id: "container"}, 
+          React.createElement("div", {id: "showQuestion"}
           ), 
-          React.createElement("div", {id: "answers"}
+          React.createElement("div", {id: "addQuestion"}
           )
         )
         );
