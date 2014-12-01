@@ -23039,7 +23039,7 @@ var React = require('react');
 var QuestionBox = React.createClass({displayName: 'QuestionBox',
 	 handleQuestionSubmit: function(question) {
  	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/");
-     	this.questionsRef.push(question);
+ 	 	this.questionsRef.child('questions').push(question);
     },
 	 render: function() {
           return (
@@ -23051,24 +23051,52 @@ var QuestionBox = React.createClass({displayName: 'QuestionBox',
 });
 
 var QuestionForm = React.createClass({displayName: 'QuestionForm',
+	isValid: function() {
+    		var fields = ['question', 'answer1', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) 
+    			fields.push('question');
+    		if (this.props.answer1) fields.push('answer1');
+    		if (this.props.answer2) fields.push('answer2');
+    		if (this.props.answer3) fields.push('answer3');
+    		if (this.props.answer4) fields.push('answer4');
+
+    		var errors = {};
+    		fields.forEach(function(field) {
+	      		var value = this.refs[field].getDOMNode().value.trim();
+	      		if (!value) {
+	        		errors[field] = 'This field is required';
+	      		}
+    		}.bind(this));
+    		this.setState({errors: errors});
+
+		    var isValid = true;
+		    for (var error in errors) {
+		      isValid = false;
+		      break;
+		    }
+		    return isValid;
+	  	},
         handleSubmit: function() {
-          var question = this.refs.question.getDOMNode().value.trim();
-          var answer1 = this.refs.answer1.getDOMNode().value.trim();
-          var answer2 = this.refs.answer2.getDOMNode().value.trim();
-          var answer3 = this.refs.answer3.getDOMNode().value.trim();
-          var answer4 = this.refs.answer4.getDOMNode().value.trim();
-          this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
-          this.refs.question.getDOMNode().value = "";
-          this.refs.answer1.getDOMNode().value = "";
-          this.refs.answer2.getDOMNode().value = "";
-          this.refs.answer3.getDOMNode().value = "";
-          this.refs.answer4.getDOMNode().value = "";
-          return true;
+          	var question = this.refs.question.getDOMNode().value.trim(),
+          		answer1 = this.refs.answer1.getDOMNode().value.trim(),
+      			answer2 = this.refs.answer2.getDOMNode().value.trim(),
+      			answer3 = this.refs.answer3.getDOMNode().value.trim(),
+      			answer4 = this.refs.answer4.getDOMNode().value.trim();
+      			
+  			if (this.isValid()) {
+	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
+	          	this.refs.question.getDOMNode().value = "";
+	          	this.refs.answer1.getDOMNode().value = "";
+	          	this.refs.answer2.getDOMNode().value = "";
+	          	this.refs.answer3.getDOMNode().value = "";
+	          	this.refs.answer4.getDOMNode().value = "";
+	          	return true;
+          }
         },
 		render: function(){
 		return (    
           React.createElement("div", {id: "questionForm"}, 
-			React.createElement("form", {onSubmit: this.handleSubmit}, 
+			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm"}, 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("h2", null, "Question:"), 
 		          React.createElement("p", null, "What's the question?: "), 
@@ -23124,7 +23152,7 @@ var React = require('react'),
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {id: "container"}, 
+		React.createElement("div", {class: "container", id: "container"}, 
 			React.createElement("h2", null, " Quiz "), 
 			React.createElement(RouteHandler, null)
         )
