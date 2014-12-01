@@ -23036,24 +23036,60 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
-var NewQuestion = React.createClass({displayName: 'NewQuestion',
-	render: function(){
-		return (
-		React.createElement("div", {id: "questionbox"}, 
-          React.createElement("div", {id: "question"}, 
-          React.createElement("h2", null, "Question:"), 
-          React.createElement("p", null, "What's the question?: ")
-          ), 
-          React.createElement("div", {id: "answers"}, 
-          React.createElement("h2", null, "Answers: "), 
-          React.createElement("p", null, "Provide some answers: ")
-          )
-        )
-        );
-   }
+var QuestionBox = React.createClass({displayName: 'QuestionBox',
+	 handleQuestionSubmit: function(question) {
+ 	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/");
+     	this.questionsRef.push(question);
+    },
+	 render: function() {
+          return (
+            React.createElement("div", {className: "questionBox"}, 
+              React.createElement(QuestionForm, {onQuestionSubmit: this.handleQuestionSubmit})
+            )
+          );
+   	}
 });
 
-module.exports = NewQuestion;
+var QuestionForm = React.createClass({displayName: 'QuestionForm',
+        handleSubmit: function() {
+          var question = this.refs.question.getDOMNode().value.trim();
+          var answer1 = this.refs.answer1.getDOMNode().value.trim();
+          var answer2 = this.refs.answer2.getDOMNode().value.trim();
+          var answer3 = this.refs.answer3.getDOMNode().value.trim();
+          var answer4 = this.refs.answer4.getDOMNode().value.trim();
+          this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
+          this.refs.question.getDOMNode().value = "";
+          this.refs.answer1.getDOMNode().value = "";
+          this.refs.answer2.getDOMNode().value = "";
+          this.refs.answer3.getDOMNode().value = "";
+          this.refs.answer4.getDOMNode().value = "";
+          return true;
+        },
+		render: function(){
+		return (    
+          React.createElement("div", {id: "questionForm"}, 
+			React.createElement("form", {onSubmit: this.handleSubmit}, 
+			React.createElement("div", {id: "question"}, 
+		          React.createElement("h2", null, "Question:"), 
+		          React.createElement("p", null, "What's the question?: "), 
+		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Add question", ref: "question"}))
+	          ), 
+	          React.createElement("div", {id: "answers"}, 
+		          React.createElement("h2", null, "Answers: "), 
+		          React.createElement("p", null, "Provide some answers: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4"}))
+	          ), 
+	          React.createElement("input", {type: "submit", value: "Post"})
+          )
+          )
+        );
+       }
+     });
+
+module.exports = QuestionBox;
 },{"react":190}],192:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -23070,7 +23106,7 @@ var React = require('react'),
 var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
 	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
-	      React.createElement(Route, {name: "show_question", path: "./show_question.js", handler: Show_question}), 
+	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
 );
@@ -23082,27 +23118,22 @@ module.exports = App;
 
 var React = require('react'),
 	Router = require('react-router'),
-	Link = Router.Link;
+	Start = require('./start'),
+    RouteHandler = require('react-router').RouteHandler;
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
 		React.createElement("div", {id: "container"}, 
-          React.createElement("div", {id: "showQuestion"}, 
-          	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {to: "show_question"}, "Play!")
-          ), 
-          React.createElement("div", {id: "addQuestion"}, 
-          	React.createElement("h2", null, "Add question"), 
-          	React.createElement(Link, {to: "add_question"}, "Here")
-          )
+			React.createElement("h2", null, " Quiz "), 
+			React.createElement(RouteHandler, null)
         )
         );
    }
 });
 
 module.exports = Container;
-},{"react":190,"react-router":13}],194:[function(require,module,exports){
+},{"./start":196,"react":190,"react-router":13}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23142,21 +23173,29 @@ module.exports = Question;
 },{"react":190}],196:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react'),
+	Router = require('react-router'),
+	Link = Router.Link;
 
 var Start = React.createClass({displayName: 'Start',
 	render: function(){
 		return (
 		React.createElement("div", {id: "start"}, 
-          React.createElement("h2", null, "Welcome"), 
-          React.createElement("p", null, "bla bla bla")
-        )
+          React.createElement("div", {id: "showQuestion"}, 
+          	React.createElement("h2", null, "Play game"), 
+          	React.createElement(Link, {to: "show_question"}, "Play!")
+          ), 
+          React.createElement("div", {id: "addQuestion"}, 
+          	React.createElement("h2", null, "Add question"), 
+          	React.createElement(Link, {to: "add_question"}, "Here")
+          )
+      	)
         );
    }
 });
 
 module.exports = Start;
-},{"react":190}],197:[function(require,module,exports){
+},{"react":190,"react-router":13}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
