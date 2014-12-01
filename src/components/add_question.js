@@ -62,19 +62,17 @@ var QuestionForm = React.createClass({
 		render: function(){
 		return (    
           <div id="questionForm" >
-			<form onSubmit={this.handleSubmit} ref = "questionForm">
+			<form onSubmit={this.handleSubmit} ref = "questionForm" class="form-horizontal">
 			<div id="question">
-		          <h2>Question:</h2>
-		          <p>What's the question?: </p>
-		          	<p><input type="text" placeholder="Add question" ref="question" /></p>
+		          <label>Question:</label>
+		          	<p><input type="text" placeholder="Add question" ref="question" class="input-xlarge" /></p>
 	          </div>
 	          <div id="answers">
-		          <h2>Answers: </h2>
-		          <p>Provide some answers: </p>
-		          <p><input type="text" placeholder="Say something..." ref="answer1" /></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer2" /></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer3" /></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer4" /></p>
+		          <label>Provide some answers: </label>
+		          <p><input type="text" placeholder="Say something..." ref="answer1" class="input-xlarge"/></p>
+		          <p><input type="text" placeholder="Say something..." ref="answer2" class="input-xlarge"/></p>
+		          <p><input type="text" placeholder="Say something..." ref="answer3" class="input-xlarge"/></p>
+		          <p><input type="text" placeholder="Say something..." ref="answer4" class="input-xlarge"/></p>
 	          </div>
 	          <input type="submit" value="Post" />
           </form>

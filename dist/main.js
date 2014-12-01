@@ -23096,19 +23096,17 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		render: function(){
 		return (    
           React.createElement("div", {id: "questionForm"}, 
-			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm"}, 
+			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", class: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
-		          React.createElement("h2", null, "Question:"), 
-		          React.createElement("p", null, "What's the question?: "), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Add question", ref: "question"}))
+		          React.createElement("label", null, "Question:"), 
+		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Add question", ref: "question", class: "input-xlarge"}))
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("h2", null, "Answers: "), 
-		          React.createElement("p", null, "Provide some answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4"}))
+		          React.createElement("label", null, "Provide some answers: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", class: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", class: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", class: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", class: "input-xlarge"}))
 	          ), 
 	          React.createElement("input", {type: "submit", value: "Post"})
           )
@@ -23128,6 +23126,7 @@ var React = require('react'),
     QForm = require('./qform.js'),
     Start = require('./start.js'),
     Show_question = require('./show_question.js'),
+    Show_all_questions = require('./show_all_questions.js'),
     Add_question = require('./add_question.js'),
     Container = require('./container.js');
     
@@ -23135,13 +23134,14 @@ var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
 	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
 	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
+	      React.createElement(Route, {name: "show_all_questions", handler: Show_all_questions}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
 );
 
 module.exports = App;
 
-},{"./add_question.js":191,"./container.js":193,"./qform.js":194,"./show_question.js":195,"./start.js":196,"react":190,"react-router":13}],193:[function(require,module,exports){
+},{"./add_question.js":191,"./container.js":193,"./qform.js":194,"./show_all_questions.js":195,"./show_question.js":196,"./start.js":197,"react":190,"react-router":13}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -23161,7 +23161,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./start":196,"react":190,"react-router":13}],194:[function(require,module,exports){
+},{"./start":197,"react":190,"react-router":13}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -23188,6 +23188,24 @@ var Question = React.createClass({displayName: 'Question',
 		return (
 		React.createElement("div", {id: "questionbox"}, 
           React.createElement("div", {id: "question"}, 
+          React.createElement("h2", null, "Questions:")
+          )
+        )
+        );
+   }
+});
+
+module.exports = Question;
+},{"react":190}],196:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react');
+
+var Question = React.createClass({displayName: 'Question',
+	render: function(){
+		return (
+		React.createElement("div", {id: "questionbox"}, 
+          React.createElement("div", {id: "question"}, 
           React.createElement("h2", null, "Question:")
           ), 
           React.createElement("div", {id: "answers"}
@@ -23198,7 +23216,7 @@ var Question = React.createClass({displayName: 'Question',
 });
 
 module.exports = Question;
-},{"react":190}],196:[function(require,module,exports){
+},{"react":190}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -23210,12 +23228,13 @@ var Start = React.createClass({displayName: 'Start',
 		return (
 		React.createElement("div", {id: "start"}, 
           React.createElement("div", {id: "showQuestion"}, 
-          	React.createElement("h2", null, "Play game"), 
-          	React.createElement(Link, {to: "show_question"}, "Play!")
+          	React.createElement(Link, {to: "show_question"}, "Play game")
+          ), 
+          React.createElement("div", {id: "showQuestions"}, 
+          	React.createElement(Link, {to: "show_all_questions"}, "Show all questions")
           ), 
           React.createElement("div", {id: "addQuestion"}, 
-          	React.createElement("h2", null, "Add question"), 
-          	React.createElement(Link, {to: "add_question"}, "Here")
+          	React.createElement(Link, {to: "add_question"}, "Add question")
           )
       	)
         );
@@ -23223,7 +23242,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":190,"react-router":13}],197:[function(require,module,exports){
+},{"react":190,"react-router":13}],198:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -23233,4 +23252,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":192,"react":190,"react-router":13}]},{},[197])
+},{"./components/app":192,"react":190,"react-router":13}]},{},[198])
