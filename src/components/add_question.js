@@ -74,7 +74,7 @@ var QuestionForm = React.createClass({
 		          <p><input type="text" placeholder="Say something..." ref="answer3" class="input-xlarge"/></p>
 		          <p><input type="text" placeholder="Say something..." ref="answer4" class="input-xlarge"/></p>
 	          </div>
-	          <input type="submit" value="Post" />
+	          <input type="submit" value="Submit" />
           </form>
           </div>
         );

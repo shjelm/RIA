@@ -23108,7 +23108,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", class: "input-xlarge"})), 
 		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", class: "input-xlarge"}))
 	          ), 
-	          React.createElement("input", {type: "submit", value: "Post"})
+	          React.createElement("input", {type: "submit", value: "Submit"})
           )
           )
         );
@@ -23184,11 +23184,33 @@ module.exports = QForm;
 var React = require('react');
 
 var Question = React.createClass({displayName: 'Question',
+	getData: function(){
+		var ref = new Firebase("https://ria2014.firebaseio.com/");
+		ref.child('questions').once("value", function(data) {
+			var idIndex = 0;
+        	this.questions = [];
+  			data.forEach(
+	            function(data) {
+	                var question = data.child('question');
+	                var index = 0;
+	                this.questions[idIndex] = []; 
+	                this.questions[idIndex][index++] = question.val();
+	                this.questions[idIndex][index++] = data.child('answer1').val();
+	                this.questions[idIndex][index++] = data.child('answer2').val();
+	                this.questions[idIndex][index++] = data.child('answer3').val();
+	                this.questions[idIndex][index++] = data.child('answer4').val();           
+	                idIndex++;
+            	}
+        	);
+			console.log(this.questions);
+		});
+	},
 	render: function(){
 		return (
 		React.createElement("div", {id: "questionbox"}, 
           React.createElement("div", {id: "question"}, 
-          React.createElement("h2", null, "Questions:")
+          React.createElement("h2", null, "Questions:"), 
+          this.getData()
           )
         )
         );
