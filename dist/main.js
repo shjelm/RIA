@@ -23093,8 +23093,8 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";
-	          	return true;
           }
+          return false;
         },
 		render: function(){
 		return (    
