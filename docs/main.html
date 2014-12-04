@@ -32,12 +32,14 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @jsx React.DOM */</span>
 
-<span class="hljs-keyword">var</span> App = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./components/app'</span>),
-    React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
-	
-React.render(
-  App,
-  <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'main'</span>));</pre></div></div>
+<span class="hljs-keyword">var</span> approutes = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./components/app'</span>),
+    React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>),
+    Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>);
+
+Router.run(approutes, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Handler)</span> </span>{
+	React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Handler</span> /&gt;</span>, document.getElementById('main'));
+});
+</span></pre></div></div>
             
         </li>
         

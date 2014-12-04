@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react'),
+	Router = require('react-router'),
+	Footer = require('./footer');
 
 var Question = React.createClass({
 	render: function(){
@@ -11,6 +13,7 @@ var Question = React.createClass({
           </div>
           <div id="answers">
           </div>
+          <Footer />
         </div>
         );
    }

@@ -1,7 +1,10 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-
+var React = require('react'),
+	Router = require('react-router'),
+	Footer = require('./footer'),
+	Link = Router.Link;
+	
 var QuestionBox = React.createClass({
 	 handleQuestionSubmit: function(question) {
  	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/");
@@ -76,6 +79,7 @@ var QuestionForm = React.createClass({
 	          </div>
 	          <input type="submit" value="Submit" />
           </form>
+          <Footer />
           </div>
         );
        }

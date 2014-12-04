@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>show_all_questions.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="..\docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>show_all_questions.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @jsx React.DOM */</span>
+
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>),
+	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>),
+	Footer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./footer'</span>);
+
+<span class="hljs-keyword">var</span> Question = React.createClass({
+	getData: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">var</span> ref = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">"https://ria2014.firebaseio.com/"</span>);
+		ref.child(<span class="hljs-string">'questions'</span>).once(<span class="hljs-string">"value"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+			<span class="hljs-keyword">var</span> idIndex = <span class="hljs-number">0</span>;
+        	<span class="hljs-keyword">this</span>.questions = [];
+  			data.forEach(
+	            <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+	                <span class="hljs-keyword">var</span> question = data.child(<span class="hljs-string">'question'</span>);
+	                <span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;
+	                <span class="hljs-keyword">this</span>.questions[idIndex] = []; 
+	                <span class="hljs-keyword">this</span>.questions[idIndex][index++] = question.val();
+	                <span class="hljs-keyword">this</span>.questions[idIndex][index++] = data.child(<span class="hljs-string">'answer1'</span>).val();
+	                <span class="hljs-keyword">this</span>.questions[idIndex][index++] = data.child(<span class="hljs-string">'answer2'</span>).val();
+	                <span class="hljs-keyword">this</span>.questions[idIndex][index++] = data.child(<span class="hljs-string">'answer3'</span>).val();
+	                <span class="hljs-keyword">this</span>.questions[idIndex][index++] = data.child(<span class="hljs-string">'answer4'</span>).val();           
+	                idIndex++;
+            	}
+        	);
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.questions);
+		});
+	},
+	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">return</span> (
+		<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"questionbox"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"question"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Questions:<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+          {this.getData()}
+          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Footer</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        );
+   }
+});
+
+module.exports = Question;
+</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
