@@ -55,8 +55,12 @@
 	                idIndex++;
             	}
         	);
-			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.questions);
+        	<span class="hljs-keyword">this</span>.printData(<span class="hljs-keyword">this</span>.questions);
 		});
+	},
+	printData: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span></span>{
+			<span class="hljs-built_in">console</span>.log(data);
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"data"</span>);
 	},
 	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">return</span> (

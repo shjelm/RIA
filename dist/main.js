@@ -23209,7 +23209,11 @@ var React = require('react'),
 	Router = require('react-router'),
 	Footer = require('./footer');
 
-var Question = React.createClass({displayName: 'Question',
+var Question = React.createClass({displayName: 'Question',	
+	printData: function(data){
+			console.log("data");
+			console.log(data);
+	},
 	getData: function(){
 		var ref = new Firebase("https://ria2014.firebaseio.com/");
 		ref.child('questions').once("value", function(data) {
@@ -23228,7 +23232,7 @@ var Question = React.createClass({displayName: 'Question',
 	                idIndex++;
             	}
         	);
-			console.log(this.questions);
+        	console.log(this.questions);
 		});
 	},
 	render: function(){

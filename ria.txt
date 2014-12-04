@@ -1,0 +1,10 @@
+BUGG | OSV
+Varför byggs inte all till docs?
+Bugg med att fråga inte sparas första gången.
+
+
+
+FRÅGOR | FUNDERINGAR
+Hur visa data från firebase?
+Hur Update/Delete av frågor på bra sätt?
+
