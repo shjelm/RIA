@@ -3,6 +3,7 @@
 var React = require('react'),
 	Router = require('react-router'),
 	Question = require('./show_question'),
+	Link = Router.Link,
 	_ = require('lodash');
 
 var QuestionList = React.createClass({
@@ -25,7 +26,7 @@ var QuestionList = React.createClass({
 		          {_.map(this.state.questions,function(q){
 		          	return <Question data={q}/>;
 		          })}
-		      </div> 
+		      </div>
           </div>
         </div>
         );

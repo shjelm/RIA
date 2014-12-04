@@ -30032,6 +30032,7 @@ module.exports = QForm;
 var React = require('react'),
 	Router = require('react-router'),
 	Question = require('./show_question'),
+	Link = Router.Link,
 	_ = require('lodash');
 
 var QuestionList = React.createClass({displayName: 'QuestionList',
