@@ -14,7 +14,6 @@ var QuestionList = React.createClass({
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
 		this.ref.child('questions').on("value", function(data) {
-			console.log("GONNA UPDATE",data.val());
 			me.setState({'questions':data.val()});
 		});
     },
