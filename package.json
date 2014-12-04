@@ -23,6 +23,7 @@
     "reflux": "^0.1.15",
     "gulp-jest": "0.2.2",
     "folder-toc": "0.1.0",
-    "gulp-docco": "0.0.4"
+    "gulp-docco": "0.0.4",
+    "lodash": "*"
 	}
 }
