@@ -29936,7 +29936,7 @@ var App = (
 
 module.exports = App;
 
-},{"./add_question.js":192,"./container.js":194,"./play_game.js":196,"./qform.js":197,"./show_all_questions.js":198,"./show_question.js":199,"./start.js":200,"react":191,"react-router":14}],194:[function(require,module,exports){
+},{"./add_question.js":192,"./container.js":194,"./play_game.js":197,"./qform.js":198,"./show_all_questions.js":199,"./show_question.js":200,"./start.js":201,"react":191,"react-router":14}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29958,7 +29958,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./footer":195,"./start":200,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":201,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29981,8 +29981,35 @@ module.exports = Footer;
 /** @jsx React.DOM */
 
 var React = require('react'),
+	Router = require('react-router');
+
+var Guess = React.createClass({displayName: 'Guess',
+	render: function(){
+		return (
+			React.createElement("div", null, 
+			React.createElement("div", {id: "question"}, 
+				React.createElement("h3", null, "Question"), 
+		          React.createElement("p", null, this.props.data.question)
+	          ), 
+	          React.createElement("div", {id: "answers"}, 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer1}, " ", this.props.data.answer1, " ")), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer2}, " ", this.props.data.answer2)), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer3}, " ", this.props.data.answer3)), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer4}, " ", this.props.data.answer4))
+	          )
+	          )
+        );
+   }
+});
+
+module.exports = Guess;
+},{"react":191,"react-router":14}],197:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react'),
 	Router = require('react-router'),
 	Question = require('./show_question'),
+	GuessQuestion = require('./guess_question'),
 	_ = require('lodash');
 
 var Play = React.createClass({displayName: 'Play',
@@ -29996,20 +30023,25 @@ var Play = React.createClass({displayName: 'Play',
 			me.setState({'questions':data.val()});
 		});
     },
-		render: function() {
-			 return(
+	render: function() {
+		 return(
 			React.createElement("div", {id: "game"}, 
-			React.createElement("h2", null, "Let's play! "), 
-				_.map(this.state.questions,function(q){
-		          	return React.createElement(Question, {data: q});
-		          })
+			React.createElement("h2", null, "Let's play! "), 			
+	          	React.createElement("div", {id: "guessForm"}, 
+					React.createElement("form", {onSubmit: this.handleSubmit, ref: "guessForm", className: "form-horizontal"}, 
+						_.map(this.state.questions,function(q){
+				          	return React.createElement(GuessQuestion, {data: q});
+				          }), 
+			          	React.createElement("input", {type: "submit", value: "submit"})
+	          		)
+	          	)
 			)
-			);
-		}
+		);
+	}
 	});
 	
 module.exports = Play;
-},{"./show_question":199,"lodash":5,"react":191,"react-router":14}],197:[function(require,module,exports){
+},{"./guess_question":196,"./show_question":200,"lodash":5,"react":191,"react-router":14}],198:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30026,7 +30058,7 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":191}],198:[function(require,module,exports){
+},{"react":191}],199:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30063,7 +30095,7 @@ var QuestionList = React.createClass({displayName: 'QuestionList',
 });
 
 module.exports = QuestionList;
-},{"./show_question":199,"lodash":5,"react":191,"react-router":14}],199:[function(require,module,exports){
+},{"./show_question":200,"lodash":5,"react":191,"react-router":14}],200:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30093,7 +30125,7 @@ var Question = React.createClass({displayName: 'Question',
 });
 
 module.exports = Question;
-},{"./footer":195,"react":191,"react-router":14}],200:[function(require,module,exports){
+},{"./footer":195,"react":191,"react-router":14}],201:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30119,7 +30151,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":191,"react-router":14}],201:[function(require,module,exports){
+},{"react":191,"react-router":14}],202:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -30129,4 +30161,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":193,"react":191,"react-router":14}]},{},[201])
+},{"./components/app":193,"react":191,"react-router":14}]},{},[202])
