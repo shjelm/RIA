@@ -79,7 +79,6 @@ var QuestionForm = React.createClass({
 	          </div>
 	          <input type="submit" value="Submit" />
           </form>
-          <Footer />
           </div>
         );
        }

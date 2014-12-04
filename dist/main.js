@@ -29901,8 +29901,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"}))
 	          ), 
 	          React.createElement("input", {type: "submit", value: "Submit"})
-          ), 
-          React.createElement(Footer, null)
+          )
           )
         );
        }
@@ -29941,7 +29940,8 @@ module.exports = App;
 var React = require('react'),
 	Router = require('react-router'),
 	Start = require('./start'),
-    RouteHandler = require('react-router').RouteHandler;
+    RouteHandler = require('react-router').RouteHandler,
+	Footer = require('./footer');
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
@@ -29956,7 +29956,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30046,8 +30046,7 @@ var Question = React.createClass({displayName: 'Question',
             React.createElement("p", null, this.props.data.question)
           ), 
           React.createElement("div", {id: "answers"}
-          ), 
-          React.createElement(Footer, null)
+          )
         )
         );
    }

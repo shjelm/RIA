@@ -14,7 +14,6 @@ var Question = React.createClass({
           </div>
           <div id="answers">
           </div>
-          <Footer />
         </div>
         );
    }

@@ -3,7 +3,8 @@
 var React = require('react'),
 	Router = require('react-router'),
 	Start = require('./start'),
-    RouteHandler = require('react-router').RouteHandler;
+    RouteHandler = require('react-router').RouteHandler,
+	Footer = require('./footer');
 
 var Container = React.createClass({
 	render: function(){
