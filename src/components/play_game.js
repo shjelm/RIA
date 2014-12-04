@@ -5,7 +5,7 @@ var React = require('react'),
 	Question = require('./show_question'),
 	_ = require('lodash');
 
-var QuestionList = React.createClass({
+var Play = React.createClass({
 	getInitialState: function(){
 		return {questions:{}};
 	},
@@ -16,20 +16,16 @@ var QuestionList = React.createClass({
 			me.setState({'questions':data.val()});
 		});
     },
-	render: function(){
-		return (
-		<div id="questionbox">
-          <div id="question">
-	          <h2>Questions:</h2>
-	          <div>
-		          {_.map(this.state.questions,function(q){
+		render: function() {
+			 return(
+			<div id = "game">
+			<h2>Let's play! </h2>
+				{_.map(this.state.questions,function(q){
 		          	return <Question data={q}/>;
 		          })}
-		      </div> 
-          </div>
-        </div>
-        );
-   }
-});
-
-module.exports = QuestionList;
+			</div>
+			);
+		}
+	});
+	
+module.exports = Play;

@@ -9,7 +9,7 @@ var Start = React.createClass({
 		return (
 		<div id="start">
           <div id="showQuestion">
-          	<Link to='show_question'>Play game</Link>
+          	<Link to='play_game'>Play game</Link>
           </div>
           <div id="showQuestions">
           	<Link to='show_all_questions'>Show all questions</Link>

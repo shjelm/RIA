@@ -3,6 +3,6 @@ Bugg med att fråga inte sparas första gången.
 
 
 FRÅGOR | FUNDERINGAR
-Hur visa data från firebase?
+Hur visa data från firebase? CHECK
 Hur Update/Delete av frågor på bra sätt?
 

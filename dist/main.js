@@ -29920,6 +29920,7 @@ var React = require('react'),
     Show_question = require('./show_question.js'),
     Show_all_questions = require('./show_all_questions.js'),
     Add_question = require('./add_question.js'),
+    Play_game = require('./play_game.js'),
     Container = require('./container.js');
     
 var App = (
@@ -29927,6 +29928,7 @@ var App = (
 	  	  React.createElement(Route, {name: "start", handler: Start}), 
 	      React.createElement(Route, {name: "add_question", handler: Add_question}), 
 	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
+	      React.createElement(Route, {name: "play_game", handler: Play_game}), 
 	      React.createElement(Route, {name: "show_all_questions", handler: Show_all_questions}), 
 	      React.createElement(DefaultRoute, {handler: Start})
 	    )
@@ -29934,7 +29936,7 @@ var App = (
 
 module.exports = App;
 
-},{"./add_question.js":192,"./container.js":194,"./qform.js":196,"./show_all_questions.js":197,"./show_question.js":198,"./start.js":199,"react":191,"react-router":14}],194:[function(require,module,exports){
+},{"./add_question.js":192,"./container.js":194,"./play_game.js":196,"./qform.js":197,"./show_all_questions.js":198,"./show_question.js":199,"./start.js":200,"react":191,"react-router":14}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29956,7 +29958,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./footer":195,"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":200,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29978,6 +29980,38 @@ module.exports = Footer;
 },{"react":191,"react-router":14}],196:[function(require,module,exports){
 /** @jsx React.DOM */
 
+var React = require('react'),
+	Router = require('react-router'),
+	Question = require('./show_question'),
+	_ = require('lodash');
+
+var Play = React.createClass({displayName: 'Play',
+	getInitialState: function(){
+		return {questions:{}};
+	},
+	componentWillMount: function() {
+		var me = this;
+		this.ref = new Firebase("https://ria2014.firebaseio.com/");
+		this.ref.child('questions').on("value", function(data) {
+			me.setState({'questions':data.val()});
+		});
+    },
+		render: function() {
+			 return(
+			React.createElement("div", {id: "game"}, 
+			React.createElement("h2", null, "Let's play! "), 
+				_.map(this.state.questions,function(q){
+		          	return React.createElement(Question, {data: q});
+		          })
+			)
+			);
+		}
+	});
+	
+module.exports = Play;
+},{"./show_question":199,"lodash":5,"react":191,"react-router":14}],197:[function(require,module,exports){
+/** @jsx React.DOM */
+
 var React = require('react');
 
 var QForm = React.createClass({displayName: 'QForm',
@@ -29992,12 +30026,11 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":191}],197:[function(require,module,exports){
+},{"react":191}],198:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
 	Router = require('react-router'),
-	Footer = require('./footer'),
 	Question = require('./show_question'),
 	_ = require('lodash');
 
@@ -30029,7 +30062,7 @@ var QuestionList = React.createClass({displayName: 'QuestionList',
 });
 
 module.exports = QuestionList;
-},{"./footer":195,"./show_question":198,"lodash":5,"react":191,"react-router":14}],198:[function(require,module,exports){
+},{"./show_question":199,"lodash":5,"react":191,"react-router":14}],199:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30059,7 +30092,7 @@ var Question = React.createClass({displayName: 'Question',
 });
 
 module.exports = Question;
-},{"./footer":195,"react":191,"react-router":14}],199:[function(require,module,exports){
+},{"./footer":195,"react":191,"react-router":14}],200:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30071,7 +30104,7 @@ var Start = React.createClass({displayName: 'Start',
 		return (
 		React.createElement("div", {id: "start"}, 
           React.createElement("div", {id: "showQuestion"}, 
-          	React.createElement(Link, {to: "show_question"}, "Play game")
+          	React.createElement(Link, {to: "play_game"}, "Play game")
           ), 
           React.createElement("div", {id: "showQuestions"}, 
           	React.createElement(Link, {to: "show_all_questions"}, "Show all questions")
@@ -30085,7 +30118,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":191,"react-router":14}],200:[function(require,module,exports){
+},{"react":191,"react-router":14}],201:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -30095,4 +30128,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":193,"react":191,"react-router":14}]},{},[200])
+},{"./components/app":193,"react":191,"react-router":14}]},{},[201])

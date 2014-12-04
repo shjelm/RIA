@@ -9,6 +9,7 @@ var React = require('react'),
     Show_question = require('./show_question.js'),
     Show_all_questions = require('./show_all_questions.js'),
     Add_question = require('./add_question.js'),
+    Play_game = require('./play_game.js'),
     Container = require('./container.js');
     
 var App = (
@@ -16,6 +17,7 @@ var App = (
 	  	  <Route name="start" handler={Start} />
 	      <Route name="add_question" handler={Add_question} />
 	      <Route name="show_question" handler={Show_question} />
+	      <Route name="play_game" handler={Play_game} />
 	      <Route name="show_all_questions" handler={Show_all_questions} />
 	      <DefaultRoute handler={Start}/>
 	    </Route>
