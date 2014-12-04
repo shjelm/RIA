@@ -29,7 +29,6 @@ var QuestionList = React.createClass({
 		          })}
 		      </div> 
           </div>
-          <Footer />
         </div>
         );
    }

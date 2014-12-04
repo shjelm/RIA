@@ -11,6 +11,7 @@ var Container = React.createClass({
 		<div class="container" id="container">
 			<h2> Quiz </h2>
 			<RouteHandler />
+			<Footer />
         </div>
         );
    }

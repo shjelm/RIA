@@ -29948,7 +29948,8 @@ var Container = React.createClass({displayName: 'Container',
 		return (
 		React.createElement("div", {class: "container", id: "container"}, 
 			React.createElement("h2", null, " Quiz "), 
-			React.createElement(RouteHandler, null)
+			React.createElement(RouteHandler, null), 
+			React.createElement(Footer, null)
         )
         );
    }
@@ -30022,8 +30023,7 @@ var QuestionList = React.createClass({displayName: 'QuestionList',
 		          	return React.createElement(Question, {data: q});
 		          })
 		      )
-          ), 
-          React.createElement(Footer, null)
+          )
         )
         );
    }
