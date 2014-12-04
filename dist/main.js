@@ -29882,8 +29882,8 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";
-	          	return true;
           }
+          e.preventDefault();
         },
 		render: function(){
 		return (    
@@ -29941,22 +29941,21 @@ var React = require('react'),
 	Router = require('react-router'),
 	Start = require('./start'),
     RouteHandler = require('react-router').RouteHandler,
-	Footer = require('./footer');
+	Link = Router.Link;
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {class: "container", id: "container"}, 
-			React.createElement("h2", null, " Quiz "), 
-			React.createElement(RouteHandler, null), 
-			React.createElement(Footer, null)
+		React.createElement("div", {class: "container", id: "container"}, React.createElement("h2", null, " Quiz "), 
+			React.createElement(Link, {to: "start"}, "Homepage"), 
+			React.createElement(RouteHandler, null)
         )
         );
    }
 });
 
 module.exports = Container;
-},{"./footer":195,"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30042,10 +30041,17 @@ var Question = React.createClass({displayName: 'Question',
 		return (
 		React.createElement("div", {id: "questionbox"}, 
           React.createElement("div", {id: "question"}, 
-            React.createElement("h2", null, "Question:"), 
+            React.createElement("h3", null, "Question:"), 
             React.createElement("p", null, this.props.data.question)
           ), 
-          React.createElement("div", {id: "answers"}
+          React.createElement("div", {id: "answers"}, 
+            React.createElement("h3", null, "Answers:"), 
+            React.createElement("ul", null, 
+            React.createElement("li", null, React.createElement("p", null, this.props.data.answer1)), 
+            React.createElement("li", null, React.createElement("p", null, this.props.data.answer2)), 
+            React.createElement("li", null, React.createElement("p", null, this.props.data.answer3)), 
+            React.createElement("li", null, React.createElement("p", null, this.props.data.answer4))
+            )
           )
         )
         );

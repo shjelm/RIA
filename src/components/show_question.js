@@ -9,10 +9,17 @@ var Question = React.createClass({
 		return (
 		<div id="questionbox">
           <div id="question">
-            <h2>Question:</h2>
+            <h3>Question:</h3>
             <p>{this.props.data.question}</p>
           </div>
           <div id="answers">
+            <h3>Answers:</h3>
+            <ul>
+            <li><p>{this.props.data.answer1}</p></li>
+            <li><p>{this.props.data.answer2}</p></li>
+            <li><p>{this.props.data.answer3}</p></li>
+            <li><p>{this.props.data.answer4}</p></li>
+            </ul>
           </div>
         </div>
         );
