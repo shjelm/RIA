@@ -29948,8 +29948,8 @@ var Container = React.createClass({displayName: 'Container',
 		return (
 		React.createElement("div", {class: "container", id: "container"}, 
 			React.createElement("h2", null, " Quiz "), 
-			React.createElement(RouteHandler, null), 
-			React.createElement(Footer, null)
+			React.createElement(Footer, null), 
+			React.createElement(RouteHandler, null)
         )
         );
    }
@@ -29967,7 +29967,7 @@ var Footer = React.createClass({displayName: 'Footer',
 		render: function() {
 			 return(
 			React.createElement("div", {id: "footer"}, 
-				React.createElement(Link, {to: "start"}, "Back to homepage")
+				React.createElement(Link, {to: "start"}, "Homepage")
 			)
 			);
 		}

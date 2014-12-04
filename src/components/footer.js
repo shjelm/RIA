@@ -8,7 +8,7 @@ var Footer = React.createClass({
 		render: function() {
 			 return(
 			<div id = "footer">
-				<Link to='start'>Back to homepage</Link>
+				<Link to='start'>Homepage</Link>
 			</div>
 			);
 		}

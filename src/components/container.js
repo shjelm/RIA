@@ -11,8 +11,8 @@ var Container = React.createClass({
 		return (
 		<div class="container" id="container">
 			<h2> Quiz </h2>
-			<RouteHandler />
 			<Footer />
+			<RouteHandler />
         </div>
         );
    }
