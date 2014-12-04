@@ -29941,21 +29941,22 @@ var React = require('react'),
 	Router = require('react-router'),
 	Start = require('./start'),
     RouteHandler = require('react-router').RouteHandler,
-	Link = Router.Link;
+	Footer = require('./footer');
 
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {class: "container", id: "container"}, React.createElement("h2", null, " Quiz "), 
-			React.createElement(Link, {to: "start"}, "Homepage"), 
-			React.createElement(RouteHandler, null)
+		React.createElement("div", {class: "container", id: "container"}, 
+			React.createElement("h2", null, " Quiz "), 
+			React.createElement(RouteHandler, null), 
+			React.createElement(Footer, null)
         )
         );
    }
 });
 
 module.exports = Container;
-},{"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":199,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
