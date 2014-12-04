@@ -9,7 +9,7 @@ var React = require('react'),
 var Container = React.createClass({
 	render: function(){
 		return (
-		<div class="container" id="container">
+		<div className="container" id="container">
 			<h2> Quiz </h2>
 			<Footer />
 			<RouteHandler />

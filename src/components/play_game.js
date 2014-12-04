@@ -12,7 +12,7 @@ var Play = React.createClass({
 	componentWillMount: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-		this.ref.child('questions').on("value", function(data) {
+		this.ref.child('questions').limitToLast(10).on("value", function(data) {
 			me.setState({'questions':data.val()});
 		});
     },

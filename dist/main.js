@@ -29948,7 +29948,7 @@ var React = require('react'),
 var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
-		React.createElement("div", {class: "container", id: "container"}, 
+		React.createElement("div", {className: "container", id: "container"}, 
 			React.createElement("h2", null, " Quiz "), 
 			React.createElement(Footer, null), 
 			React.createElement(RouteHandler, null)
@@ -29992,7 +29992,7 @@ var Play = React.createClass({displayName: 'Play',
 	componentWillMount: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-		this.ref.child('questions').on("value", function(data) {
+		this.ref.child('questions').limitToLast(10).on("value", function(data) {
 			me.setState({'questions':data.val()});
 		});
     },
