@@ -1,7 +1,5 @@
 BUGG | OSV
-Varför byggs inte all till docs?
 Bugg med att fråga inte sparas första gången.
-
 
 
 FRÅGOR | FUNDERINGAR

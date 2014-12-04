@@ -23214,9 +23214,9 @@ var Question = React.createClass({displayName: 'Question',
 			console.log("data");
 			console.log(data);
 	},
-	getData: function(){
-		var ref = new Firebase("https://ria2014.firebaseio.com/");
-		ref.child('questions').once("value", function(data) {
+	loadData: function(){
+		this.ref = new Firebase("https://ria2014.firebaseio.com/");
+		this.ref.child('questions').on("value", function(data) {
 			var idIndex = 0;
         	this.questions = [];
   			data.forEach(
@@ -23235,12 +23235,15 @@ var Question = React.createClass({displayName: 'Question',
         	console.log(this.questions);
 		});
 	},
+	componentWillMount: function() {
+          this.loadData();
+    },
 	render: function(){
 		return (
 		React.createElement("div", {id: "questionbox"}, 
           React.createElement("div", {id: "question"}, 
           React.createElement("h2", null, "Questions:"), 
-          this.getData()
+          this.loadData()
           ), 
           React.createElement(Footer, null)
         )

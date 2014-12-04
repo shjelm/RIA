@@ -9,9 +9,9 @@ var Question = React.createClass({
 			console.log("data");
 			console.log(data);
 	},
-	getData: function(){
-		var ref = new Firebase("https://ria2014.firebaseio.com/");
-		ref.child('questions').once("value", function(data) {
+	loadData: function(){
+		this.ref = new Firebase("https://ria2014.firebaseio.com/");
+		this.ref.child('questions').on("value", function(data) {
 			var idIndex = 0;
         	this.questions = [];
   			data.forEach(
@@ -30,12 +30,15 @@ var Question = React.createClass({
         	console.log(this.questions);
 		});
 	},
+	componentWillMount: function() {
+          this.loadData();
+    },
 	render: function(){
 		return (
 		<div id="questionbox">
           <div id="question">
           <h2>Questions:</h2>
-          {this.getData()}
+          {this.loadData()}
           </div>
           <Footer />
         </div>
