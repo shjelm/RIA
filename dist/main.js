@@ -29873,7 +29873,10 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
           		answer1 = this.refs.answer1.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
-      			answer4 = this.refs.answer4.getDOMNode().value.trim();
+      			answer4 = this.refs.answer4.getDOMNode().value.trim(),
+      			correct = this.refs.correct.getDOMNode.value;
+      			
+      			console.log(correct);
       			
   			if (this.isValid()) {
 	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
@@ -29881,8 +29884,8 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	          	this.refs.answer1.getDOMNode().value = "";
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
-	          	this.refs.answer4.getDOMNode().value = "";
-          }
+	          	this.refs.answer4.getDOMNode().value = "";       
+	          	}
           e.preventDefault();
         },
 		render: function(){
@@ -29891,16 +29894,16 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("label", null, "Question:"), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Add question", ref: "question", className: "input-xlarge"}))
+		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "input-xlarge"}))
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
 		          React.createElement("label", null, "Provide some answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"}))
+		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer1}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer2}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer3}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer4}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"})))
 	          ), 
-	          React.createElement("input", {type: "submit", value: "Submit"})
+	          React.createElement("input", {type: "submit", value: "Add question"})
           )
           )
         );
@@ -29985,8 +29988,9 @@ var React = require('react'),
 
 var Guess = React.createClass({displayName: 'Guess',
 	render: function(){
-		return (
-			React.createElement("div", null, 
+		return (		
+      	React.createElement("div", {id: "guessForm"}, 
+			React.createElement("form", {onSubmit: this.handleSubmit, ref: "guessForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
 				React.createElement("h3", null, "Question"), 
 		          React.createElement("p", null, this.props.data.question)
@@ -29996,8 +30000,10 @@ var Guess = React.createClass({displayName: 'Guess',
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer2}, " ", this.props.data.answer2)), 
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer3}, " ", this.props.data.answer3)), 
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer4}, " ", this.props.data.answer4))
-	          )
-	          )
+	          ), 
+	          React.createElement("input", {type: "submit", value: "Submit"})
+      		)
+      	)
         );
    }
 });
@@ -30019,22 +30025,17 @@ var Play = React.createClass({displayName: 'Play',
 	componentWillMount: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-		this.ref.child('questions').limitToLast(10).on("value", function(data) {
+		this.ref.child('questions').limitToLast(1).on("value", function(data) {
 			me.setState({'questions':data.val()});
 		});
     },
 	render: function() {
 		 return(
 			React.createElement("div", {id: "game"}, 
-			React.createElement("h2", null, "Let's play! "), 			
-	          	React.createElement("div", {id: "guessForm"}, 
-					React.createElement("form", {onSubmit: this.handleSubmit, ref: "guessForm", className: "form-horizontal"}, 
-						_.map(this.state.questions,function(q){
-				          	return React.createElement(GuessQuestion, {data: q});
-				          }), 
-			          	React.createElement("input", {type: "submit", value: "submit"})
-	          		)
-	          	)
+			React.createElement("h2", null, "Let's play! "), 	
+				_.map(this.state.questions,function(q){
+		          	return React.createElement(GuessQuestion, {data: q});
+		          })
 			)
 		);
 	}

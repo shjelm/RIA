@@ -5,4 +5,6 @@ Bugg med att fråga inte sparas första gången.
 FRÅGOR | FUNDERINGAR
 Hur visa data från firebase? CHECK
 Hur Update/Delete av frågor på bra sätt?
+Måste markera vilket svar som är rätt. Hur? Radiobutton?
+Hur spela spel? Visa en fråga i taget?
 

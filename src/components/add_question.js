@@ -50,7 +50,10 @@ var QuestionForm = React.createClass({
           		answer1 = this.refs.answer1.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
-      			answer4 = this.refs.answer4.getDOMNode().value.trim();
+      			answer4 = this.refs.answer4.getDOMNode().value.trim(),
+      			correct = this.refs.correct.getDOMNode.value;
+      			
+      			console.log(correct);
       			
   			if (this.isValid()) {
 	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
@@ -58,8 +61,8 @@ var QuestionForm = React.createClass({
 	          	this.refs.answer1.getDOMNode().value = "";
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
-	          	this.refs.answer4.getDOMNode().value = "";
-          }
+	          	this.refs.answer4.getDOMNode().value = "";       
+	          	}
           e.preventDefault();
         },
 		render: function(){
@@ -68,16 +71,16 @@ var QuestionForm = React.createClass({
 			<form onSubmit={this.handleSubmit} ref = "questionForm" className="form-horizontal">
 			<div id="question">
 		          <label>Question:</label>
-		          	<p><input type="text" placeholder="Add question" ref="question" className="input-xlarge" /></p>
+		          	<p><input type="text" placeholder="Say something..." ref="question" className="input-xlarge" /></p>
 	          </div>
 	          <div id="answers">
 		          <label>Provide some answers: </label>
-		          <p><input type="text" placeholder="Say something..." ref="answer1" className="input-xlarge"/></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer2" className="input-xlarge"/></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer3" className="input-xlarge"/></p>
-		          <p><input type="text" placeholder="Say something..." ref="answer4" className="input-xlarge"/></p>
+		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer1}><p><input type="text" placeholder="Say something..." ref="answer1" className="input-xlarge"/></p></input>
+		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer2}><p><input type="text" placeholder="Say something..." ref="answer2" className="input-xlarge"/></p></input>
+		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer3}><p><input type="text" placeholder="Say something..." ref="answer3" className="input-xlarge"/></p></input>
+		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer4}><p><input type="text" placeholder="Say something..." ref="answer4" className="input-xlarge"/></p></input>
 	          </div>
-	          <input type="submit" value="Submit" />
+	          <input type="submit" value="Add question" />
           </form>
           </div>
         );

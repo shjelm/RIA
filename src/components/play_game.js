@@ -20,15 +20,10 @@ var Play = React.createClass({
 	render: function() {
 		 return(
 			<div id = "game">
-			<h2>Let's play! </h2>			
-	          	<div id="guessForm" >
-					<form onSubmit={this.handleSubmit} ref = "guessForm" className="form-horizontal">
-						{_.map(this.state.questions,function(q){
-				          	return <GuessQuestion data={q}/>;
-				          })}
-			          	<input type="submit" value="Submit" />
-	          		</form>
-	          	</div>
+			<h2>Let's play! </h2>	
+				{_.map(this.state.questions,function(q){
+		          	return <GuessQuestion data={q}/>;
+		          })}
 			</div>
 		);
 	}

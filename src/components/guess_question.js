@@ -5,8 +5,9 @@ var React = require('react'),
 
 var Guess = React.createClass({
 	render: function(){
-		return (
-			<div>
+		return (		
+      	<div id="guessForm" >
+			<form onSubmit={this.handleSubmit} ref = "guessForm" className="form-horizontal">
 			<div id="question">
 				<h3>Question</h3>
 		          <p>{this.props.data.question}</p>
@@ -17,7 +18,9 @@ var Guess = React.createClass({
 		          <p><input type="radio" name="answer" value={this.props.data.answer3}> {this.props.data.answer3}</input></p>
 		          <p><input type="radio" name="answer" value={this.props.data.answer4}> {this.props.data.answer4}</input></p>
 	          </div>
-	          </div>
+	          <input type="submit" value="Submit" />
+      		</form>
+      	</div>
         );
    }
 });
