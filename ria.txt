@@ -8,3 +8,19 @@ Hur Update/Delete av frågor på bra sätt?
 Måste markera vilket svar som är rätt. Hur? Radiobutton?
 Hur spela spel? Visa en fråga i taget?
 
+
+Play game: knapp för att hämta data från firebase, event once - laddar ner frågor
+Då finns frågor 
+Rendera playknapp för att spela
+
+knapp för att ladda ner frågor med loadquestions
+klick loadQuestions 
+knapp ladda frågor om state är tom
+play --> guess question  
+
+lodash för isempty _.isEmpty(this.state.questions)
+
+
+Om det inte finns frågor i state --> rendera knapp för att ladda (loadQuestions)
+när det finns frågor i state --> rendera knapp för att spela (köra guessQuestion)
+
