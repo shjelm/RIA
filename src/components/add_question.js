@@ -51,9 +51,6 @@ var QuestionForm = React.createClass({
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
       			answer4 = this.refs.answer4.getDOMNode().value.trim(),
-      			// correct = this.correct.getDOMNode.checked;
-      			
-      			// console.log(correct);
       			
   			if (this.isValid()) {
 	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
