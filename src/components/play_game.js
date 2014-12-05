@@ -16,8 +16,8 @@ var Play = React.createClass({
 	loadQuestions: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-		this.ref.child('questions').limitToLast(10).once("value", function(data) {
-			me.setState({'questions':data.val()});
+	this.ref.child('questions').limitToLast(10).once("value", function(data) {
+		me.setState({'questions':data.val()});
 		});
     },
     stopGame: function(){
@@ -28,22 +28,23 @@ var Play = React.createClass({
 		if (_.isEmpty(this.state.questions)){
 			return (
 				<div id = "game">
-					<button onClick={this.loadQuestions}>load questions</button>
+					<button onClick={this.loadQuestions}>Load questions</button>
 				</div>
 			);
 		} else if (!this.state.isplaying){
 			return (
 				<div id = "game">
-					<button onClick={this.runGame}>start game</button>
+					<button onClick={this.runGame}>Start quiz</button>
+					<p>The questions has been loaded. Let's play!</p>
 				</div>
 			);
 		} else {
 			return (
 				<div id = "game">
-					<button onClick={this.stopGame}>stop game</button>
 					{_.map(this.state.questions,function(q){
 	          			return <GuessQuestion data={q}/>;
 		        	})}
+					<button onClick={this.stopGame}>End quiz</button>
 				</div>
 			);
 		}

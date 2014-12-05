@@ -18,7 +18,6 @@ var Guess = React.createClass({
 		          <p><input type="radio" name="answer" value={this.props.data.answer3}> {this.props.data.answer3}</input></p>
 		          <p><input type="radio" name="answer" value={this.props.data.answer4}> {this.props.data.answer4}</input></p>
 	          </div>
-	          <input type="submit" value="Submit" />
       		</form>
       	</div>
         );
