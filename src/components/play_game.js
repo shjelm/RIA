@@ -10,28 +10,9 @@ var Play = React.createClass({
 	getInitialState: function(){
 		return {questions:{}};
 	},
-	getButton: function(){
-		if(_.isEmpty(this.state.questions)){
-			return "Load game";
-		}
-		else{
-			return "Start game";
-		}		
-	},
 	runGame: function(){
-		console.log("hej");
-		_.map(this.state.questions,function(q){
-	          		return <GuessQuestion data={q}/>;
-		        });
+		this.setState({isplaying:true});
 	},
-	handleClick: function() {
- 	 	if(_.isEmpty(this.state.questions)){
-			this.loadQuestions();
-		}
-		else{
-			this.runGame();	
-		}
-   	},
 	loadQuestions: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
@@ -39,17 +20,34 @@ var Play = React.createClass({
 			me.setState({'questions':data.val()});
 		});
     },
+    stopGame: function(){
+    	this.setState({isplaying:false});
+    },
 	render: function() {
-		 return(
-			<div id = "game">
-			<h2>Let's play! </h2>
-				<button ref="button" value={this.getButton()} onClick={this.handleClick}>{this.getButton()}</button>
-				{_.map(this.state.questions,function(q){
-	          		return <GuessQuestion data={q}/>;
-		        })}
-			</div>
-		);
+		var button;
+		if (_.isEmpty(this.state.questions)){
+			return (
+				<div id = "game">
+					<button onClick={this.loadQuestions}>load questions</button>
+				</div>
+			);
+		} else if (!this.state.isplaying){
+			return (
+				<div id = "game">
+					<button onClick={this.runGame}>start game</button>
+				</div>
+			);
+		} else {
+			return (
+				<div id = "game">
+					<button onClick={this.stopGame}>stop game</button>
+					{_.map(this.state.questions,function(q){
+	          			return <GuessQuestion data={q}/>;
+		        	})}
+				</div>
+			);
+		}
 	}
-	});
+});
 	
 module.exports = Play;
