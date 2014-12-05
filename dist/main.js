@@ -29874,7 +29874,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
       			answer4 = this.refs.answer4.getDOMNode().value.trim(),
-      			correct = this.refs.correct.getDOMNode.value;
+      			correct = this.correct.getDOMNode.checked;
       			
       			console.log(correct);
       			
@@ -29898,10 +29898,10 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
 		          React.createElement("label", null, "Provide some answers: "), 
-		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer1}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer2}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer3}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", value: this.refs.answer4}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"})))
+		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer1}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer2}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer3}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"}))), 
+		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer4}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"})))
 	          ), 
 	          React.createElement("input", {type: "submit", value: "Add question"})
           )
