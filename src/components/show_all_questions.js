@@ -5,6 +5,7 @@ var React = require('react'),
 	Question = require('./show_question'),
 	Link = Router.Link,
 	_ = require('lodash');
+	
 
 var QuestionList = React.createClass({
 	getInitialState: function(){
@@ -18,18 +19,19 @@ var QuestionList = React.createClass({
 		});
     },
 	render: function(){
-		return (
-		<div id="questionbox">
-          <div id="question">
-	          <h2>Questions:</h2>
-	          <div>
-		          {_.map(this.state.questions,function(q){
-		          	return <Question data={q}/>;
-		          })}
-		      </div>
-          </div>
-        </div>
-        );
+			return (
+			<div id="questionbox">
+	          <div id="question">
+		          <h2>Questions:</h2>
+		          
+		          <div>
+			          {_.map(this.state.questions,function(q){
+			          	return <div><Question data={q}/></div>;
+			          })}
+			      </div>
+	          </div>
+	        </div>
+	        );
    }
 });
 

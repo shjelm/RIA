@@ -8,7 +8,8 @@ var React = require('react'),
 var QuestionBox = React.createClass({
 	 handleQuestionSubmit: function(question) {
  	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/");
- 	 	this.questionsRef.child('questions').push(question);
+ 	 	var qRef = this.questionsRef.child('questions').push(question);
+ 	 	qRef.update({id:qRef.key()});
     },
 	 render: function() {
           return (
@@ -21,10 +22,9 @@ var QuestionBox = React.createClass({
 
 var QuestionForm = React.createClass({
 	isValid: function() {
-    		var fields = ['question', 'answer1', 'answer2', 'answer3', 'answer4'];
-    		if (this.props.question) 
-    			fields.push('question');
-    		if (this.props.answer1) fields.push('answer1');
+    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) fields.push('question');
+    		if (this.props.correct) fields.push('correct');
     		if (this.props.answer2) fields.push('answer2');
     		if (this.props.answer3) fields.push('answer3');
     		if (this.props.answer4) fields.push('answer4');
@@ -47,20 +47,21 @@ var QuestionForm = React.createClass({
 	  	},
         handleSubmit: function() {
           	var question = this.refs.question.getDOMNode().value.trim(),
-          		answer1 = this.refs.answer1.getDOMNode().value.trim(),
+          		correct = this.refs.correct.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
       			answer4 = this.refs.answer4.getDOMNode().value.trim();
       			
   			if (this.isValid()) {
-	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
+	          	this.props.onQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});
 	          	this.refs.question.getDOMNode().value = "";
-	          	this.refs.answer1.getDOMNode().value = "";
+	          	this.refs.correct.getDOMNode().value = "";
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";       
 	          	}
-          e.preventDefault();
+	          	
+          		e.preventDefault();
         },
 		render: function(){
 		return (    
@@ -71,11 +72,12 @@ var QuestionForm = React.createClass({
 		          	<p><input type="text" placeholder="Say something..." ref="question" className="input-xlarge" /></p>
 	          </div>
 	          <div id="answers">
-		          <label>Provide some answers: </label>
-		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer1}><p><input type="text" placeholder="Say something..." ref="answer1" className="input-xlarge"/></p></input>
-		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer2}><p><input type="text" placeholder="Say something..." ref="answer2" className="input-xlarge"/></p></input>
-		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer3}><p><input type="text" placeholder="Say something..." ref="answer3" className="input-xlarge"/></p></input>
-		          <input type="radio" name="correct" ref = "correct" value={this.refs.answer4}><p><input type="text" placeholder="Say something..." ref="answer4" className="input-xlarge"/></p></input>
+		          <label>Provide correct answer: </label>
+		          <p><input type="text" placeholder="Say something..." ref="correct" className="input-xlarge"/></p>
+		          <label>Provide some other answers: </label>
+		          <p><input type="text" placeholder="Say something..." ref="answer2" className="input-xlarge"/></p>
+		          <p><input type="text" placeholder="Say something..." ref="answer3" className="input-xlarge"/></p>
+		          <p><input type="text" placeholder="Say something..." ref="answer4" className="input-xlarge"/></p>
 	          </div>
 	          <input type="submit" value="Add question" />
           </form>

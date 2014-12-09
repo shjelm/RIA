@@ -29831,7 +29831,8 @@ var React = require('react'),
 var QuestionBox = React.createClass({displayName: 'QuestionBox',
 	 handleQuestionSubmit: function(question) {
  	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/");
- 	 	this.questionsRef.child('questions').push(question);
+ 	 	var qRef = this.questionsRef.child('questions').push(question);
+ 	 	qRef.update({id:qRef.key()});
     },
 	 render: function() {
           return (
@@ -29844,10 +29845,9 @@ var QuestionBox = React.createClass({displayName: 'QuestionBox',
 
 var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	isValid: function() {
-    		var fields = ['question', 'answer1', 'answer2', 'answer3', 'answer4'];
-    		if (this.props.question) 
-    			fields.push('question');
-    		if (this.props.answer1) fields.push('answer1');
+    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) fields.push('question');
+    		if (this.props.correct) fields.push('correct');
     		if (this.props.answer2) fields.push('answer2');
     		if (this.props.answer3) fields.push('answer3');
     		if (this.props.answer4) fields.push('answer4');
@@ -29870,20 +29870,21 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	  	},
         handleSubmit: function() {
           	var question = this.refs.question.getDOMNode().value.trim(),
-          		answer1 = this.refs.answer1.getDOMNode().value.trim(),
+          		correct = this.refs.correct.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
       			answer4 = this.refs.answer4.getDOMNode().value.trim();
       			
   			if (this.isValid()) {
-	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
+	          	this.props.onQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});
 	          	this.refs.question.getDOMNode().value = "";
-	          	this.refs.answer1.getDOMNode().value = "";
+	          	this.refs.correct.getDOMNode().value = "";
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";       
 	          	}
-          e.preventDefault();
+	          	
+          		e.preventDefault();
         },
 		render: function(){
 		return (    
@@ -29894,11 +29895,12 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "input-xlarge"}))
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("label", null, "Provide some answers: "), 
-		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer1}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer1", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer2}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer3}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"}))), 
-		          React.createElement("input", {type: "radio", name: "correct", ref: "correct", value: this.refs.answer4}, React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"})))
+		          React.createElement("label", null, "Provide correct answer: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "correct", className: "input-xlarge"})), 
+		          React.createElement("label", null, "Provide some other answers: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"}))
 	          ), 
 	          React.createElement("input", {type: "submit", value: "Add question"})
           )
@@ -29915,6 +29917,7 @@ var React = require('react'),
 	Router = require('react-router'),
     Route = require('react-router').Route,
     DefaultRoute = require('react-router').DefaultRoute,
+    NotFoundRoute = Router.NotFoundRoute,
     QForm = require('./qform.js'),
     Start = require('./start.js'),
     Show_question = require('./show_question.js'),
@@ -29922,6 +29925,7 @@ var React = require('react'),
     Add_question = require('./add_question.js'),
     Play_game = require('./play_game.js'),
     Container = require('./container.js');
+    NotFound = require('./not_found.js');
     
 var App = (
 	    React.createElement(Route, {name: "app", path: "/", handler: Container}, 
@@ -29930,13 +29934,14 @@ var App = (
 	      React.createElement(Route, {name: "show_question", handler: Show_question}), 
 	      React.createElement(Route, {name: "play_game", handler: Play_game}), 
 	      React.createElement(Route, {name: "show_all_questions", handler: Show_all_questions}), 
-	      React.createElement(DefaultRoute, {handler: Start})
+	      React.createElement(DefaultRoute, {handler: Start}), 
+	      React.createElement(NotFoundRoute, {handler: NotFound})
 	    )
 );
 
 module.exports = App;
 
-},{"./add_question.js":192,"./container.js":194,"./play_game.js":197,"./qform.js":198,"./show_all_questions.js":199,"./show_question.js":200,"./start.js":201,"react":191,"react-router":14}],194:[function(require,module,exports){
+},{"./add_question.js":192,"./container.js":194,"./not_found.js":197,"./play_game.js":198,"./qform.js":199,"./show_all_questions.js":200,"./show_question.js":201,"./start.js":202,"react":191,"react-router":14}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29958,7 +29963,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./footer":195,"./start":201,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":202,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29993,7 +29998,7 @@ var Guess = React.createClass({displayName: 'Guess',
 		          React.createElement("p", null, this.props.data.question)
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer1}, " ", this.props.data.answer1, " ")), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.correct}, " ", this.props.data.correct, " ")), 
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer2}, " ", this.props.data.answer2)), 
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer3}, " ", this.props.data.answer3)), 
 		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer4}, " ", this.props.data.answer4))
@@ -30006,6 +30011,23 @@ var Guess = React.createClass({displayName: 'Guess',
 
 module.exports = Guess;
 },{"react":191,"react-router":14}],197:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react');
+
+var NotFound = React.createClass({displayName: 'NotFound',
+	render: function(){
+		return (
+		React.createElement("div", {id: "notFound"}, 
+          React.createElement("h2", null, "Not found"), 
+          React.createElement("p", null, "bla bla bla")
+        )
+        );
+   }
+});
+
+module.exports = NotFound;
+},{"react":191}],198:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30060,7 +30082,7 @@ var Play = React.createClass({displayName: 'Play',
 });
 	
 module.exports = Play;
-},{"./guess_question":196,"./show_question":200,"lodash":5,"react":191,"react-router":14}],198:[function(require,module,exports){
+},{"./guess_question":196,"./show_question":201,"lodash":5,"react":191,"react-router":14}],199:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30077,7 +30099,7 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":191}],199:[function(require,module,exports){
+},{"react":191}],200:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30085,6 +30107,7 @@ var React = require('react'),
 	Question = require('./show_question'),
 	Link = Router.Link,
 	_ = require('lodash');
+	
 
 var QuestionList = React.createClass({displayName: 'QuestionList',
 	getInitialState: function(){
@@ -30098,31 +30121,100 @@ var QuestionList = React.createClass({displayName: 'QuestionList',
 		});
     },
 	render: function(){
-		return (
-		React.createElement("div", {id: "questionbox"}, 
-          React.createElement("div", {id: "question"}, 
-	          React.createElement("h2", null, "Questions:"), 
-	          React.createElement("div", null, 
-		          _.map(this.state.questions,function(q){
-		          	return React.createElement(Question, {data: q});
-		          })
-		      )
-          )
-        )
-        );
+			return (
+			React.createElement("div", {id: "questionbox"}, 
+	          React.createElement("div", {id: "question"}, 
+		          React.createElement("h2", null, "Questions:"), 
+		          
+		          React.createElement("div", null, 
+			          _.map(this.state.questions,function(q){
+			          	return React.createElement("div", null, React.createElement(Question, {data: q}));
+			          })
+			      )
+	          )
+	        )
+	        );
    }
 });
 
 module.exports = QuestionList;
-},{"./show_question":200,"lodash":5,"react":191,"react-router":14}],200:[function(require,module,exports){
+},{"./show_question":201,"lodash":5,"react":191,"react-router":14}],201:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Router = require('react-router'),
-	Footer = require('./footer');
+	Router = require('react-router');
+	
 
 var Question = React.createClass({displayName: 'Question',
+	getInitialState: function(){return {val:""};},
+	handleQuestionSubmit: function(question) {
+ 	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/questions/");
+	 	this.questionsRef.child(this.props.data.id).update(question);
+    },
+	isValid: function() {
+    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) fields.push('question');
+    		if (this.props.correct) fields.push('correct');
+    		if (this.props.answer2) fields.push('answer2');
+    		if (this.props.answer3) fields.push('answer3');
+    		if (this.props.answer4) fields.push('answer4');
+
+    		var errors = {};
+    		fields.forEach(function(field) {
+	      		var value = this.refs[field].getDOMNode().value.trim();
+	      		if (!value) {
+	        		errors[field] = 'This field is required';
+	      		}
+    		}.bind(this));
+    		this.setState({errors: errors});
+
+		    var isValid = true;
+		    for (var error in errors) {
+		      isValid = false;
+		      break;
+		    }
+		    return isValid;
+	  	},
+	handleSubmit: function() {
+          	var question = this.refs.question.getDOMNode().value.trim(),
+          		correct = this.refs.correct.getDOMNode().value.trim(),
+      			answer2 = this.refs.answer2.getDOMNode().value.trim(),
+      			answer3 = this.refs.answer3.getDOMNode().value.trim(),
+      			answer4 = this.refs.answer4.getDOMNode().value.trim();      			
+      			
+  			if (this.isValid()) {
+	          	this.handleQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});	          	
+    			this.setState({isediting:false});     
+	          	}
+          e.preventDefault();
+    },
+    editQuestion: function(){
+    	this.setState({isediting:true});
+    },
 	render: function(){
+		if(this.state.isediting){
+			return (
+          React.createElement("div", {id: "questionForm"}, 
+			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
+			React.createElement("div", {id: "question"}, 
+		          React.createElement("label", null, "Question:"), 
+		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", className: "input-xlarge", defaultValue: this.props.data.question}))
+	          ), 
+	          React.createElement("div", {id: "answers"}, 
+		          React.createElement("label", null, "Provide correct answer: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.correct, ref: "correct", className: "input-xlarge"})), 
+		          React.createElement("label", null, "Provide some other answers: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer2, ref: "answer2", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer3, ref: "answer3", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer4, ref: "answer4", className: "input-xlarge"}))
+	          ), 
+	          React.createElement("input", {type: "submit", value: "Update question"})
+          )
+          )
+	        );
+       }
+       else{
+       	
 		return (
 		React.createElement("div", {id: "questionbox"}, 
           React.createElement("div", {id: "question"}, 
@@ -30131,20 +30223,27 @@ var Question = React.createClass({displayName: 'Question',
           ), 
           React.createElement("div", {id: "answers"}, 
             React.createElement("h3", null, "Answers:"), 
+            React.createElement("p", null, "Correct: "), 
             React.createElement("ul", null, 
-            React.createElement("li", null, React.createElement("p", null, this.props.data.answer1)), 
+            React.createElement("li", null, React.createElement("p", null, this.props.data.correct))
+            ), 
+            React.createElement("p", null, "Other: "), 
+            React.createElement("ul", null, 
             React.createElement("li", null, React.createElement("p", null, this.props.data.answer2)), 
             React.createElement("li", null, React.createElement("p", null, this.props.data.answer3)), 
             React.createElement("li", null, React.createElement("p", null, this.props.data.answer4))
             )
-          )
+          ), 
+          React.createElement("button", {onClick: this.editQuestion}, "Edit")
         )
         );
-   }
+       }
+
+       	   }
 });
 
 module.exports = Question;
-},{"./footer":195,"react":191,"react-router":14}],201:[function(require,module,exports){
+},{"react":191,"react-router":14}],202:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30170,7 +30269,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":191,"react-router":14}],202:[function(require,module,exports){
+},{"react":191,"react-router":14}],203:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -30180,4 +30279,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":193,"react":191,"react-router":14}]},{},[202])
+},{"./components/app":193,"react":191,"react-router":14}]},{},[203])
