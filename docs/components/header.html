@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>container.js</title>
+  <title>header.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="..\docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>container.js</h1>
+                  <h1>header.js</h1>
               </div>
           </li>
         
@@ -34,23 +34,22 @@
 
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>),
 	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>),
-	Start = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./start'</span>),
-    RouteHandler = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>).RouteHandler,
 	Footer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./footer'</span>);
 
-<span class="hljs-keyword">var</span> Container = React.createClass({
+<span class="hljs-keyword">var</span> Header = React.createClass({
 	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">return</span> (
-		<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"container"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"container"</span>&gt;</span>
-			<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span> Quiz <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-			<span class="hljs-tag">&lt;<span class="hljs-title">Footer</span> /&gt;</span>
-			<span class="hljs-tag">&lt;<span class="hljs-title">RouteHandler</span> /&gt;</span>
+		<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"questionbox"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"question"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Question:<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{this.props.data.question}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
         );
    }
 });
 
-module.exports = Container;
+module.exports = Header;
 </span></pre></div></div>
             
         </li>

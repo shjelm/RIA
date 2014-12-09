@@ -36,20 +36,25 @@
 	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>),
     Route = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>).Route,
     DefaultRoute = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>).DefaultRoute,
+    NotFoundRoute = Router.NotFoundRoute,
     QForm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./qform.js'</span>),
     Start = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./start.js'</span>),
     Show_question = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./show_question.js'</span>),
     Show_all_questions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./show_all_questions.js'</span>),
     Add_question = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./add_question.js'</span>),
+    Play_game = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./play_game.js'</span>),
     Container = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./container.js'</span>);
+    NotFound = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./not_found.js'</span>);
     
 <span class="hljs-keyword">var</span> App = (
 	    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"app"</span> <span class="hljs-attribute">path</span>=<span class="hljs-value">"/"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Container}</span>&gt;</span>
 	  	  <span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"start"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Start}</span> /&gt;</span>
 	      <span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"add_question"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Add_question}</span> /&gt;</span>
 	      <span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"show_question"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Show_question}</span> /&gt;</span>
+	      <span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"play_game"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Play_game}</span> /&gt;</span>
 	      <span class="hljs-tag">&lt;<span class="hljs-title">Route</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"show_all_questions"</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Show_all_questions}</span> /&gt;</span>
 	      <span class="hljs-tag">&lt;<span class="hljs-title">DefaultRoute</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{Start}</span>/&gt;</span>
+	      <span class="hljs-tag">&lt;<span class="hljs-title">NotFoundRoute</span> <span class="hljs-attribute">handler</span>=<span class="hljs-value">{NotFound}</span>/&gt;</span>
 	    <span class="hljs-tag">&lt;/<span class="hljs-title">Route</span>&gt;</span>
 );
 

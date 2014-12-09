@@ -40,7 +40,8 @@
 <span class="hljs-keyword">var</span> QuestionBox = React.createClass({
 	 handleQuestionSubmit: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(question)</span> </span>{
  	 	<span class="hljs-keyword">this</span>.questionsRef = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">"https://ria2014.firebaseio.com/"</span>);
- 	 	<span class="hljs-keyword">this</span>.questionsRef.child(<span class="hljs-string">'questions'</span>).push(question);
+ 	 	<span class="hljs-keyword">var</span> qRef = <span class="hljs-keyword">this</span>.questionsRef.child(<span class="hljs-string">'questions'</span>).push(question);
+ 	 	qRef.update({id:qRef.key()});
     },
 	 render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
           <span class="hljs-keyword">return</span> (
@@ -53,10 +54,9 @@
 
 var QuestionForm = React.createClass({
 	isValid: function() {
-    		var fields = ['question', 'answer1', 'answer2', 'answer3', 'answer4'];
-    		if (this.props.question) 
-    			fields.push('question');
-    		if (this.props.answer1) fields.push('answer1');
+    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) fields.push('question');
+    		if (this.props.correct) fields.push('correct');
     		if (this.props.answer2) fields.push('answer2');
     		if (this.props.answer3) fields.push('answer3');
     		if (this.props.answer4) fields.push('answer4');
@@ -79,39 +79,40 @@ var QuestionForm = React.createClass({
 	  	},
         handleSubmit: function() {
           	var question = this.refs.question.getDOMNode().value.trim(),
-          		answer1 = this.refs.answer1.getDOMNode().value.trim(),
+          		correct = this.refs.correct.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
       			answer3 = this.refs.answer3.getDOMNode().value.trim(),
       			answer4 = this.refs.answer4.getDOMNode().value.trim();
       			
   			if (this.isValid()) {
-	          	this.props.onQuestionSubmit({question: question, answer1: answer1, answer2: answer2, answer3: answer3, answer4: answer4});
+	          	this.props.onQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});
 	          	this.refs.question.getDOMNode().value = "";
-	          	this.refs.answer1.getDOMNode().value = "";
+	          	this.refs.correct.getDOMNode().value = "";
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
-	          	this.refs.answer4.getDOMNode().value = "";
-	          	return true;
-          }
+	          	this.refs.answer4.getDOMNode().value = "";       
+	          	}
+	          	
+          		e.preventDefault();
         },
 		render: function(){
 		return (    
           <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"questionForm"</span> &gt;</span>
-			<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">onSubmit</span>=<span class="hljs-value">{this.handleSubmit}</span> <span class="hljs-attribute">ref</span> = "<span class="hljs-attribute">questionForm</span>" <span class="hljs-attribute">class</span>=<span class="hljs-value">"form-horizontal"</span>&gt;</span>
+			<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">onSubmit</span>=<span class="hljs-value">{this.handleSubmit}</span> <span class="hljs-attribute">ref</span> = "<span class="hljs-attribute">questionForm</span>" <span class="hljs-attribute">className</span>=<span class="hljs-value">"form-horizontal"</span>&gt;</span>
 			<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"question"</span>&gt;</span>
 		          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Question:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-		          	<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Add question"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"question"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"input-xlarge"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          	<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"question"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"input-xlarge"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 	          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"answers"</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Provide some answers: <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer1"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer2"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer3"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer4"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Provide correct answer: <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"correct"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Provide some other answers: <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer2"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer3"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Say something..."</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"answer4"</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"input-xlarge"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-	          <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"submit"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Submit"</span> /&gt;</span>
+	          <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"submit"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Add question"</span> /&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">Footer</span> /&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
         );
        }

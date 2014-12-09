@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>show_all_questions.js</title>
+  <title>play_game.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="..\docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>show_all_questions.js</h1>
+                  <h1>play_game.js</h1>
               </div>
           </li>
         
@@ -35,39 +35,55 @@
 var React = require('react'),
 	Router = require('react-router'),
 	Question = require('./show_question'),
-	Link = Router.Link,
+	GuessQuestion = require('./guess_question'),
 	_ = require('lodash');
-	
 
-var QuestionList = React.createClass({
+var Play = React.createClass({
 	getInitialState: function(){
 		return {questions:{}};
 	},
-	componentWillMount: function() {
+	runGame: function(){
+		this.setState({isplaying:true});
+	},
+	loadQuestions: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-		this.ref.child('questions').on("value", function(data) {
-			me.setState({'questions':data.val()});
+	this.ref.child('questions').limitToLast(10).once("value", function(data) {
+		me.setState({'questions':data.val()});
 		});
     },
-	render: function(){
+    stopGame: function(){
+    	this.setState({isplaying:false});
+    },
+	render: function() {
+		var button;
+		if (_.isEmpty(this.state.questions)){
 			return (
-			&lt;div id="questionbox"&gt;
-	          &lt;div id="question"&gt;
-		          &lt;h2&gt;Questions:&lt;/h2&gt;
-		          
-		          &lt;div&gt;
-			          {_.map(this.state.questions,function(q){
-			          	return &lt;div&gt;&lt;Question data={q}/&gt;&lt;/div&gt;;
-			          })}
-			      &lt;/div&gt;
-	          &lt;/div&gt;
-	        &lt;/div&gt;
-	        );
-   }
+				&lt;div id = "game"&gt;
+					&lt;button onClick={this.loadQuestions}&gt;Load questions&lt;/button&gt;
+				&lt;/div&gt;
+			);
+		} else if (!this.state.isplaying){
+			return (
+				&lt;div id = "game"&gt;
+					&lt;button onClick={this.runGame}&gt;Start quiz&lt;/button&gt;
+					&lt;p&gt;The questions has been loaded. Let's play!&lt;/p&gt;
+				&lt;/div&gt;
+			);
+		} else {
+			return (
+				&lt;div id = "game"&gt;
+					{_.map(this.state.questions,function(q){
+	          			return &lt;GuessQuestion data={q}/&gt;;
+		        	})}
+					&lt;button onClick={this.stopGame}&gt;End quiz&lt;/button&gt;
+				&lt;/div&gt;
+			);
+		}
+	}
 });
-
-module.exports = QuestionList;</pre></div></div>
+	
+module.exports = Play;</pre></div></div>
             
         </li>
         
