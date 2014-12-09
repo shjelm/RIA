@@ -30191,6 +30191,20 @@ var Question = React.createClass({displayName: 'Question',
     editQuestion: function(){
     	this.setState({isediting:true});
     },
+    deleteQuestion: function(){
+    	var onComplete = function(error) {
+		  if (error) {
+		    console.log("Question couldn't be deleted");
+		  } else {
+		    console.log('Question deleted!');
+		  }
+		};
+		var x = confirm("Are you sure you want to delete?");
+		this.questionsRef = new Firebase("https://ria2014.firebaseio.com/questions/");
+		if(x){
+    		this.questionsRef.child(this.props.data.id).remove(onComplete);
+    	}
+    },
 	render: function(){
 		if(this.state.isediting){
 			return (
@@ -30234,7 +30248,8 @@ var Question = React.createClass({displayName: 'Question',
             React.createElement("li", null, React.createElement("p", null, this.props.data.answer4))
             )
           ), 
-          React.createElement("button", {onClick: this.editQuestion}, "Edit")
+          React.createElement("button", {onClick: this.editQuestion}, "Edit"), 
+          React.createElement("button", {onClick: this.deleteQuestion}, "Delete")
         )
         );
        }

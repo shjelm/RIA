@@ -50,6 +50,20 @@ var Question = React.createClass({
     editQuestion: function(){
     	this.setState({isediting:true});
     },
+    deleteQuestion: function(){
+    	var onComplete = function(error) {
+		  if (error) {
+		    console.log("Question couldn't be deleted");
+		  } else {
+		    console.log('Question deleted!');
+		  }
+		};
+		var x = confirm("Are you sure you want to delete?");
+		this.questionsRef = new Firebase("https://ria2014.firebaseio.com/questions/");
+		if(x){
+    		this.questionsRef.child(this.props.data.id).remove(onComplete);
+    	}
+    },
 	render: function(){
 		if(this.state.isediting){
 			return (
@@ -94,6 +108,7 @@ var Question = React.createClass({
             </ul>
           </div>
           <button onClick={this.editQuestion}>Edit</button>
+          <button onClick={this.deleteQuestion}>Delete</button>
         </div>
         );
        }
