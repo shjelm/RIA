@@ -5,15 +5,15 @@
 	background-color: #FFF;
 	margin: 3% 3% 5% 3%;
 	padding: 3%;
+    width: device-width;
 }
 
 #showQuestion, #showQuestions, #addQuestion
 {
 	height:50px;
 	width:50px;
-	float:left;
 	margin: 20px;
-	margin-bottom: 10%;
+	margin-bottom: 25%;
 }
 #start{
 	margin:auto;
