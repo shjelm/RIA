@@ -29,13 +29,13 @@ var Play = React.createClass({
 		if (_.isEmpty(this.state.questions)){
 			return (
 				<div id = "game">
-					<button onClick={this.loadQuestions}>Load questions</button>
+					<button onClick={this.loadQuestions} className="btn btn-primary">Load questions</button>
 				</div>
 			);
 		} else if (!this.state.isplaying){
 			return (
 				<div id = "game">
-					<button onClick={this.runGame}>Start quiz</button>
+					<button onClick={this.runGame} className="btn btn-primary">Start quiz</button>
 					<p>The questions has been loaded. Let's play!</p>
 				</div>
 			);
@@ -46,7 +46,7 @@ var Play = React.createClass({
 					{_.map(this.state.questions,function(q){
 	          			return <GuessQuestion data={q}/>;
 		        	})}
-					<button onClick={this.stopGame}>End quiz</button>
+					<button onClick={this.stopGame} className="btn btn-primary">End quiz</button>
 				</div>
 			);
 		}

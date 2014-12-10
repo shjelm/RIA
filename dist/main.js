@@ -29891,17 +29891,17 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("label", null, "Question:"), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "input-xlarge"}))
+		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "form-control"}))
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
 		          React.createElement("label", null, "Provide correct answer: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "correct", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "correct", className: "form-control"})), 
 		          React.createElement("label", null, "Provide some other answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "input-xlarge"}))
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "form-control"}))
 	          ), 
-	          React.createElement("input", {type: "submit", value: "Add question"})
+	          React.createElement("input", {type: "submit", value: "Add question", className: "btn btn-success"})
           )
           )
         );
@@ -30089,13 +30089,13 @@ var Play = React.createClass({displayName: 'Play',
 		if (_.isEmpty(this.state.questions)){
 			return (
 				React.createElement("div", {id: "game"}, 
-					React.createElement("button", {onClick: this.loadQuestions}, "Load questions")
+					React.createElement("button", {onClick: this.loadQuestions, className: "btn btn-primary"}, "Load questions")
 				)
 			);
 		} else if (!this.state.isplaying){
 			return (
 				React.createElement("div", {id: "game"}, 
-					React.createElement("button", {onClick: this.runGame}, "Start quiz"), 
+					React.createElement("button", {onClick: this.runGame, className: "btn btn-primary"}, "Start quiz"), 
 					React.createElement("p", null, "The questions has been loaded. Let's play!")
 				)
 			);
@@ -30106,7 +30106,7 @@ var Play = React.createClass({displayName: 'Play',
 					_.map(this.state.questions,function(q){
 	          			return React.createElement(GuessQuestion, {data: q});
 		        	}), 
-					React.createElement("button", {onClick: this.stopGame}, "End quiz")
+					React.createElement("button", {onClick: this.stopGame, className: "btn btn-primary"}, "End quiz")
 				)
 			);
 		}
@@ -30244,17 +30244,17 @@ var Question = React.createClass({displayName: 'Question',
 			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("label", null, "Question:"), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", className: "input-xlarge", defaultValue: this.props.data.question}))
+		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", className: "form-control", defaultValue: this.props.data.question}))
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
 		          React.createElement("label", null, "Provide correct answer: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.correct, ref: "correct", className: "input-xlarge"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.correct, ref: "correct", className: "form-control"})), 
 		          React.createElement("label", null, "Provide some other answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer2, ref: "answer2", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer3, ref: "answer3", className: "input-xlarge"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", defaultValue: this.props.data.answer4, ref: "answer4", className: "input-xlarge"}))
+		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer2, ref: "answer2", className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer3, ref: "answer3", className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer4, ref: "answer4", className: "form-control"}))
 	          ), 
-	          React.createElement("input", {type: "submit", value: "Update question"})
+	          React.createElement("input", {type: "submit", className: "btn btn-success", value: "Update question"})
           )
           )
 	        );
@@ -30280,8 +30280,8 @@ var Question = React.createClass({displayName: 'Question',
             React.createElement("li", null, React.createElement("p", null, this.props.data.answer4))
             )
           ), 
-          React.createElement("button", {onClick: this.editQuestion}, "Edit"), 
-          React.createElement("button", {onClick: this.deleteQuestion}, "Delete")
+          React.createElement("button", {onClick: this.editQuestion, className: "btn btn-warning"}, "Edit"), 
+          React.createElement("button", {onClick: this.deleteQuestion, className: "btn btn-danger"}, "Delete")
         )
         );
        }

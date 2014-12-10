@@ -71,17 +71,17 @@ var Question = React.createClass({
 			<form onSubmit={this.handleSubmit} ref = "questionForm" className="form-horizontal">
 			<div id="question">
 		          <label>Question:</label>
-		          	<p><input type="text" ref="question" className="input-xlarge" defaultValue={this.props.data.question} /></p>
+		          	<p><input type="text" ref="question" className="form-control" defaultValue={this.props.data.question} /></p>
 	          </div>
 	          <div id="answers">
 		          <label>Provide correct answer: </label>
-		          <p><input type="text" placeholder="Say something..." defaultValue={this.props.data.correct} ref="correct" className="input-xlarge"></input></p>
+		          <p><input type="text" defaultValue={this.props.data.correct} ref="correct" className="form-control" /></p>
 		          <label>Provide some other answers: </label>
-		          <p><input type="text" placeholder="Say something..." defaultValue={this.props.data.answer2} ref="answer2" className="input-xlarge"/></p>
-		          <p><input type="text" placeholder="Say something..." defaultValue={this.props.data.answer3} ref="answer3" className="input-xlarge"/></p>
-		          <p><input type="text" placeholder="Say something..." defaultValue={this.props.data.answer4} ref="answer4" className="input-xlarge"/></p>
+		          <p><input type="text" defaultValue={this.props.data.answer2} ref="answer2" className="form-control"/></p>
+		          <p><input type="text" defaultValue={this.props.data.answer3} ref="answer3" className="form-control"/></p>
+		          <p><input type="text" defaultValue={this.props.data.answer4} ref="answer4" className="form-control"/></p>
 	          </div>
-	          <input type="submit" value="Update question" />
+	          <input type="submit" className="btn btn-success" value="Update question" />
           </form>
           </div>
 	        );
@@ -107,8 +107,8 @@ var Question = React.createClass({
             <li><p>{this.props.data.answer4}</p></li>
             </ul>
           </div>
-          <button onClick={this.editQuestion}>Edit</button>
-          <button onClick={this.deleteQuestion}>Delete</button>
+          <button onClick={this.editQuestion} className="btn btn-warning">Edit</button>
+          <button onClick={this.deleteQuestion} className="btn btn-danger">Delete</button>
         </div>
         );
        }
