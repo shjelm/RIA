@@ -85,13 +85,16 @@
     deleteQuestion: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     	<span class="hljs-keyword">var</span> onComplete = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error)</span> </span>{
 		  <span class="hljs-keyword">if</span> (error) {
-		    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Synchronization failed'</span>);
+		    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Question couldn't be deleted"</span>);
 		  } <span class="hljs-keyword">else</span> {
-		    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Synchronization succeeded'</span>);
+		    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Question deleted!'</span>);
 		  }
 		};
-		
-    	<span class="hljs-keyword">this</span>.questionsRef.child(<span class="hljs-keyword">this</span>.props.data.id).remove(onComplete);
+		<span class="hljs-keyword">var</span> x = confirm(<span class="hljs-string">"Are you sure you want to delete?"</span>);
+		<span class="hljs-keyword">this</span>.questionsRef = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">"https://ria2014.firebaseio.com/questions/"</span>);
+		<span class="hljs-keyword">if</span>(x){
+    		<span class="hljs-keyword">this</span>.questionsRef.child(<span class="hljs-keyword">this</span>.props.data.id).remove(onComplete);
+    	}
     },
 	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.isediting){

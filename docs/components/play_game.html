@@ -30,31 +30,45 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>/** @jsx React.DOM */
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/** @jsx React.DOM */</span>
 
-var React = require('react'),
-	Router = require('react-router'),
-	Question = require('./show_question'),
-	GuessQuestion = require('./guess_question'),
-	_ = require('lodash');
+<span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>),
+	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>),
+	Question = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./show_question'</span>),
+	GuessQuestion = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./guess_question'</span>),
+	_ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
 
-var Play = React.createClass({
-	getInitialState: function(){
-		return {questions:{}};
+<span class="hljs-keyword">var</span> Play = React.createClass({
+	getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">return</span> {questions:{}};
 	},
-	runGame: function(){
-		this.setState({isplaying:true});
+	runGame: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">true</span>});
 	},
-	loadQuestions: function() {
-		var me = this;
-		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-	this.ref.child('questions').limitToLast(10).once("value", function(data) {
-		me.setState({'questions':data.val()});
+	loadQuestions: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
+		<span class="hljs-keyword">this</span>.ref = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">"https://ria2014.firebaseio.com/"</span>);
+	<span class="hljs-keyword">this</span>.ref.child(<span class="hljs-string">'questions'</span>).limitToLast(<span class="hljs-number">10</span>).once(<span class="hljs-string">"value"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+		me.setState({<span class="hljs-string">'questions'</span>:data.val()});
 		});
     },
-    stopGame: function(){
-    	this.setState({isplaying:false});
-    },
+    stopGame: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    	<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">false</span>});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>this.setState({isended: true});</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    },
 	render: function() {
 		var button;
 		if (_.isEmpty(this.state.questions)){
@@ -70,7 +84,8 @@ var Play = React.createClass({
 					&lt;p&gt;The questions has been loaded. Let's play!&lt;/p&gt;
 				&lt;/div&gt;
 			);
-		} else {
+		}
+		 else {
 			return (
 				&lt;div id = "game"&gt;
 					{_.map(this.state.questions,function(q){

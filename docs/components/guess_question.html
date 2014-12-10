@@ -36,23 +36,52 @@
 	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>);
 
 <span class="hljs-keyword">var</span> Guess = React.createClass({
-	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-		<span class="hljs-keyword">return</span> (		
-      	<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"guessForm"</span> &gt;</span>
-			<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">onSubmit</span>=<span class="hljs-value">{this.handleSubmit}</span> <span class="hljs-attribute">ref</span> = "<span class="hljs-attribute">guessForm</span>" <span class="hljs-attribute">className</span>=<span class="hljs-value">"form-horizontal"</span>&gt;</span>
+	getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">this</span>.setState({iscorrect:<span class="hljs-literal">false</span>});
+		<span class="hljs-keyword">return</span> {count:{}};
+	},
+	handleChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">if</span>(event.target.value === <span class="hljs-keyword">this</span>.props.data.correct){
+			<span class="hljs-keyword">this</span>.setState({iscorrect: <span class="hljs-literal">true</span>});	
+		}
+		<span class="hljs-keyword">else</span>{
+			<span class="hljs-keyword">this</span>.setState({isfalse:<span class="hljs-literal">true</span>});
+		}
+	},
+	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{	
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.iscorrect){
+			<span class="hljs-keyword">return</span> (
+				<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Correct!<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{this.props.data.correct} is the correct answer.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+			);
+		} else if(this.state.isfalse){
+			return (
+				<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Incorrect!<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>You answered {event.target.value}. {this.props.data.correct} is the correct answer. <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+			);
+		}
+		else{
+		return (		
+      	<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"guessForm"</span> &gt;</span>
+			<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.handleChange}</span> <span class="hljs-attribute">ref</span> = "<span class="hljs-attribute">guessForm</span>" <span class="hljs-attribute">className</span>=<span class="hljs-value">"form-horizontal"</span>&gt;</span>
 			<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"question"</span>&gt;</span>
 				<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Question<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
 		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{this.props.data.question}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 	          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"answers"</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"answer"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.correct}</span>&gt;</span> {this.props.data.correct} <span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"answer"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer2}</span>&gt;</span> {this.props.data.answer2}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"answer"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer3}</span>&gt;</span> {this.props.data.answer3}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"answer"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer4}</span>&gt;</span> {this.props.data.answer4}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.correct}</span>&gt;</span> {this.props.data.correct} <span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer2}</span>&gt;</span> {this.props.data.answer2}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer3}</span>&gt;</span> {this.props.data.answer3}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer4}</span>&gt;</span> {this.props.data.answer4}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       		<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
       	<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
         );
+       }
    }
 });
 
