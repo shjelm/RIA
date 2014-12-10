@@ -1,0 +1,43 @@
+#footer{
+	margin-bottom: 3%;
+}
+#main{
+	background-color: #FFF;
+	margin: 3% 3% 5% 3%;
+	padding: 3%;
+}
+
+#showQuestion, #showQuestions, #addQuestion
+{
+	height:50px;
+	width:50px;
+	float:left;
+	margin: 20px;
+	margin-bottom: 10%;
+}
+#start{
+	margin:auto;
+	width:900px;
+}
+
+#header{
+	height: 80px;
+	width: 150px;
+	margin-bottom: 6%;
+}
+
+#footer{
+	margin:5% 0 0 15%;
+}
+
+#questionbox{
+	padding-left: 3%;
+}
+
+.btn{
+	margin-right: 5px;	
+}
+
+#questionForm{
+	width: 60%;
+}
