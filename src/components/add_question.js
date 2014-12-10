@@ -2,7 +2,6 @@
 
 var React = require('react'),
 	Router = require('react-router'),
-	Footer = require('./footer'),
 	Link = Router.Link;
 	
 var QuestionBox = React.createClass({

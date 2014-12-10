@@ -22,6 +22,7 @@ var Play = React.createClass({
     },
     stopGame: function(){
     	this.setState({isplaying:false});
+    	// this.setState({isended: true});
     },
 	render: function() {
 		var button;
@@ -38,7 +39,8 @@ var Play = React.createClass({
 					<p>The questions has been loaded. Let's play!</p>
 				</div>
 			);
-		} else {
+		}
+		 else {
 			return (
 				<div id = "game">
 					{_.map(this.state.questions,function(q){

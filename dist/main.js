@@ -29825,7 +29825,6 @@ module.exports = require('./lib/React');
 
 var React = require('react'),
 	Router = require('react-router'),
-	Footer = require('./footer'),
 	Link = Router.Link;
 	
 var QuestionBox = React.createClass({displayName: 'QuestionBox',
@@ -29910,7 +29909,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
      });
 
 module.exports = QuestionBox;
-},{"./footer":195,"react":191,"react-router":14}],193:[function(require,module,exports){
+},{"react":191,"react-router":14}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29986,31 +29985,63 @@ module.exports = Footer;
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Router = require('react-router');
+	Router = require('react-router'),
+	Play = require('./play_game');
 
 var Guess = React.createClass({displayName: 'Guess',
-	render: function(){
+	getInitialState: function(){
+		this.setState({iscorrect:false});
+		return {count:Play.getCount()};
+	},
+	handleChange: function(){
+		if(event.target.value === this.props.data.correct){
+			this.setState({iscorrect: true});	
+		}
+		else{
+			this.setState({isfalse:true});
+		}
+	},
+	render: function(){	
+		if(this.state.iscorrect){
+			return (
+				React.createElement("div", null, 
+				React.createElement("h2", null, "Correct!"), 
+				React.createElement("p", null, this.props.data.correct, " is the correct answer."), 
+				React.createElement("p", null, this.state.count, "/10")
+				)
+			);
+		} else if(this.state.isfalse){
+			return (
+				React.createElement("div", null, 
+				React.createElement("h2", null, "Incorrect!"), 
+				React.createElement("p", null, "You answered ", event.target.value, ". ", this.props.data.correct, " is the correct answer. "), 
+				React.createElement("p", null, this.state.count, "/10")
+				)
+			);
+		}
+		else{
 		return (		
       	React.createElement("div", {id: "guessForm"}, 
-			React.createElement("form", {onSubmit: this.handleSubmit, ref: "guessForm", className: "form-horizontal"}, 
+			React.createElement("form", {onChange: this.handleChange, ref: "guessForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
 				React.createElement("h3", null, "Question"), 
 		          React.createElement("p", null, this.props.data.question)
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.correct}, " ", this.props.data.correct, " ")), 
-		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer2}, " ", this.props.data.answer2)), 
-		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer3}, " ", this.props.data.answer3)), 
-		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "answer", value: this.props.data.answer4}, " ", this.props.data.answer4))
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "A", value: this.props.data.correct}, " ", this.props.data.correct, " ")), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "A", value: this.props.data.answer2}, " ", this.props.data.answer2)), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "A", value: this.props.data.answer3}, " ", this.props.data.answer3)), 
+		          React.createElement("p", null, React.createElement("input", {type: "radio", name: "A", value: this.props.data.answer4}, " ", this.props.data.answer4))
 	          )
       		)
       	)
         );
+       }
    }
 });
 
 module.exports = Guess;
-},{"react":191,"react-router":14}],197:[function(require,module,exports){
+},{"./play_game":198,"react":191,"react-router":14}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30050,8 +30081,12 @@ var Play = React.createClass({displayName: 'Play',
 		me.setState({'questions':data.val()});
 		});
     },
+    getCount: function(){
+    	return 5;
+    },
     stopGame: function(){
     	this.setState({isplaying:false});
+    	// this.setState({isended: true});
     },
 	render: function() {
 		var button;
@@ -30068,7 +30103,8 @@ var Play = React.createClass({displayName: 'Play',
 					React.createElement("p", null, "The questions has been loaded. Let's play!")
 				)
 			);
-		} else {
+		}
+		 else {
 			return (
 				React.createElement("div", {id: "game"}, 
 					_.map(this.state.questions,function(q){
