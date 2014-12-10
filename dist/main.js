@@ -29985,13 +29985,12 @@ module.exports = Footer;
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Router = require('react-router'),
-	Play = require('./play_game');
+	Router = require('react-router');
 
 var Guess = React.createClass({displayName: 'Guess',
 	getInitialState: function(){
 		this.setState({iscorrect:false});
-		return {count:Play.getCount()};
+		return {count:{}};
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
@@ -30006,16 +30005,14 @@ var Guess = React.createClass({displayName: 'Guess',
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Correct!"), 
-				React.createElement("p", null, this.props.data.correct, " is the correct answer."), 
-				React.createElement("p", null, this.state.count, "/10")
+				React.createElement("p", null, this.props.data.correct, " is the correct answer.")
 				)
 			);
 		} else if(this.state.isfalse){
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Incorrect!"), 
-				React.createElement("p", null, "You answered ", event.target.value, ". ", this.props.data.correct, " is the correct answer. "), 
-				React.createElement("p", null, this.state.count, "/10")
+				React.createElement("p", null, "You answered ", event.target.value, ". ", this.props.data.correct, " is the correct answer. ")
 				)
 			);
 		}
@@ -30041,7 +30038,7 @@ var Guess = React.createClass({displayName: 'Guess',
 });
 
 module.exports = Guess;
-},{"./play_game":198,"react":191,"react-router":14}],197:[function(require,module,exports){
+},{"react":191,"react-router":14}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30080,9 +30077,6 @@ var Play = React.createClass({displayName: 'Play',
 	this.ref.child('questions').limitToLast(10).once("value", function(data) {
 		me.setState({'questions':data.val()});
 		});
-    },
-    getCount: function(){
-    	return 5;
     },
     stopGame: function(){
     	this.setState({isplaying:false});

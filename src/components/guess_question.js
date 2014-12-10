@@ -6,7 +6,7 @@ var React = require('react'),
 var Guess = React.createClass({
 	getInitialState: function(){
 		this.setState({iscorrect:false});
-		return {count:{};
+		return {count:{}};
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
