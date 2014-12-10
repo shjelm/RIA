@@ -9,13 +9,13 @@ var Start = React.createClass({
 		return (
 		<div id="start">
           <div id="showQuestion">
-          	<Link to='play_game'>Play game</Link>
+          	<Link to='play_game'><img src="../images/play.png" alt="Play Game"/></Link>
           </div>
           <div id="showQuestions">
-          	<Link to='show_all_questions'>Show all questions</Link>
+          	<Link to='show_all_questions'><img src="../images/all.png" alt="Show All Questions"/></Link>
           </div>
           <div id="addQuestion">
-          	<Link to='add_question'>Add question</Link>
+          	<Link to='add_question'><img src="../images/add.png" alt="Add Question"/></Link>
           </div>
       	</div>
         );

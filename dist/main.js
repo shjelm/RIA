@@ -29953,8 +29953,10 @@ var Container = React.createClass({displayName: 'Container',
 	render: function(){
 		return (
 		React.createElement("div", {className: "container", id: "container"}, 
-			React.createElement("h2", null, " Quiz "), 
-			React.createElement(Footer, null), 
+			React.createElement("div", {id: "header"}, 
+			React.createElement("img", {src: "../images/quiz.png", alt: "Quiz"}), 
+			React.createElement(Footer, null)
+			), 
 			React.createElement(RouteHandler, null)
         )
         );
@@ -30300,13 +30302,13 @@ var Start = React.createClass({displayName: 'Start',
 		return (
 		React.createElement("div", {id: "start"}, 
           React.createElement("div", {id: "showQuestion"}, 
-          	React.createElement(Link, {to: "play_game"}, "Play game")
+          	React.createElement(Link, {to: "play_game"}, React.createElement("img", {src: "../images/play.png", alt: "Play Game"}))
           ), 
           React.createElement("div", {id: "showQuestions"}, 
-          	React.createElement(Link, {to: "show_all_questions"}, "Show all questions")
+          	React.createElement(Link, {to: "show_all_questions"}, React.createElement("img", {src: "../images/all.png", alt: "Show All Questions"}))
           ), 
           React.createElement("div", {id: "addQuestion"}, 
-          	React.createElement(Link, {to: "add_question"}, "Add question")
+          	React.createElement(Link, {to: "add_question"}, React.createElement("img", {src: "../images/add.png", alt: "Add Question"}))
           )
       	)
         );

@@ -1,8 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Router = require('react-router'),
-	Footer = require('./footer');
+	Router = require('react-router');
 
 var Header = React.createClass({
 	render: function(){

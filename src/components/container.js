@@ -10,8 +10,10 @@ var Container = React.createClass({
 	render: function(){
 		return (
 		<div className="container" id="container">
-			<h2> Quiz </h2>
+			<div id="header">
+			<img src="../images/quiz.png" alt="Quiz" />
 			<Footer />
+			</div>
 			<RouteHandler />
         </div>
         );
