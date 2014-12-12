@@ -32,3 +32,12 @@ när det finns frågor i state --> rendera knapp för att spela (köra guessQuestion
 		          	return <GuessQuestion data={q}/>;
 		          })}
 
+
+
+Slumpa fråga: 
+{a:"bla",b:"tjo"}
+Object.keys(myObj); // ["a","b"]
+
+lodash: _.keys(myObj)
+_.shuffle(_.keys(myObj))
+var questions = _.first(_.shuffle(_.keys(myObj)),7);

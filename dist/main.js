@@ -29996,7 +29996,8 @@ var Guess = React.createClass({displayName: 'Guess',
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
-			this.setState({iscorrect: true});	
+			this.setState({iscorrect: true});
+			this.props.fun();	
 		}
 		else{
 			this.setState({isfalse:true});
@@ -30068,7 +30069,7 @@ var React = require('react'),
 
 var Play = React.createClass({displayName: 'Play',
 	getInitialState: function(){
-		return {questions:{}};
+		return {questions:{},correctAnswer:0};
 	},
 	runGame: function(){
 		this.setState({isplaying:true});
@@ -30076,13 +30077,37 @@ var Play = React.createClass({displayName: 'Play',
 	loadQuestions: function() {
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
-	this.ref.child('questions').limitToLast(10).once("value", function(data) {
+	this.ref.child('questions').once("value", function(data) {
+		var d = data.val();
+		var value = _.shuffle(_.keys(d));
+		var first = _.first(value,10);
+		
+		//TODO: Get questions from keys (first)
+		
 		me.setState({'questions':data.val()});
 		});
+		
+		this.setState({isended:false});
     },
     stopGame: function(){
-    	this.setState({isplaying:false});
-    	// this.setState({isended: true});
+    	this.setState({isplaying:false, isended:true});
+    },
+    addCorrect: function(){
+    	this.setState({correctAnswer:this.state.correctAnswer+1});
+    },
+    printResult: function(){
+    	if(this.state.correctAnswer === 0){
+    		return "Well, that was bad. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    	}
+    	else if(this.state.correctAnswer > 0 && this.state.correctAnswer < 6){
+    		return "Could have benn better. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    	}
+    	else if(this.state.correctAnswer > 5 && this.state.correctAnswer < 10){
+    		return "Pretty good. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    	}
+    	else{
+    	 	return "Congratulations, you're awesome. You got all " +this.state.correctAnswer+" out of 10 questions right.";
+    	}
     },
 	render: function() {
 		var button;
@@ -30092,20 +30117,27 @@ var Play = React.createClass({displayName: 'Play',
 					React.createElement("button", {onClick: this.loadQuestions, className: "btn btn-primary"}, "Load questions")
 				)
 			);
-		} else if (!this.state.isplaying){
+		} else if (!this.state.isplaying && !this.state.isended){
 			return (
 				React.createElement("div", {id: "game"}, 
 					React.createElement("button", {onClick: this.runGame, className: "btn btn-primary"}, "Start quiz"), 
 					React.createElement("p", null, "The questions has been loaded. Let's play!")
 				)
 			);
+		}else if(this.state.isended){
+			return (
+				React.createElement("div", null, 
+	        	React.createElement("h2", null, this.printResult()), 
+	        	React.createElement("button", {onClick: this.loadQuestions, className: "btn btn-primary"}, "Play again")
+	        	)
+	       );
 		}
 		 else {
 			return (
 				React.createElement("div", {id: "game"}, 
 					_.map(this.state.questions,function(q){
-	          			return React.createElement(GuessQuestion, {data: q});
-		        	}), 
+	          			return React.createElement(GuessQuestion, {data: q, fun: this.addCorrect});
+		        	},this), 
 					React.createElement("button", {onClick: this.stopGame, className: "btn btn-primary"}, "End quiz")
 				)
 			);

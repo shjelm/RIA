@@ -10,7 +10,8 @@ var Guess = React.createClass({
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
-			this.setState({iscorrect: true});	
+			this.setState({iscorrect: true});
+			this.props.fun();	
 		}
 		else{
 			this.setState({isfalse:true});
