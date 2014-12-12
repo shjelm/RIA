@@ -41,3 +41,8 @@ Object.keys(myObj); // ["a","b"]
 lodash: _.keys(myObj)
 _.shuffle(_.keys(myObj))
 var questions = _.first(_.shuffle(_.keys(myObj)),7);
+
+
+räknare rätt i playgame
+{questions:{},correctAnswers:0};
+registerCorrectAnswer: function(){ this.setState({correctAnswers:this.state.correctAnswers+1}); }
