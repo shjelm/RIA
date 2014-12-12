@@ -30080,11 +30080,17 @@ var Play = React.createClass({displayName: 'Play',
 	this.ref.child('questions').once("value", function(data) {
 		var d = data.val();
 		var value = _.shuffle(_.keys(d));
-		var first = _.first(value,10);
+		var first = (_.first(value,10));
+		
+		var q = [];
+		for (var i =0; i< first.length; i++){
+			q.push(data.child(first[i]).val());
+		}
+		console.log(q);
 		
 		//TODO: Get questions from keys (first)
 		
-		me.setState({'questions':data.val()});
+		me.setState({'questions':q});
 		});
 		
 		this.setState({isended:false});
@@ -30100,10 +30106,10 @@ var Play = React.createClass({displayName: 'Play',
     		return "Well, that was bad. You got "+this.state.correctAnswer+" out of 10 questions right.";
     	}
     	else if(this.state.correctAnswer > 0 && this.state.correctAnswer < 6){
-    		return "That was almost good. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    		return "Pretty good. You got "+this.state.correctAnswer+" out of 10 questions right.";
     	}
     	else if(this.state.correctAnswer > 5 && this.state.correctAnswer < 10){
-    		return "Pretty good. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    		return "Great. You got "+this.state.correctAnswer+" out of 10 questions right.";
     	}
     	else{
     	 	return "Congratulations, you're awesome. You got all " +this.state.correctAnswer+" out of 10 questions right.";
