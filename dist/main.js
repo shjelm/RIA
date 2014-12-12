@@ -30100,7 +30100,7 @@ var Play = React.createClass({displayName: 'Play',
     		return "Well, that was bad. You got "+this.state.correctAnswer+" out of 10 questions right.";
     	}
     	else if(this.state.correctAnswer > 0 && this.state.correctAnswer < 6){
-    		return "Could have benn better. You got "+this.state.correctAnswer+" out of 10 questions right.";
+    		return "That was almost good. You got "+this.state.correctAnswer+" out of 10 questions right.";
     	}
     	else if(this.state.correctAnswer > 5 && this.state.correctAnswer < 10){
     		return "Pretty good. You got "+this.state.correctAnswer+" out of 10 questions right.";
