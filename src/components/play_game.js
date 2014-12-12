@@ -25,10 +25,6 @@ var Play = React.createClass({
 		for (var i =0; i< first.length; i++){
 			q.push(data.child(first[i]).val());
 		}
-		console.log(q);
-		
-		//TODO: Get questions from keys (first)
-		
 		me.setState({'questions':q});
 		});
 		
