@@ -63,6 +63,11 @@ gulp.task('lint', function(){
       .pipe(jshint.reporter('fail'))
 });
 
+gulp.task('watch', function () {
+  gulp.watch('src/**/*.js', ['browserify']);
+  gulp.watch('src/index.html', ['copyindex']);
+});
+
 gulp.task('build',['lint','browserify','copyindex']);
 
 gulp.task('docs',['builddocs','docsindex']);
