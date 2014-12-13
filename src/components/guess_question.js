@@ -3,10 +3,21 @@
 var React = require('react'),
 	Router = require('react-router');
 
+var shuffle = function (array) {
+  for (var i = 0; i < array.length; i++) {
+    var random = Math.floor(Math.random() * (i + 1));
+    var tmp = array[random];
+
+    array[random] = array[i];
+    array[i] = tmp;
+  }
+  return array;
+};
+
 var Guess = React.createClass({
 	getInitialState: function(){
 		this.setState({iscorrect:false});
-		return {count:{}};
+		return {count:{}, answer: ''};
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
@@ -14,7 +25,7 @@ var Guess = React.createClass({
 			this.props.fun();	
 		}
 		else{
-			this.setState({isfalse:true});
+			this.setState({isfalse:true, answer: event.target.value});
 		}
 	},
 	render: function(){	
@@ -29,7 +40,7 @@ var Guess = React.createClass({
 			return (
 				<div>
 				<h2>Incorrect!</h2>
-				<p>You answered {event.target.value}. {this.props.data.correct} is the correct answer. </p>
+				<p>You answered {this.state.answer}. {this.props.data.correct} is the correct answer. </p>
 				</div>
 			);
 		}
@@ -42,10 +53,17 @@ var Guess = React.createClass({
 		          <p>{this.props.data.question}</p>
 	          </div>
 	          <div id="answers">
-		          <p><input type="radio" name="A" value={this.props.data.correct}> {this.props.data.correct} </input></p>
-		          <p><input type="radio" name="A" value={this.props.data.answer2}> {this.props.data.answer2}</input></p>
-		          <p><input type="radio" name="A" value={this.props.data.answer3}> {this.props.data.answer3}</input></p>
-		          <p><input type="radio" name="A" value={this.props.data.answer4}> {this.props.data.answer4}</input></p>
+              {shuffle(['correct', 'answer2', 'answer3', 'answer4']).map(function (value, i) {
+                 return (
+                     <p>
+                       <input
+                         type="radio"
+                         name="A"
+                         key={i}
+                         value={this.props.data[value]}> {this.props.data[value]} </input>
+                     </p>
+                     );
+              }, this)}
 	          </div>
       		</form>
       	</div>
