@@ -30112,7 +30112,7 @@ var shuffle = function (array) {
 var Guess = React.createClass({displayName: 'Guess',
 	getInitialState: function(){
 		this.setState({iscorrect:false});
-		return {count:{}};
+		return {count:{}, answer: ''};
 	},
 	handleChange: function(){
 		if(event.target.value === this.props.data.correct){
@@ -30120,7 +30120,7 @@ var Guess = React.createClass({displayName: 'Guess',
 			this.props.fun();	
 		}
 		else{
-			this.setState({isfalse:true});
+			this.setState({isfalse:true, answer: event.target.value});
 		}
 	},
 	render: function(){	
@@ -30135,7 +30135,7 @@ var Guess = React.createClass({displayName: 'Guess',
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Incorrect!"), 
-				React.createElement("p", null, "You answered ", event.target.value, ". ", this.props.data.correct, " is the correct answer. ")
+				React.createElement("p", null, "You answered ", this.state.answer, ". ", this.props.data.correct, " is the correct answer. ")
 				)
 			);
 		}
