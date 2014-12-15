@@ -45,3 +45,9 @@
 #showQuestion:hover,#showQuestions:hover, #addQuestion:hover{
 	opacity: .9;
 }
+
+#errors{
+	font-size: 1.2em;
+	color: #F00;
+	
+}

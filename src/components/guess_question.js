@@ -27,6 +27,7 @@ var Guess = React.createClass({
 		else{
 			this.setState({isfalse:true, answer: event.target.value});
 		}
+		this.props.count();
 	},
 	render: function(){	
 		if(this.state.iscorrect){

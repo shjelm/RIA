@@ -58,6 +58,10 @@ var QuestionForm = React.createClass({
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";       
+	          	this.refs.errors.getDOMNode().innerHTML = '';
+	          	}
+	          	else{
+	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
 	          	}
 	          	
           		e.preventDefault();
@@ -66,6 +70,7 @@ var QuestionForm = React.createClass({
 		return (    
           <div id="questionForm" >
 			<form onSubmit={this.handleSubmit} ref = "questionForm" className="form-horizontal">
+			<div id="errors" ref="errors"></div>
 			<div id="question">
 		          <label>Question:</label>
 		          	<p><input type="text" placeholder="Say something..." ref="question" className="form-control" /></p>

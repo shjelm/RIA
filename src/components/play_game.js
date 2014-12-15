@@ -8,7 +8,7 @@ var React = require('react'),
 
 var Play = React.createClass({
 	getInitialState: function(){
-		return {questions:{},correctAnswer:0};
+		return {questions:{},correctAnswer:0,answeredQ:0};
 	},
 	runGame: function(){
 		this.setState({isplaying:true});
@@ -30,8 +30,23 @@ var Play = React.createClass({
 		
 		this.setState({isended:false});
     },
+    countQuestions: function(){
+    	this.setState({answeredQ:this.state.answeredQ+1});
+    },
+	errorAll: function(){
+		if(this.state.answeredQ !== 10){
+			console.log(this.refs.errors.getDOMNode());
+			this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer all questions.</p>";
+			return false;
+		}
+		else{
+			return true;
+		}
+	},
     stopGame: function(){
-    	this.setState({isplaying:false, isended:true});
+    	if(this.errorAll()){
+    		this.setState({isplaying:false, isended:true});
+    	}
     },
     addCorrect: function(){
     	this.setState({correctAnswer:this.state.correctAnswer+1});
@@ -77,8 +92,9 @@ var Play = React.createClass({
 			return (
 				<div id = "game">
 					{_.map(this.state.questions,function(q){
-	          			return <GuessQuestion data={q} fun={this.addCorrect}/>;
+	          			return <GuessQuestion data={q} fun={this.addCorrect} count={this.countQuestions}/>;
 		        	},this)}
+		        	<div id="errors" ref="errors"></div>
 					<button onClick={this.stopGame} className="btn btn-primary">End quiz</button>
 				</div>
 			);

@@ -29881,6 +29881,10 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 	          	this.refs.answer2.getDOMNode().value = "";
 	          	this.refs.answer3.getDOMNode().value = "";
 	          	this.refs.answer4.getDOMNode().value = "";       
+	          	this.refs.errors.getDOMNode().innerHTML = '';
+	          	}
+	          	else{
+	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
 	          	}
 	          	
           		e.preventDefault();
@@ -29889,6 +29893,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		return (    
           React.createElement("div", {id: "questionForm"}, 
 			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
+			React.createElement("div", {id: "errors", ref: "errors"}), 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("label", null, "Question:"), 
 		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "form-control"}))
@@ -30013,6 +30018,7 @@ var Guess = React.createClass({displayName: 'Guess',
 		else{
 			this.setState({isfalse:true, answer: event.target.value});
 		}
+		this.props.count();
 	},
 	render: function(){	
 		if(this.state.iscorrect){
@@ -30088,7 +30094,7 @@ var React = require('react'),
 
 var Play = React.createClass({displayName: 'Play',
 	getInitialState: function(){
-		return {questions:{},correctAnswer:0};
+		return {questions:{},correctAnswer:0,answeredQ:0};
 	},
 	runGame: function(){
 		this.setState({isplaying:true});
@@ -30110,8 +30116,23 @@ var Play = React.createClass({displayName: 'Play',
 		
 		this.setState({isended:false});
     },
+    countQuestions: function(){
+    	this.setState({answeredQ:this.state.answeredQ+1});
+    },
+	errorAll: function(){
+		if(this.state.answeredQ !== 10){
+			console.log(this.refs.errors.getDOMNode());
+			this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer all questions.</p>";
+			return false;
+		}
+		else{
+			return true;
+		}
+	},
     stopGame: function(){
-    	this.setState({isplaying:false, isended:true});
+    	if(this.errorAll()){
+    		this.setState({isplaying:false, isended:true});
+    	}
     },
     addCorrect: function(){
     	this.setState({correctAnswer:this.state.correctAnswer+1});
@@ -30157,8 +30178,9 @@ var Play = React.createClass({displayName: 'Play',
 			return (
 				React.createElement("div", {id: "game"}, 
 					_.map(this.state.questions,function(q){
-	          			return React.createElement(GuessQuestion, {data: q, fun: this.addCorrect});
+	          			return React.createElement(GuessQuestion, {data: q, fun: this.addCorrect, count: this.countQuestions});
 		        	},this), 
+		        	React.createElement("div", {id: "errors", ref: "errors"}), 
 					React.createElement("button", {onClick: this.stopGame, className: "btn btn-primary"}, "End quiz")
 				)
 			);
@@ -30271,6 +30293,9 @@ var Question = React.createClass({displayName: 'Question',
 	          	this.handleQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});	          	
     			this.setState({isediting:false});     
 	          	}
+	          	else{
+	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
+	          	}
           e.preventDefault();
     },
     editQuestion: function(){
@@ -30295,6 +30320,7 @@ var Question = React.createClass({displayName: 'Question',
 			return (
           React.createElement("div", {id: "questionForm"}, 
 			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
+			React.createElement("div", {id: "errors", ref: "errors"}), 
 			React.createElement("div", {id: "question"}, 
 		          React.createElement("label", null, "Question:"), 
 		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", className: "form-control", defaultValue: this.props.data.question}))

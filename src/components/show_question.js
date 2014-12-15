@@ -45,6 +45,9 @@ var Question = React.createClass({
 	          	this.handleQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});	          	
     			this.setState({isediting:false});     
 	          	}
+	          	else{
+	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
+	          	}
           e.preventDefault();
     },
     editQuestion: function(){
@@ -69,6 +72,7 @@ var Question = React.createClass({
 			return (
           <div id="questionForm" >
 			<form onSubmit={this.handleSubmit} ref = "questionForm" className="form-horizontal">
+			<div id="errors" ref="errors"></div>
 			<div id="question">
 		          <label>Question:</label>
 		          	<p><input type="text" ref="question" className="form-control" defaultValue={this.props.data.question} /></p>
