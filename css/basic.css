@@ -41,3 +41,7 @@
 #questionForm{
 	width: 60%;
 }
+
+#showQuestion:hover,#showQuestions:hover, #addQuestion:hover{
+	opacity: .9;
+}
