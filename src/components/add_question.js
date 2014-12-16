@@ -2,8 +2,7 @@
 
 var React = require('react'),
 	Router = require('react-router'),	
-	F = require('./form'),
-	Link = Router.Link;
+	F = require('./form');
 	
 var QuestionBox = React.createClass({
 	 handleQuestionSubmit: function(question) {
