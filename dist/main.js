@@ -29824,7 +29824,8 @@ module.exports = require('./lib/React');
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Router = require('react-router'),
+	Router = require('react-router'),	
+	F = require('./form'),
 	Link = Router.Link;
 	
 var QuestionBox = React.createClass({displayName: 'QuestionBox',
@@ -29836,85 +29837,14 @@ var QuestionBox = React.createClass({displayName: 'QuestionBox',
 	 render: function() {
           return (
             React.createElement("div", {className: "questionBox"}, 
-              React.createElement(QuestionForm, {onQuestionSubmit: this.handleQuestionSubmit})
+              React.createElement(F, {onQuestionSubmit: this.handleQuestionSubmit})
             )
           );
    	}
 });
 
-var QuestionForm = React.createClass({displayName: 'QuestionForm',
-	isValid: function() {
-    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
-    		if (this.props.question) fields.push('question');
-    		if (this.props.correct) fields.push('correct');
-    		if (this.props.answer2) fields.push('answer2');
-    		if (this.props.answer3) fields.push('answer3');
-    		if (this.props.answer4) fields.push('answer4');
-
-    		var errors = {};
-    		fields.forEach(function(field) {
-	      		var value = this.refs[field].getDOMNode().value.trim();
-	      		if (!value) {
-	        		errors[field] = 'This field is required';
-	      		}
-    		}.bind(this));
-    		this.setState({errors: errors});
-
-		    var isValid = true;
-		    for (var error in errors) {
-		      isValid = false;
-		      break;
-		    }
-		    return isValid;
-	  	},
-        handleSubmit: function(e) {
-          	var question = this.refs.question.getDOMNode().value.trim(),
-          		correct = this.refs.correct.getDOMNode().value.trim(),
-      			answer2 = this.refs.answer2.getDOMNode().value.trim(),
-      			answer3 = this.refs.answer3.getDOMNode().value.trim(),
-      			answer4 = this.refs.answer4.getDOMNode().value.trim();
-      			
-  			if (this.isValid()) {
-	          	this.props.onQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});
-	          	this.refs.question.getDOMNode().value = "";
-	          	this.refs.correct.getDOMNode().value = "";
-	          	this.refs.answer2.getDOMNode().value = "";
-	          	this.refs.answer3.getDOMNode().value = "";
-	          	this.refs.answer4.getDOMNode().value = "";       
-	          	this.refs.errors.getDOMNode().innerHTML = '';
-	          	}
-	          	else{
-	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
-	          	}
-	          	
-          		e.preventDefault();
-        },
-		render: function(){
-		return (    
-          React.createElement("div", {id: "questionForm"}, 
-			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
-			React.createElement("div", {id: "errors", ref: "errors"}), 
-			React.createElement("div", {id: "question"}, 
-		          React.createElement("label", null, "Question:"), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "question", className: "form-control"}))
-	          ), 
-	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("label", null, "Provide correct answer: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "correct", className: "form-control"})), 
-		          React.createElement("label", null, "Provide some other answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer2", className: "form-control"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer3", className: "form-control"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", placeholder: "Say something...", ref: "answer4", className: "form-control"}))
-	          ), 
-	          React.createElement("input", {type: "submit", value: "Add question", className: "btn btn-success"})
-          )
-          )
-        );
-       }
-     });
-
 module.exports = QuestionBox;
-},{"react":191,"react-router":14}],193:[function(require,module,exports){
+},{"./form":196,"react":191,"react-router":14}],193:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29945,7 +29875,7 @@ var App = (
 
 module.exports = App;
 
-},{"./add_question.js":192,"./container.js":194,"./not_found.js":197,"./play_game.js":198,"./qform.js":199,"./show_all_questions.js":200,"./show_question.js":201,"./start.js":202,"react":191,"react-router":14}],194:[function(require,module,exports){
+},{"./add_question.js":192,"./container.js":194,"./not_found.js":198,"./play_game.js":199,"./qform.js":200,"./show_all_questions.js":201,"./show_question.js":202,"./start.js":203,"react":191,"react-router":14}],194:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29969,7 +29899,7 @@ var Container = React.createClass({displayName: 'Container',
 });
 
 module.exports = Container;
-},{"./footer":195,"./start":202,"react":191,"react-router":14}],195:[function(require,module,exports){
+},{"./footer":195,"./start":203,"react":191,"react-router":14}],195:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -29989,6 +29919,115 @@ var Footer = React.createClass({displayName: 'Footer',
 module.exports = Footer;
 
 },{"react":191,"react-router":14}],196:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react'),
+	Router = require('react-router'),
+	_ = require('lodash');
+
+var FormToFill = React.createClass({displayName: 'FormToFill',
+	getInitialState: function(){
+		this.setState({isadded: false});
+		return {};
+	},
+	isValid: function() {
+    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
+    		if (this.props.question) fields.push('question');
+    		if (this.props.correct) fields.push('correct');
+    		if (this.props.answer2) fields.push('answer2');
+    		if (this.props.answer3) fields.push('answer3');
+    		if (this.props.answer4) fields.push('answer4');
+
+    		var errors = {};
+    		fields.forEach(function(field) {
+	      		var value = this.refs[field].getDOMNode().value.trim();
+	      		if (!value) {
+	        		errors[field] = 'This field is required';
+	      		}
+    		}.bind(this));
+    		this.setState({errors: errors});
+
+		    var isValid = true;
+		    for (var error in errors) {
+		      isValid = false;
+		      break;
+		    }
+		    return isValid;
+	  	},
+	  	getStatus: function(){
+	  		console.log(_.isEmpty(this.props.data));
+	  		if(_.isEmpty(this.props.data)){
+	          	return true;
+	          }
+			return false;
+	  	},
+        handleSubmit: function(e) {
+          	var question = this.refs.question.getDOMNode().value.trim(),
+          		correct = this.refs.correct.getDOMNode().value.trim(),
+      			answer2 = this.refs.answer2.getDOMNode().value.trim(),
+      			answer3 = this.refs.answer3.getDOMNode().value.trim(),
+      			answer4 = this.refs.answer4.getDOMNode().value.trim();
+      			
+  			if (this.isValid()) {
+		          	this.props.onQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});
+		          	if(this.getStatus()){
+			          	this.refs.question.getDOMNode().value = "";
+			          	this.refs.correct.getDOMNode().value = "";
+			          	this.refs.answer2.getDOMNode().value = "";
+			          	this.refs.answer3.getDOMNode().value = "";
+			          	this.refs.answer4.getDOMNode().value = "";       
+			          	this.refs.errors.getDOMNode().innerHTML = '';
+		          	}
+		          	if(this.props.editing){
+	          			this.props.editing(); 
+	          		}
+	          	}
+	          	else{
+	        		this.refs.msg.getDOMNode().innerHTML = "<p>All fields are required.</p>";
+	          	}
+	          	if(this.state.isadded){
+	          		this.refs.msg.getDOMNode().innerHTML = "<p>The question has been added.</p>";
+	          	}
+	          	
+          		e.preventDefault();
+        },
+	render: function(){
+		var _q, _c, _a2, _a3, _a4 = '';
+		var button = 'Add question';
+		if(!_.isEmpty(this.props.data)){
+			console.log(this.props.data.question);
+			_q = this.props.data.question;
+			_c = this.props.data.correct;
+			_a2 = this.props.data.answer2;
+			_a3 = this.props.data.answer3;
+			_a4 = this.props.data.answer4;
+			button = 'Update question';
+		}
+		return (
+		React.createElement("div", {id: "questionForm"}, 
+			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
+			React.createElement("div", {id: "msg", ref: "msg"}), 
+			React.createElement("div", {id: "question"}, 
+		          React.createElement("label", null, "Question:"), 
+		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", defaultValue: _q, className: "form-control"}))
+	          ), 
+	          React.createElement("div", {id: "answers"}, 
+		          React.createElement("label", null, "Provide correct answer: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", ref: "correct", defaultValue: _c, className: "form-control"})), 
+		          React.createElement("label", null, "Provide some other answers: "), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", ref: "answer2", defaultValue: _a2, className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", ref: "answer3", defaultValue: _a3, className: "form-control"})), 
+		          React.createElement("p", null, React.createElement("input", {type: "text", ref: "answer4", defaultValue: _a4, className: "form-control"}))
+	          ), 
+	          React.createElement("input", {type: "submit", value: button, className: "btn btn-success"})
+          )
+          )
+        );
+   }
+});
+
+module.exports = FormToFill;
+},{"lodash":5,"react":191,"react-router":14}],197:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30066,7 +30105,7 @@ var Guess = React.createClass({displayName: 'Guess',
 
 module.exports = Guess;
 
-},{"react":191,"react-router":14}],197:[function(require,module,exports){
+},{"react":191,"react-router":14}],198:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30083,7 +30122,7 @@ var NotFound = React.createClass({displayName: 'NotFound',
 });
 
 module.exports = NotFound;
-},{"react":191}],198:[function(require,module,exports){
+},{"react":191}],199:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30189,7 +30228,7 @@ var Play = React.createClass({displayName: 'Play',
 });
 	
 module.exports = Play;
-},{"./guess_question":196,"./show_question":201,"lodash":5,"react":191,"react-router":14}],199:[function(require,module,exports){
+},{"./guess_question":197,"./show_question":202,"lodash":5,"react":191,"react-router":14}],200:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -30206,7 +30245,7 @@ var QForm = React.createClass({displayName: 'QForm',
 });
 
 module.exports = QForm;
-},{"react":191}],200:[function(require,module,exports){
+},{"react":191}],201:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30245,10 +30284,11 @@ var QuestionList = React.createClass({displayName: 'QuestionList',
 });
 
 module.exports = QuestionList;
-},{"./show_question":201,"lodash":5,"react":191,"react-router":14}],201:[function(require,module,exports){
+},{"./show_question":202,"lodash":5,"react":191,"react-router":14}],202:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var React = require('react'),
+var React = require('react'),	
+	F = require('./form'),
 	Router = require('react-router');
 	
 
@@ -30258,45 +30298,8 @@ var Question = React.createClass({displayName: 'Question',
  	 	this.questionsRef = new Firebase("https://ria2014.firebaseio.com/questions/");
 	 	this.questionsRef.child(this.props.data.id).update(question);
     },
-	isValid: function() {
-    		var fields = ['question', 'correct', 'answer2', 'answer3', 'answer4'];
-    		if (this.props.question) fields.push('question');
-    		if (this.props.correct) fields.push('correct');
-    		if (this.props.answer2) fields.push('answer2');
-    		if (this.props.answer3) fields.push('answer3');
-    		if (this.props.answer4) fields.push('answer4');
-
-    		var errors = {};
-    		fields.forEach(function(field) {
-	      		var value = this.refs[field].getDOMNode().value.trim();
-	      		if (!value) {
-	        		errors[field] = 'This field is required';
-	      		}
-    		}.bind(this));
-    		this.setState({errors: errors});
-
-		    var isValid = true;
-		    for (var error in errors) {
-		      isValid = false;
-		      break;
-		    }
-		    return isValid;
-	  	},
-	handleSubmit: function() {
-          	var question = this.refs.question.getDOMNode().value.trim(),
-          		correct = this.refs.correct.getDOMNode().value.trim(),
-      			answer2 = this.refs.answer2.getDOMNode().value.trim(),
-      			answer3 = this.refs.answer3.getDOMNode().value.trim(),
-      			answer4 = this.refs.answer4.getDOMNode().value.trim();      			
-      			
-  			if (this.isValid()) {
-	          	this.handleQuestionSubmit({question: question, correct: correct, answer2: answer2, answer3: answer3, answer4: answer4});	          	
-    			this.setState({isediting:false});     
-	          	}
-	          	else{
-	        		this.refs.errors.getDOMNode().innerHTML = "<p>All fields are required.</p>";
-	          	}
-          e.preventDefault();
+    isEditing: function(){
+    	this.setState({isediting:false});
     },
     editQuestion: function(){
     	this.setState({isediting:true});
@@ -30318,24 +30321,7 @@ var Question = React.createClass({displayName: 'Question',
 	render: function(){
 		if(this.state.isediting){
 			return (
-          React.createElement("div", {id: "questionForm"}, 
-			React.createElement("form", {onSubmit: this.handleSubmit, ref: "questionForm", className: "form-horizontal"}, 
-			React.createElement("div", {id: "errors", ref: "errors"}), 
-			React.createElement("div", {id: "question"}, 
-		          React.createElement("label", null, "Question:"), 
-		          	React.createElement("p", null, React.createElement("input", {type: "text", ref: "question", className: "form-control", defaultValue: this.props.data.question}))
-	          ), 
-	          React.createElement("div", {id: "answers"}, 
-		          React.createElement("label", null, "Provide correct answer: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.correct, ref: "correct", className: "form-control"})), 
-		          React.createElement("label", null, "Provide some other answers: "), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer2, ref: "answer2", className: "form-control"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer3, ref: "answer3", className: "form-control"})), 
-		          React.createElement("p", null, React.createElement("input", {type: "text", defaultValue: this.props.data.answer4, ref: "answer4", className: "form-control"}))
-	          ), 
-	          React.createElement("input", {type: "submit", className: "btn btn-success", value: "Update question"})
-          )
-          )
+          		React.createElement(F, {data: this.props.data, onQuestionSubmit: this.handleQuestionSubmit, editing: this.isEditing})
 	        );
        }
        else{
@@ -30369,7 +30355,7 @@ var Question = React.createClass({displayName: 'Question',
 });
 
 module.exports = Question;
-},{"react":191,"react-router":14}],202:[function(require,module,exports){
+},{"./form":196,"react":191,"react-router":14}],203:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react'),
@@ -30395,7 +30381,7 @@ var Start = React.createClass({displayName: 'Start',
 });
 
 module.exports = Start;
-},{"react":191,"react-router":14}],203:[function(require,module,exports){
+},{"react":191,"react-router":14}],204:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var approutes = require('./components/app'),
@@ -30405,4 +30391,4 @@ var approutes = require('./components/app'),
 Router.run(approutes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('main'));
 });
-},{"./components/app":193,"react":191,"react-router":14}]},{},[203])
+},{"./components/app":193,"react":191,"react-router":14}]},{},[204])
