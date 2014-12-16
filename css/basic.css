@@ -46,8 +46,6 @@
 	opacity: .9;
 }
 
-#errors{
+#msg{
 	font-size: 1.2em;
-	color: #F00;
-	
 }

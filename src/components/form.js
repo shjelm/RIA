@@ -64,7 +64,7 @@ var FormToFill = React.createClass({
 	          	else{
 	        		this.refs.msg.getDOMNode().innerHTML = "<p>All fields are required.</p>";
 	          	}
-	          	if(this.state.isadded){
+	          	if(this.getStatus()){
 	          		this.refs.msg.getDOMNode().innerHTML = "<p>The question has been added.</p>";
 	          	}
 	          	
@@ -74,7 +74,6 @@ var FormToFill = React.createClass({
 		var _q, _c, _a2, _a3, _a4 = '';
 		var button = 'Add question';
 		if(!_.isEmpty(this.props.data)){
-			console.log(this.props.data.question);
 			_q = this.props.data.question;
 			_c = this.props.data.correct;
 			_a2 = this.props.data.answer2;

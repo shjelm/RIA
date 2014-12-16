@@ -35,7 +35,6 @@ var Play = React.createClass({
     },
 	errorAll: function(){
 		if(this.state.answeredQ !== 10){
-			console.log(this.refs.errors.getDOMNode());
 			this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer all questions.</p>";
 			return false;
 		}
