@@ -29867,7 +29867,7 @@ var QuestionForm = React.createClass({displayName: 'QuestionForm',
 		    }
 		    return isValid;
 	  	},
-        handleSubmit: function() {
+        handleSubmit: function(e) {
           	var question = this.refs.question.getDOMNode().value.trim(),
           		correct = this.refs.correct.getDOMNode().value.trim(),
       			answer2 = this.refs.answer2.getDOMNode().value.trim(),
