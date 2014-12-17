@@ -29825,8 +29825,7 @@ module.exports = require('./lib/React');
 
 var React = require('react'),
 	Router = require('react-router'),	
-	F = require('./form'),
-	Link = Router.Link;
+	F = require('./form');
 	
 var QuestionBox = React.createClass({displayName: 'QuestionBox',
 	 handleQuestionSubmit: function(question) {
@@ -30214,10 +30213,9 @@ var Play = React.createClass({displayName: 'Play',
 		 else {
 			return (
 				React.createElement("div", {id: "game"}, 
-					_.map(this.state.questions,function(q){
-	          			return React.createElement(GuessQuestion, {data: q, fun: this.addCorrect, count: this.countQuestions});
-		        	},this), 
+				React.createElement(GuessQuestion, {data: this.state.questions[this.state.answeredQ], fun: this.addCorrect, count: this.countQuestions}), 
 		        	React.createElement("div", {id: "errors", ref: "errors"}), 
+		        	React.createElement("button", {onClick: this.countQuestions, className: "btn btn-primary"}, "Next"), 
 					React.createElement("button", {onClick: this.stopGame, className: "btn btn-primary"}, "End quiz")
 				)
 			);

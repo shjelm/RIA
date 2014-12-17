@@ -89,11 +89,10 @@ var Play = React.createClass({
 		}
 		 else {
 			return (
-				<div id = "game">
-					{_.map(this.state.questions,function(q){
-	          			return <GuessQuestion data={q} fun={this.addCorrect} count={this.countQuestions}/>;
-		        	},this)}
+				<div id = "game"> 
+				<GuessQuestion data={this.state.questions[this.state.answeredQ]} fun={this.addCorrect} count={this.countQuestions}/>
 		        	<div id="errors" ref="errors"></div>
+		        	<button onClick={this.countQuestions} className="btn btn-primary">Next</button>
 					<button onClick={this.stopGame} className="btn btn-primary">End quiz</button>
 				</div>
 			);
