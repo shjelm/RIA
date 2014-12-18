@@ -25,19 +25,22 @@ var Guess = React.createClass({
 			this.props.fun();	
 		}
 		else{
-			this.setState({isfalse:true, answer: event.target.value});
+			this.setState({iscorrect:false, answer: event.target.value});
 		}
-		this.props.count();
+		this.props.getGuessing();
+	},
+	getNumber: function(){
+		return this.props.count+1;	
 	},
 	render: function(){	
-		if(this.state.iscorrect){
+		if(this.state.iscorrect && this.props.guessing === false){
 			return (
 				<div>
 				<h2>Correct!</h2>
 				<p>{this.props.data.correct} is the correct answer.</p>
 				</div>
 			);
-		} else if(this.state.isfalse){
+		} else if(!this.state.iscorrect && this.props.guessing === false){
 			return (
 				<div>
 				<h2>Incorrect!</h2>
@@ -50,7 +53,7 @@ var Guess = React.createClass({
       	<div id="guessForm" >
 			<form onChange={this.handleChange} ref = "guessForm" className="form-horizontal">
 			<div id="question">
-				<h3>Question</h3>
+				<h3>Question {this.getNumber()}</h3>
 		          <p>{this.props.data.question}</p>
 	          </div>
 	          <div id="answers">

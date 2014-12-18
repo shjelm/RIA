@@ -14,6 +14,7 @@ var Play = React.createClass({
 		this.setState({isplaying:true});
 	},
 	loadQuestions: function() {
+		this.setState({isplaying:false, answeredQ:0, correctAnswer:0, isguessing:true, isanswered: false});
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
 	this.ref.child('questions').once("value", function(data) {
@@ -30,8 +31,13 @@ var Play = React.createClass({
 		
 		this.setState({isended:false});
     },
+    guessing: function(){
+    	this.setState({isguessing:false, isanswered: true});
+    },
     countQuestions: function(){
-    	this.setState({answeredQ:this.state.answeredQ+1});
+    	this.setState({answeredQ:this.state.answeredQ+1});    	
+    	this.setState({isguessing:true, isanswered: false});
+		this.refs.errors.getDOMNode().innerHTML = "";	
     },
 	errorAll: function(){
 		if(this.state.answeredQ !== 10){
@@ -43,9 +49,7 @@ var Play = React.createClass({
 		}
 	},
     stopGame: function(){
-    	if(this.errorAll()){
-    		this.setState({isplaying:false, isended:true});
-    	}
+		this.setState({isplaying:false, isended:true});
     },
     addCorrect: function(){
     	this.setState({correctAnswer:this.state.correctAnswer+1});
@@ -64,6 +68,27 @@ var Play = React.createClass({
     	 	return "Congratulations, you're awesome. You got all " +this.state.correctAnswer+" out of 10 questions right.";
     	}
     },
+    game: function(){
+		if(this.state.answeredQ < 9){
+			if(this.state.isanswered){
+				this.countQuestions();
+			}
+			else{
+				this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer the question.</p>";				
+			}
+		}
+		else{
+			this.stopGame();
+		}
+   },
+    getName: function(){
+		if(this.state.answeredQ < 9){
+			return "Next question";
+		}
+		else{
+			return "End quiz";
+		}
+   },
 	render: function() {
 		var button;
 		if (_.isEmpty(this.state.questions)){
@@ -90,10 +115,10 @@ var Play = React.createClass({
 		 else {
 			return (
 				<div id = "game"> 
-				<GuessQuestion data={this.state.questions[this.state.answeredQ]} fun={this.addCorrect} count={this.countQuestions}/>
+				<GuessQuestion data={this.state.questions[this.state.answeredQ]} fun={this.addCorrect} guessing={this.state.isguessing} 
+				getGuessing ={this.guessing} count = {this.state.answeredQ}/>
 		        	<div id="errors" ref="errors"></div>
-		        	<button onClick={this.countQuestions} className="btn btn-primary">Next</button>
-					<button onClick={this.stopGame} className="btn btn-primary">End quiz</button>
+					<button onClick={this.game} className="btn btn-primary">{this.getName()}</button>
 				</div>
 			);
 		}

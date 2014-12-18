@@ -30053,19 +30053,22 @@ var Guess = React.createClass({displayName: 'Guess',
 			this.props.fun();	
 		}
 		else{
-			this.setState({isfalse:true, answer: event.target.value});
+			this.setState({iscorrect:false, answer: event.target.value});
 		}
-		this.props.count();
+		this.props.getGuessing();
+	},
+	getNumber: function(){
+		return this.props.count+1;	
 	},
 	render: function(){	
-		if(this.state.iscorrect){
+		if(this.state.iscorrect && this.props.guessing === false){
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Correct!"), 
 				React.createElement("p", null, this.props.data.correct, " is the correct answer.")
 				)
 			);
-		} else if(this.state.isfalse){
+		} else if(!this.state.iscorrect && this.props.guessing === false){
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Incorrect!"), 
@@ -30078,7 +30081,7 @@ var Guess = React.createClass({displayName: 'Guess',
       	React.createElement("div", {id: "guessForm"}, 
 			React.createElement("form", {onChange: this.handleChange, ref: "guessForm", className: "form-horizontal"}, 
 			React.createElement("div", {id: "question"}, 
-				React.createElement("h3", null, "Question"), 
+				React.createElement("h3", null, "Question ", this.getNumber()), 
 		          React.createElement("p", null, this.props.data.question)
 	          ), 
 	          React.createElement("div", {id: "answers"}, 
@@ -30137,6 +30140,7 @@ var Play = React.createClass({displayName: 'Play',
 		this.setState({isplaying:true});
 	},
 	loadQuestions: function() {
+		this.setState({isplaying:false, answeredQ:0, correctAnswer:0, isguessing:true, isanswered: false});
 		var me = this;
 		this.ref = new Firebase("https://ria2014.firebaseio.com/");
 	this.ref.child('questions').once("value", function(data) {
@@ -30153,8 +30157,13 @@ var Play = React.createClass({displayName: 'Play',
 		
 		this.setState({isended:false});
     },
+    guessing: function(){
+    	this.setState({isguessing:false, isanswered: true});
+    },
     countQuestions: function(){
-    	this.setState({answeredQ:this.state.answeredQ+1});
+    	this.setState({answeredQ:this.state.answeredQ+1});    	
+    	this.setState({isguessing:true, isanswered: false});
+		this.refs.errors.getDOMNode().innerHTML = "";	
     },
 	errorAll: function(){
 		if(this.state.answeredQ !== 10){
@@ -30166,9 +30175,7 @@ var Play = React.createClass({displayName: 'Play',
 		}
 	},
     stopGame: function(){
-    	if(this.errorAll()){
-    		this.setState({isplaying:false, isended:true});
-    	}
+		this.setState({isplaying:false, isended:true});
     },
     addCorrect: function(){
     	this.setState({correctAnswer:this.state.correctAnswer+1});
@@ -30187,6 +30194,27 @@ var Play = React.createClass({displayName: 'Play',
     	 	return "Congratulations, you're awesome. You got all " +this.state.correctAnswer+" out of 10 questions right.";
     	}
     },
+    game: function(){
+		if(this.state.answeredQ < 9){
+			if(this.state.isanswered){
+				this.countQuestions();
+			}
+			else{
+				this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer the question.</p>";				
+			}
+		}
+		else{
+			this.stopGame();
+		}
+   },
+    getName: function(){
+		if(this.state.answeredQ < 9){
+			return "Next question";
+		}
+		else{
+			return "End quiz";
+		}
+   },
 	render: function() {
 		var button;
 		if (_.isEmpty(this.state.questions)){
@@ -30213,10 +30241,10 @@ var Play = React.createClass({displayName: 'Play',
 		 else {
 			return (
 				React.createElement("div", {id: "game"}, 
-				React.createElement(GuessQuestion, {data: this.state.questions[this.state.answeredQ], fun: this.addCorrect, count: this.countQuestions}), 
+				React.createElement(GuessQuestion, {data: this.state.questions[this.state.answeredQ], fun: this.addCorrect, guessing: this.state.isguessing, 
+				getGuessing: this.guessing, count: this.state.answeredQ}), 
 		        	React.createElement("div", {id: "errors", ref: "errors"}), 
-		        	React.createElement("button", {onClick: this.countQuestions, className: "btn btn-primary"}, "Next"), 
-					React.createElement("button", {onClick: this.stopGame, className: "btn btn-primary"}, "End quiz")
+					React.createElement("button", {onClick: this.game, className: "btn btn-primary"}, this.getName())
 				)
 			);
 		}
