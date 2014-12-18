@@ -70,6 +70,7 @@ var Play = React.createClass({
     game: function(){
 		if(this.state.answeredQ < 9){
 			if(this.state.isanswered){
+				this.refs.errors.getDOMNode().innerHTML = "";
 				this.countQuestions();
 			}
 			else{

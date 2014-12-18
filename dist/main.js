@@ -30062,7 +30062,6 @@ var Guess = React.createClass({displayName: 'Guess',
 	},
 	render: function(){	
 		if(this.state.iscorrect && this.props.guessing === false){
-			this.refs.errors.getDOMNode().innerHTML = "";	
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Correct!"), 
@@ -30070,7 +30069,6 @@ var Guess = React.createClass({displayName: 'Guess',
 				)
 			);
 		} else if(!this.state.iscorrect && this.props.guessing === false){
-			this.refs.errors.getDOMNode().innerHTML = "";
 			return (
 				React.createElement("div", null, 
 				React.createElement("h2", null, "Incorrect!"), 
@@ -30198,6 +30196,7 @@ var Play = React.createClass({displayName: 'Play',
     game: function(){
 		if(this.state.answeredQ < 9){
 			if(this.state.isanswered){
+				this.refs.errors.getDOMNode().innerHTML = "";
 				this.countQuestions();
 			}
 			else{
