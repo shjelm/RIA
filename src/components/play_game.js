@@ -37,7 +37,6 @@ var Play = React.createClass({
     countQuestions: function(){
     	this.setState({answeredQ:this.state.answeredQ+1});    	
     	this.setState({isguessing:true, isanswered: false});
-		this.refs.errors.getDOMNode().innerHTML = "";	
     },
 	errorAll: function(){
 		if(this.state.answeredQ !== 10){

@@ -34,6 +34,7 @@ var Guess = React.createClass({
 	},
 	render: function(){	
 		if(this.state.iscorrect && this.props.guessing === false){
+			this.refs.errors.getDOMNode().innerHTML = "";	
 			return (
 				<div>
 				<h2>Correct!</h2>
@@ -41,6 +42,7 @@ var Guess = React.createClass({
 				</div>
 			);
 		} else if(!this.state.iscorrect && this.props.guessing === false){
+			this.refs.errors.getDOMNode().innerHTML = "";
 			return (
 				<div>
 				<h2>Incorrect!</h2>
