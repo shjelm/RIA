@@ -30055,6 +30055,7 @@ var Guess = React.createClass({displayName: 'Guess',
 		else{
 			this.setState({iscorrect:false, answer: event.target.value});
 		}
+		this.props.showBtn();
 		this.props.getGuessing();
 	},
 	getNumber: function(){
@@ -30077,6 +30078,7 @@ var Guess = React.createClass({displayName: 'Guess',
 			);
 		}
 		else{
+			this.props.hideBtn();
 		return (		
       	React.createElement("div", {id: "guessForm"}, 
 			React.createElement("form", {onChange: this.handleChange, ref: "guessForm", className: "form-horizontal"}, 
@@ -30195,17 +30197,19 @@ var Play = React.createClass({displayName: 'Play',
     },
     game: function(){
 		if(this.state.answeredQ < 9){
-			if(this.state.isanswered){
-				this.refs.errors.getDOMNode().innerHTML = "";
-				this.countQuestions();
-			}
-			else{
-				this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer the question.</p>";				
-			}
+			this.countQuestions();
 		}
 		else{
 			this.stopGame();
 		}
+   },
+   showButton: function(){
+   		this.refs.nextBtn.getDOMNode().style.visibility = "visible";
+   },
+   hideButton: function(){
+   	if(this.refs.nextBtn){
+   		this.refs.nextBtn.getDOMNode().style.visibility = "hidden";
+   	}
    },
     getName: function(){
 		if(this.state.answeredQ < 9){
@@ -30242,9 +30246,9 @@ var Play = React.createClass({displayName: 'Play',
 			return (
 				React.createElement("div", {id: "game"}, 
 				React.createElement(GuessQuestion, {data: this.state.questions[this.state.answeredQ], fun: this.addCorrect, guessing: this.state.isguessing, 
-				getGuessing: this.guessing, count: this.state.answeredQ}), 
+				getGuessing: this.guessing, count: this.state.answeredQ, showBtn: this.showButton, hideBtn: this.hideButton}), 
 		        	React.createElement("div", {id: "errors", ref: "errors"}), 
-					React.createElement("button", {onClick: this.game, className: "btn btn-primary"}, this.getName())
+					React.createElement("button", {id: "nextBtn", ref: "nextBtn", onClick: this.game, className: "btn btn-primary"}, this.getName())
 				)
 			);
 		}

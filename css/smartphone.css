@@ -45,3 +45,6 @@
 	font-size: 1.2em;
 	
 }
+#nextBtn{
+	visibility: hidden;
+}

@@ -69,17 +69,19 @@ var Play = React.createClass({
     },
     game: function(){
 		if(this.state.answeredQ < 9){
-			if(this.state.isanswered){
-				this.refs.errors.getDOMNode().innerHTML = "";
-				this.countQuestions();
-			}
-			else{
-				this.refs.errors.getDOMNode().innerHTML = "<p>You really should answer the question.</p>";				
-			}
+			this.countQuestions();
 		}
 		else{
 			this.stopGame();
 		}
+   },
+   showButton: function(){
+   		this.refs.nextBtn.getDOMNode().style.visibility = "visible";
+   },
+   hideButton: function(){
+   	if(this.refs.nextBtn){
+   		this.refs.nextBtn.getDOMNode().style.visibility = "hidden";
+   	}
    },
     getName: function(){
 		if(this.state.answeredQ < 9){
@@ -116,9 +118,9 @@ var Play = React.createClass({
 			return (
 				<div id = "game"> 
 				<GuessQuestion data={this.state.questions[this.state.answeredQ]} fun={this.addCorrect} guessing={this.state.isguessing} 
-				getGuessing ={this.guessing} count = {this.state.answeredQ}/>
+				getGuessing ={this.guessing} count = {this.state.answeredQ} showBtn={this.showButton} hideBtn={this.hideButton} />
 		        	<div id="errors" ref="errors"></div>
-					<button onClick={this.game} className="btn btn-primary">{this.getName()}</button>
+					<button id="nextBtn" ref="nextBtn" onClick={this.game} className="btn btn-primary" >{this.getName()}</button>
 				</div>
 			);
 		}

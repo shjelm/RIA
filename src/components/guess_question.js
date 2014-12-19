@@ -27,6 +27,7 @@ var Guess = React.createClass({
 		else{
 			this.setState({iscorrect:false, answer: event.target.value});
 		}
+		this.props.showBtn();
 		this.props.getGuessing();
 	},
 	getNumber: function(){
@@ -49,6 +50,7 @@ var Guess = React.createClass({
 			);
 		}
 		else{
+			this.props.hideBtn();
 		return (		
       	<div id="guessForm" >
 			<form onChange={this.handleChange} ref = "guessForm" className="form-horizontal">
