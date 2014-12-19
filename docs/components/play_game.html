@@ -40,65 +40,127 @@
 
 <span class="hljs-keyword">var</span> Play = React.createClass({
 	getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-		<span class="hljs-keyword">return</span> {questions:{}};
+		<span class="hljs-keyword">return</span> {questions:{},correctAnswer:<span class="hljs-number">0</span>,answeredQ:<span class="hljs-number">0</span>};
 	},
 	runGame: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">true</span>});
 	},
 	loadQuestions: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">false</span>, answeredQ:<span class="hljs-number">0</span>, correctAnswer:<span class="hljs-number">0</span>, isguessing:<span class="hljs-literal">true</span>, isanswered: <span class="hljs-literal">false</span>});
 		<span class="hljs-keyword">var</span> me = <span class="hljs-keyword">this</span>;
 		<span class="hljs-keyword">this</span>.ref = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">"https://ria2014.firebaseio.com/"</span>);
-	<span class="hljs-keyword">this</span>.ref.child(<span class="hljs-string">'questions'</span>).limitToLast(<span class="hljs-number">10</span>).once(<span class="hljs-string">"value"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
-		me.setState({<span class="hljs-string">'questions'</span>:data.val()});
+	<span class="hljs-keyword">this</span>.ref.child(<span class="hljs-string">'questions'</span>).once(<span class="hljs-string">"value"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+		<span class="hljs-keyword">var</span> d = data.val();
+		<span class="hljs-keyword">var</span> value = _.shuffle(_.keys(d));
+		<span class="hljs-keyword">var</span> first = (_.first(value,<span class="hljs-number">10</span>));
+		
+		<span class="hljs-keyword">var</span> q = [];
+		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i =<span class="hljs-number">0</span>; i&lt; first.length; i++){
+			q.push(data.child(first[i]).val());
+		}
+		me.setState({<span class="hljs-string">'questions'</span>:q});
 		});
+		
+		<span class="hljs-keyword">this</span>.setState({isended:<span class="hljs-literal">false</span>});
     },
+    guessing: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    	<span class="hljs-keyword">this</span>.setState({isguessing:<span class="hljs-literal">false</span>, isanswered: <span class="hljs-literal">true</span>});
+    },
+    countQuestions: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    	<span class="hljs-keyword">this</span>.setState({answeredQ:<span class="hljs-keyword">this</span>.state.answeredQ+<span class="hljs-number">1</span>});    	
+    	<span class="hljs-keyword">this</span>.setState({isguessing:<span class="hljs-literal">true</span>, isanswered: <span class="hljs-literal">false</span>});
+    },
+	errorAll: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.answeredQ !== <span class="hljs-number">10</span>){
+			<span class="hljs-keyword">this</span>.refs.errors.getDOMNode().innerHTML = <span class="hljs-string">"&lt;p&gt;You really should answer all questions.&lt;/p&gt;"</span>;
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+		}
+		<span class="hljs-keyword">else</span>{
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+	},
     stopGame: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    	<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">false</span>});</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>this.setState({isended: true});</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    },
-	render: function() {
-		var button;
-		if (_.isEmpty(this.state.questions)){
-			return (
-				&lt;div id = "game"&gt;
-					&lt;button onClick={this.loadQuestions}&gt;Load questions&lt;/button&gt;
-				&lt;/div&gt;
+		<span class="hljs-keyword">this</span>.setState({isplaying:<span class="hljs-literal">false</span>, isended:<span class="hljs-literal">true</span>});
+    },
+    addCorrect: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    	<span class="hljs-keyword">this</span>.setState({correctAnswer:<span class="hljs-keyword">this</span>.state.correctAnswer+<span class="hljs-number">1</span>});
+    },
+    printResult: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.correctAnswer === <span class="hljs-number">0</span>){
+    		<span class="hljs-keyword">return</span> <span class="hljs-string">"Well, that was bad. You got "</span>+<span class="hljs-keyword">this</span>.state.correctAnswer+<span class="hljs-string">" out of 10 questions right."</span>;
+    	}
+    	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.correctAnswer &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-keyword">this</span>.state.correctAnswer &lt; <span class="hljs-number">6</span>){
+    		<span class="hljs-keyword">return</span> <span class="hljs-string">"Pretty good. You got "</span>+<span class="hljs-keyword">this</span>.state.correctAnswer+<span class="hljs-string">" out of 10 questions right."</span>;
+    	}
+    	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.correctAnswer &gt; <span class="hljs-number">5</span> &amp;&amp; <span class="hljs-keyword">this</span>.state.correctAnswer &lt; <span class="hljs-number">10</span>){
+    		<span class="hljs-keyword">return</span> <span class="hljs-string">"Great. You got "</span>+<span class="hljs-keyword">this</span>.state.correctAnswer+<span class="hljs-string">" out of 10 questions right."</span>;
+    	}
+    	<span class="hljs-keyword">else</span>{
+    	 	<span class="hljs-keyword">return</span> <span class="hljs-string">"Congratulations, you're awesome. You got all "</span> +<span class="hljs-keyword">this</span>.state.correctAnswer+<span class="hljs-string">" out of 10 questions right."</span>;
+    	}
+    },
+    game: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.answeredQ &lt; <span class="hljs-number">9</span>){
+			<span class="hljs-keyword">this</span>.countQuestions();
+		}
+		<span class="hljs-keyword">else</span>{
+			<span class="hljs-keyword">this</span>.stopGame();
+		}
+   },
+   showButton: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+   		<span class="hljs-keyword">this</span>.refs.nextBtn.getDOMNode().style.visibility = <span class="hljs-string">"visible"</span>;
+   },
+   hideButton: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+   	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.refs.nextBtn){
+   		<span class="hljs-keyword">this</span>.refs.nextBtn.getDOMNode().style.visibility = <span class="hljs-string">"hidden"</span>;
+   	}
+   },
+    getName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.answeredQ &lt; <span class="hljs-number">9</span>){
+			<span class="hljs-keyword">return</span> <span class="hljs-string">"Next question"</span>;
+		}
+		<span class="hljs-keyword">else</span>{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">"End quiz"</span>;
+		}
+   },
+	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-keyword">var</span> button;
+		<span class="hljs-keyword">if</span> (_.isEmpty(<span class="hljs-keyword">this</span>.state.questions)){
+			<span class="hljs-keyword">return</span> (
+				<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span> = "<span class="hljs-attribute">game</span>"&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.loadQuestions}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span>&gt;</span>Load questions<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 			);
-		} else if (!this.state.isplaying){
+		} else if (!this.state.isplaying &amp;&amp; !this.state.isended){
 			return (
-				&lt;div id = "game"&gt;
-					&lt;button onClick={this.runGame}&gt;Start quiz&lt;/button&gt;
-					&lt;p&gt;The questions has been loaded. Let's play!&lt;/p&gt;
-				&lt;/div&gt;
+				<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span> = "<span class="hljs-attribute">game</span>"&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runGame}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span>&gt;</span>Start quiz<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The questions has been loaded. Let's play!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 			);
+		}else if(this.state.isended){
+			return (
+				<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+	        	<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>{this.printResult()}<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+	        	<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.loadQuestions}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span>&gt;</span>Play again<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+	        	<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+	       );
 		}
 		 else {
 			return (
-				&lt;div id = "game"&gt;
-					{_.map(this.state.questions,function(q){
-	          			return &lt;GuessQuestion data={q}/&gt;;
-		        	})}
-					&lt;button onClick={this.stopGame}&gt;End quiz&lt;/button&gt;
-				&lt;/div&gt;
+				<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span> = "<span class="hljs-attribute">game</span>"&gt;</span> 
+				<span class="hljs-tag">&lt;<span class="hljs-title">GuessQuestion</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">{this.state.questions[this.state.answeredQ]}</span> <span class="hljs-attribute">fun</span>=<span class="hljs-value">{this.addCorrect}</span> <span class="hljs-attribute">guessing</span>=<span class="hljs-value">{this.state.isguessing}</span> 
+				<span class="hljs-attribute">getGuessing</span> =<span class="hljs-value">{this.guessing}</span> <span class="hljs-attribute">count</span> = {<span class="hljs-attribute">this.state.answeredQ</span>} <span class="hljs-attribute">showBtn</span>=<span class="hljs-value">{this.showButton}</span> <span class="hljs-attribute">hideBtn</span>=<span class="hljs-value">{this.hideButton}</span> /&gt;</span>
+		        	<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"errors"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"errors"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"nextBtn"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"nextBtn"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.game}</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">"btn btn-primary"</span> &gt;</span>{this.getName()}<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 			);
 		}
 	}
 });
 	
-module.exports = Play;</pre></div></div>
+module.exports = Play;
+</span></pre></div></div>
             
         </li>
         

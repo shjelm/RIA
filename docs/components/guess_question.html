@@ -35,48 +35,73 @@
 <span class="hljs-keyword">var</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>),
 	Router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-router'</span>);
 
+<span class="hljs-keyword">var</span> shuffle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(array)</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; array.length; i++) {
+    <span class="hljs-keyword">var</span> random = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * (i + <span class="hljs-number">1</span>));
+    <span class="hljs-keyword">var</span> tmp = array[random];
+
+    array[random] = array[i];
+    array[i] = tmp;
+  }
+  <span class="hljs-keyword">return</span> array;
+};
+
 <span class="hljs-keyword">var</span> Guess = React.createClass({
 	getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">this</span>.setState({iscorrect:<span class="hljs-literal">false</span>});
-		<span class="hljs-keyword">return</span> {count:{}};
+		<span class="hljs-keyword">return</span> {count:{}, answer: <span class="hljs-string">''</span>};
 	},
 	handleChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 		<span class="hljs-keyword">if</span>(event.target.value === <span class="hljs-keyword">this</span>.props.data.correct){
-			<span class="hljs-keyword">this</span>.setState({iscorrect: <span class="hljs-literal">true</span>});	
+			<span class="hljs-keyword">this</span>.setState({iscorrect: <span class="hljs-literal">true</span>});
+			<span class="hljs-keyword">this</span>.props.fun();	
 		}
 		<span class="hljs-keyword">else</span>{
-			<span class="hljs-keyword">this</span>.setState({isfalse:<span class="hljs-literal">true</span>});
+			<span class="hljs-keyword">this</span>.setState({iscorrect:<span class="hljs-literal">false</span>, answer: event.target.value});
 		}
+		<span class="hljs-keyword">this</span>.props.showBtn();
+		<span class="hljs-keyword">this</span>.props.getGuessing();
+	},
+	getNumber: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.count+<span class="hljs-number">1</span>;	
 	},
 	render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{	
-		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.iscorrect){
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.state.iscorrect &amp;&amp; <span class="hljs-keyword">this</span>.props.guessing === <span class="hljs-literal">false</span>){
 			<span class="hljs-keyword">return</span> (
 				<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
 				<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Correct!<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
 				<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{this.props.data.correct} is the correct answer.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 			);
-		} else if(this.state.isfalse){
+		} else if(!this.state.iscorrect &amp;&amp; this.props.guessing === false){
 			return (
 				<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
 				<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Incorrect!<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-				<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>You answered {event.target.value}. {this.props.data.correct} is the correct answer. <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>You answered {this.state.answer}. {this.props.data.correct} is the correct answer. <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 				<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 			);
 		}
 		else{
+			this.props.hideBtn();
 		return (		
       	<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"guessForm"</span> &gt;</span>
 			<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.handleChange}</span> <span class="hljs-attribute">ref</span> = "<span class="hljs-attribute">guessForm</span>" <span class="hljs-attribute">className</span>=<span class="hljs-value">"form-horizontal"</span>&gt;</span>
 			<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"question"</span>&gt;</span>
-				<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Question<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Question {this.getNumber()}<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
 		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{this.props.data.question}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 	          <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"answers"</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.correct}</span>&gt;</span> {this.props.data.correct} <span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer2}</span>&gt;</span> {this.props.data.answer2}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer3}</span>&gt;</span> {this.props.data.answer3}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-		          <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data.answer4}</span>&gt;</span> {this.props.data.answer4}<span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              {shuffle(['correct', 'answer2', 'answer3', 'answer4']).map(function (value, i) {
+                 return (
+                     <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
+                       <span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+                         <span class="hljs-attribute">type</span>=<span class="hljs-value">"radio"</span>
+                         <span class="hljs-attribute">name</span>=<span class="hljs-value">"A"</span>
+                         <span class="hljs-attribute">key</span>=<span class="hljs-value">{i}</span>
+                         <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.props.data[value]}</span>&gt;</span> {this.props.data[value]} <span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span>
+                     <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+                     );
+              }, this)}
 	          <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
       		<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
       	<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
@@ -86,6 +111,7 @@
 });
 
 module.exports = Guess;
+
 </span></pre></div></div>
             
         </li>
